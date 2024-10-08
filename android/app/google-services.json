@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "562451413387",
+    "project_id": "surpay-app",
+    "storage_bucket": "surpay-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:562451413387:android:23280f7daa5bf38cbad78e",
+        "android_client_info": {
+          "package_name": "id.surpay.solverra"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDvNw4IPwri8yOrn2yeA9MEnIsOU0jJG6E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
