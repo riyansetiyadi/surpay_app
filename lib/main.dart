@@ -71,34 +71,31 @@ class _SurpayAppState extends State<SurpayApp> {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Scaffold(
-        backgroundColor: Colors.white,
-        body: Stack(
-          children: [
-            PopScope(
-              canPop: false,
-              onPopInvokedWithResult: (didPop, result) async {
-                if (await _controller.canGoBack()) {
-                  await _controller.goBack();
-                } else {
-                  SystemNavigator.pop();
-                }
-              },
-              child: WebViewWidget(
-                controller: _controller,
-              ),
+      home: Stack(
+        children: [
+          PopScope(
+            canPop: false,
+            onPopInvokedWithResult: (didPop, result) async {
+              if (await _controller.canGoBack()) {
+                await _controller.goBack();
+              } else {
+                SystemNavigator.pop();
+              }
+            },
+            child: WebViewWidget(
+              controller: _controller,
             ),
-            if (_isLoading)
-              Container(
-                color: Colors.black.withOpacity(0.5),
-                child: const Center(
-                  child: CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
-                  ),
+          ),
+          if (_isLoading)
+            Container(
+              color: Colors.black.withOpacity(0.5),
+              child: const Center(
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
                 ),
               ),
-          ],
-        ),
+            ),
+        ],
       ),
     );
   }
