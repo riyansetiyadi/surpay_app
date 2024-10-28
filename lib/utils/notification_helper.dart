@@ -1,6 +1,6 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:rxdart/subjects.dart';
-import 'package:surpay_app/models/notificationModel.dart';
+import 'package:surpay_app/models/notification_model.dart';
 
 final selectNotificationSubject = BehaviorSubject<String>();
 
@@ -67,14 +67,6 @@ class NotificationHelper {
       titleRestaurant,
       platformChannelSpecifics,
       payload: 'notif',
-    );
-  }
-
-  void configureSelectNotificationSubject(String route) {
-    selectNotificationSubject.stream.listen(
-      (String payload) async {
-        print(payload);
-      },
     );
   }
 }
