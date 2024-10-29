@@ -10,52 +10,12 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  Color _cardColor = Colors.white;
-  Color _cardColor1 = Colors.white;
-  Color _cardColor2 = Colors.white;
-  Color _cardColor3 = Colors.white;
-  Color _cardColor4 = Colors.white;
-  Color _cardColor5 = Colors.white;
+  int _activeCardIndex = -1;
 
-  void _changeColor() {
+  void _changeCard(int index) {
     setState(() {
-      _cardColor = _cardColor == Colors.white ? Colors.orange : Colors.white;
+      _activeCardIndex = index;
     });
-  }
-
-  void _changeColor1() {
-    setState(() {
-      _cardColor1 = _cardColor1 == Colors.white ? Colors.orange : Colors.white;
-    });
-  }
-
-  void _changeColor2() {
-    setState(() {
-      _cardColor2 = _cardColor2 == Colors.white ? Colors.orange : Colors.white;
-    });
-  }
-
-  void _changeColor3() {
-    setState(() {
-      _cardColor3 = _cardColor3 == Colors.white ? Colors.orange : Colors.white;
-    });
-  }
-
-  void _changeColor4() {
-    setState(() {
-      _cardColor4 = _cardColor4 == Colors.white ? Colors.orange : Colors.white;
-    });
-  }
-
-  void _changeColor5() {
-    setState(() {
-      _cardColor5 = _cardColor5 == Colors.white ? Colors.orange : Colors.white;
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
   }
 
   @override
@@ -86,7 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             children: [
               Container(
-                color: const Color(0XFFb3e3e0),
+                color: Color(0XFFb3e3e0),
                 padding:
                     const EdgeInsets.only(top: 16.0, left: 16.0, right: 16.0),
                 child: Column(
@@ -95,10 +55,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     const Text(
                       'SURPAY',
                       textAlign: TextAlign.left,
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          fontSize: 20,
+                          color: Color(0xFF0355CC),
+                          fontWeight: FontWeight.bold),
                     ),
-                    const SizedBox(height: 20),
+                    SizedBox(height: 20),
                     const Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -128,22 +90,20 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16),
                     const Text(
                         'Hanya butuh 1 menit untuk menghasilkan ratusan ribu dari handphonemu. Isi surveynya, dapatkan hadiahnya'),
-                    const SizedBox(height: 20),
-                    SizedBox(
+                    SizedBox(height: 20),
+                    Container(
                       width: double.infinity,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor:
-                              Colors.orange, // Button background color
+                          backgroundColor: Colors.orange,
                           shape: RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.circular(8), // Rounded corners
+                            borderRadius: BorderRadius.circular(8),
                           ),
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 24, vertical: 12), // Padding
+                              horizontal: 24, vertical: 12),
                         ),
                         onPressed: () {
                           context.go(
@@ -158,17 +118,17 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: const Text(
                           'DAFTAR DAN DAPATKAN HADIAHNYA',
                           style: TextStyle(
-                            color: Colors.white, // Text color
-                            fontWeight: FontWeight.bold, // Bold text
-                            fontSize: 16, // Text size
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
                           ),
                         ),
                       ),
                     ),
-                    const SizedBox(height: 30),
+                    SizedBox(height: 30),
                     Align(
                       alignment: Alignment.center,
-                      child: SizedBox(
+                      child: Container(
                         width: 400,
                         height: 400,
                         child: Image.network(
@@ -180,7 +140,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: 20),
               Container(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
@@ -196,11 +156,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       'Mari mengisi survey dengan SurPay. Dapatkan hadiah langsung dan hadiah undian yang langsung tertera jelas kapan hadiah akan diundi dan berapa besarnya. Anda juga bisa mendapatkan uang langsung dengan mengisi survey yang tertera.',
                       textAlign: TextAlign.start,
                     ),
-                    const SizedBox(height: 20),
+                    SizedBox(height: 20),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor:
-                            const Color(0xFF0355CC), // Button background color
+                            Color(0xFF0355CC), // Button background color
                         shape: RoundedRectangleBorder(
                           borderRadius:
                               BorderRadius.circular(2), // Rounded corners
@@ -223,10 +183,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: 20),
               Column(
                 children: [
-                  const Text('Tentang SurPay'),
                   const Text(
                     'Langkah - Langkah',
                     style: TextStyle(fontSize: 20),
@@ -235,127 +194,33 @@ class _HomeScreenState extends State<HomeScreen> {
                     padding: const EdgeInsets.all(16.0),
                     child: Column(
                       children: [
-                        InkWell(
-                          onTap: _changeColor,
-                          child: Card(
-                            elevation: 20,
-                            shadowColor: Colors.grey,
-                            color: _cardColor,
-                            child: SizedBox(
-                              width: double.infinity,
-                              child: Padding(
-                                padding: const EdgeInsets.all(20.0),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Image.network(
-                                      "https://surpay.id/images/icon.png",
-                                      width: 200,
-                                      height: 200,
-                                      fit: BoxFit.cover,
-                                    ),
-                                    const SizedBox(height: 10),
-                                    const Text(
-                                      'Install Aplikasinya',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20,
-                                      ),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    const SizedBox(height: 5),
-                                    const Text(
-                                      'instal aplikasinya di Google Play',
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
+                        CustomCard(
+                          index: 0,
+                          activeIndex: _activeCardIndex,
+                          onTap: _changeCard,
+                          imageUrl: "https://surpay.id/images/icon.png",
+                          title: 'Install Aplikasinya',
+                          description: 'Instal aplikasinya di Google Play',
                         ),
-                        const SizedBox(height: 12),
-                        InkWell(
-                          onTap: _changeColor1,
-                          child: Card(
-                            elevation: 20,
-                            shadowColor: Colors.grey,
-                            color: _cardColor1,
-                            child: SizedBox(
-                              width: double.infinity,
-                              child: Padding(
-                                padding: const EdgeInsets.all(20.0),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Image.network(
-                                      "https://surpay.id/images/check.png",
-                                      width: 200,
-                                      height: 200,
-                                      fit: BoxFit.cover,
-                                    ),
-                                    const SizedBox(height: 10),
-                                    const Text(
-                                      'Pilih survey dan Hadiahnya',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20,
-                                      ),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    const SizedBox(height: 5),
-                                    const Text(
-                                      'Tiap survey akan dicantumkan hadiah undian atau hadiah langsungnya. Hadiah langsung akan masuk ke saldo anda, dan akan bisa ditarik ke rekening anda minimal Rp. 100.000,-',
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
+                        SizedBox(height: 12),
+                        CustomCard(
+                          index: 1,
+                          activeIndex: _activeCardIndex,
+                          onTap: _changeCard,
+                          imageUrl: "https://surpay.id/images/check.png",
+                          title: 'Pilih survey dan Hadiahnya',
+                          description:
+                              'Tiap survey akan dicantumkan hadiah undian atau hadiah langsungnya. Hadiah langsung akan masuk ke saldo anda, dan akan bisa ditarik ke rekening anda minimal Rp. 100.000,-',
                         ),
-                        const SizedBox(height: 12),
-                        InkWell(
-                          onTap: _changeColor2,
-                          child: Card(
-                            elevation: 20,
-                            shadowColor: Colors.grey,
-                            color: _cardColor2,
-                            child: SizedBox(
-                              width: double.infinity,
-                              child: Padding(
-                                padding: const EdgeInsets.all(20.0),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Image.network(
-                                      "https://surpay.id/images/win.png",
-                                      width: 200,
-                                      height: 200,
-                                      fit: BoxFit.cover,
-                                    ),
-                                    const SizedBox(height: 10),
-                                    const Text(
-                                      'Cairkan hadiahnya',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20,
-                                      ),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    const SizedBox(height: 5),
-                                    const Text(
-                                      'Anda bisa menarik saldo anda, dan kami akan mentrasfer ke rekening anda. untuk undian, kami akan umumkan kapan undian dilaksanakan dan siapa pemenangnya.',
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
+                        SizedBox(height: 12),
+                        CustomCard(
+                          index: 2,
+                          activeIndex: _activeCardIndex,
+                          onTap: _changeCard,
+                          imageUrl: "https://surpay.id/images/win.png",
+                          title: 'Cairkan hadiahnya',
+                          description:
+                              'Anda bisa menarik saldo anda, dan kami akan mentransfer ke rekening anda. Untuk undian, kami akan umumkan kapan undian dilaksanakan dan siapa pemenangnya.',
                         ),
                       ],
                     ),
@@ -363,7 +228,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor:
-                          const Color(0xFF0355CC), // Button background color
+                          Color(0xFF0355CC), // Button background color
                       shape: RoundedRectangleBorder(
                         borderRadius:
                             BorderRadius.circular(4), // Rounded corners
@@ -385,7 +250,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   )
                 ],
               ),
-              const SizedBox(
+              SizedBox(
                 height: 18,
               ),
               Column(
@@ -398,103 +263,45 @@ class _HomeScreenState extends State<HomeScreen> {
                     padding: const EdgeInsets.all(16.0),
                     child: Column(
                       children: [
-                        InkWell(
-                          onTap: _changeColor3,
-                          child: Card(
-                            elevation: 20,
-                            shadowColor: Colors.grey,
-                            color: _cardColor3,
-                            child: const SizedBox(
-                              width: double.infinity,
-                              child: Padding(
-                                padding: EdgeInsets.all(20.0),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    SizedBox(height: 10),
-                                    Text(
-                                      'Pilih survey dengan Hadiah yang anda suka',
-                                      style: TextStyle(
-                                        fontSize: 15,
-                                      ),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
+                        CustomCard(
+                          index: 3,
+                          activeIndex: _activeCardIndex,
+                          onTap: _changeCard,
+                          imageUrl: "https://surpay.id/images/icon.png",
+                          title: 'Install Aplikasinya',
+                          description: 'Instal aplikasinya di Google Play',
                         ),
-                        const SizedBox(height: 12),
-                        InkWell(
-                          onTap: _changeColor4,
-                          child: Card(
-                            elevation: 20,
-                            shadowColor: Colors.grey,
-                            color: _cardColor4,
-                            child: const SizedBox(
-                              width: double.infinity,
-                              child: Padding(
-                                padding: EdgeInsets.all(20.0),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    SizedBox(height: 10),
-                                    Text(
-                                      'isi surveynya',
-                                      style: TextStyle(
-                                        fontSize: 15,
-                                      ),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
+                        SizedBox(height: 12),
+                        CustomCard(
+                          index: 4,
+                          activeIndex: _activeCardIndex,
+                          onTap: _changeCard,
+                          imageUrl: "https://surpay.id/images/check.png",
+                          title: 'Pilih survey dan Hadiahnya',
+                          description:
+                              'Tiap survey akan dicantumkan hadiah undian atau hadiah langsungnya. Hadiah langsung akan masuk ke saldo anda, dan akan bisa ditarik ke rekening anda minimal Rp. 100.000,-',
                         ),
-                        const SizedBox(height: 12),
-                        InkWell(
-                          onTap: _changeColor5,
-                          child: Card(
-                            elevation: 20,
-                            shadowColor: Colors.grey,
-                            color: _cardColor5,
-                            child: const SizedBox(
-                              width: double.infinity,
-                              child: Padding(
-                                padding: EdgeInsets.all(20.0),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    SizedBox(height: 10),
-                                    Text(
-                                      'Tiap bulan akan diumumkan siapa yang memenangkan hadiahnya. undian hadiah akan disiarkan secara online di youtube SurPay.',
-                                      style: TextStyle(
-                                        fontSize: 15,
-                                      ),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
+                        SizedBox(height: 12),
+                        CustomCard(
+                          index: 5,
+                          activeIndex: _activeCardIndex,
+                          onTap: _changeCard,
+                          imageUrl: "https://surpay.id/images/win.png",
+                          title: 'Cairkan hadiahnya',
+                          description:
+                              'Anda bisa menarik saldo anda, dan kami akan mentransfer ke rekening anda. Untuk undian, kami akan umumkan kapan undian dilaksanakan dan siapa pemenangnya.',
                         ),
                       ],
                     ),
                   ),
                 ],
               ),
-              const SizedBox(
+              SizedBox(
                 height: 40,
               ),
               Container(
                 width: double.infinity,
-                color: const Color(0xFF0a0f43),
+                color: Color(0xFF0a0f43),
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -506,11 +313,11 @@ class _HomeScreenState extends State<HomeScreen> {
                           fontSize: 20,
                           color: Colors.white),
                     ),
-                    const SizedBox(height: 10),
+                    SizedBox(height: 10),
                     Container(
                       color: Colors.white,
                       padding: const EdgeInsets.all(2),
-                      child: SizedBox(
+                      child: Container(
                         width: 200,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -555,6 +362,74 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               )
             ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class CustomCard extends StatelessWidget {
+  final int index;
+  final int activeIndex;
+  final Function(int) onTap;
+  final String imageUrl;
+  final String title;
+  final String description;
+
+  const CustomCard({
+    Key? key,
+    required this.index,
+    required this.activeIndex,
+    required this.onTap,
+    required this.imageUrl,
+    required this.title,
+    required this.description,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    Color cardColor = (activeIndex == index) ? Colors.orange : Colors.white;
+    Color textColor = (activeIndex == index) ? Colors.white : Colors.black;
+
+    return InkWell(
+      onTap: () => onTap(index),
+      child: Card(
+        elevation: 20,
+        shadowColor: Colors.grey,
+        color: cardColor,
+        child: SizedBox(
+          width: double.infinity,
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Image.network(
+                  imageUrl,
+                  width: 200,
+                  height: 200,
+                  fit: BoxFit.cover,
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  title,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                    color: textColor,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 5),
+                Text(
+                  description,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: textColor),
+                ),
+              ],
+            ),
           ),
         ),
       ),
