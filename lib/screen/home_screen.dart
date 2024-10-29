@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -10,15 +11,20 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.phone,
-              size: 30,
-            ),
+          onPressed: () {},
+          icon: const Icon(
+            Icons.phone,
+            size: 30,
+          ),
         ),
         actions: [
           IconButton(
@@ -35,34 +41,36 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               Column(
                 children: [
-                  const Text(
-                    'SURPAY'
-                  ),
+                  const Text('SURPAY'),
                   const Column(
                     children: [
-                      Text(
-                        'Hasilkan Uang'
-                      ),
-                      Text(
-                          'Mudah'
-                      ),
-                      Text(
-                          'Dari Handphone mu'
-                      ),
+                      Text('Hasilkan Uang'),
+                      Text('Mudah'),
+                      Text('Dari Handphone mu'),
                     ],
                   ),
                   const Text(
-                    'Hanya butuh 1 menit untuk menghasilkan ratusan ribu dari handphonemu. Isi surveynya, dapatkan hadiahnya'
-                  ),
+                      'Hanya butuh 1 menit untuk menghasilkan ratusan ribu dari handphonemu. Isi surveynya, dapatkan hadiahnya'),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.orange, // Button background color
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8), // Rounded corners
+                        borderRadius:
+                            BorderRadius.circular(8), // Rounded corners
                       ),
-                      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12), // Padding
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 24, vertical: 12), // Padding
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      context.go(
+                        Uri(
+                          path: '/webview',
+                          queryParameters: {
+                            'url': 'https://surpay.id/user/login.php'
+                          },
+                        ).toString(),
+                      );
+                    },
                     child: const Text(
                       'DAFTAR DAN DAPATKAN HADIAHNYA',
                       style: TextStyle(
@@ -72,26 +80,23 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   ),
-                  Image.network(
-                    'https://surpay.id/images/mbak.png'
-                  )
+                  Image.network('https://surpay.id/images/mbak.png')
                 ],
               ),
               Column(
                 children: [
+                  const Text('Tentang SurPay'),
                   const Text(
-                    'Tentang SurPay'
-                  ),
-                  const Text(
-                      'Mari mengisi survey dengan SurPay. Dapatkan hadiah langsung dan hadiah undian yang langsung tertera jelas kapan hadiah akan diundi dan berapa besarnya. Anda juga bisa mendapatkan uang langsung dengan mengisi survey yang tertera.'
-                  ),
+                      'Mari mengisi survey dengan SurPay. Dapatkan hadiah langsung dan hadiah undian yang langsung tertera jelas kapan hadiah akan diundi dan berapa besarnya. Anda juga bisa mendapatkan uang langsung dengan mengisi survey yang tertera.'),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.blue, // Button background color
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(4), // Rounded corners
+                        borderRadius:
+                            BorderRadius.circular(4), // Rounded corners
                       ),
-                      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12), // Padding
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 24, vertical: 12), // Padding
                     ),
                     onPressed: () {
                       // Define your action here
@@ -109,9 +114,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               Column(
                 children: [
-                  const Text(
-                      'Langkah - Langkah'
-                  ),
+                  const Text('Langkah - Langkah'),
                   Column(
                     children: [
                       Card(
@@ -124,14 +127,11 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Column(
                               children: [
                                 Image.network(
-                                    "https://surpay.id/images/icon.png"
-                                ),
+                                    "https://surpay.id/images/icon.png"),
                                 const Text(
                                   'Instal Aplikasinya',
                                 ),
-                                const Text(
-                                    'instal aplikasinya di googleplay'
-                                ),
+                                const Text('instal aplikasinya di googleplay'),
                               ],
                             ),
                           ),
@@ -147,14 +147,12 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Column(
                               children: [
                                 Image.network(
-                                    "https://surpay.id/images/check.png"
-                                ),
+                                    "https://surpay.id/images/check.png"),
                                 const Text(
                                   'Pilih survey dan Hadiahnya',
                                 ),
                                 const Text(
-                                    'Tiap survey akan dicantumkan hadiah undian atau hadiah langsungnya. Hadiah langsung akan masuk ke saldo anda, dan akan bisa ditarik ke rekening anda minimal Rp. 100.000,-'
-                                ),
+                                    'Tiap survey akan dicantumkan hadiah undian atau hadiah langsungnya. Hadiah langsung akan masuk ke saldo anda, dan akan bisa ditarik ke rekening anda minimal Rp. 100.000,-'),
                               ],
                             ),
                           ),
@@ -170,14 +168,12 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Column(
                               children: [
                                 Image.network(
-                                    "https://surpay.id/images/win.png"
-                                ),
+                                    "https://surpay.id/images/win.png"),
                                 const Text(
                                   'Cairkan hadiahnya',
                                 ),
                                 const Text(
-                                    'Anda bisa menarik saldo anda, dan kami akan mentrasfer ke rekening anda. untuk undian, kami akan umumkan kapan undian dilaksanakan dan siapa pemenangnya.'
-                                ),
+                                    'Anda bisa menarik saldo anda, dan kami akan mentrasfer ke rekening anda. untuk undian, kami akan umumkan kapan undian dilaksanakan dan siapa pemenangnya.'),
                               ],
                             ),
                           ),
@@ -189,9 +185,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.blue, // Button background color
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(4), // Rounded corners
+                        borderRadius:
+                            BorderRadius.circular(4), // Rounded corners
                       ),
-                      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12), // Padding
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 24, vertical: 12), // Padding
                     ),
                     onPressed: () {
                       // Define your action here
@@ -209,9 +207,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               Column(
                 children: [
-                  const Text(
-                      'Contoh survey'
-                  ),
+                  const Text('Contoh survey'),
                   Column(
                     children: [
                       Card(
@@ -224,8 +220,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Column(
                               children: [
                                 Image.network(
-                                    "https://surpay.id/images/icon.png"
-                                ),
+                                    "https://surpay.id/images/icon.png"),
                                 const Text(
                                   'Pilih Survey dengan Hadiah yang anda suka',
                                 ),
@@ -244,8 +239,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Column(
                               children: [
                                 Image.network(
-                                    "https://surpay.id/images/check.png"
-                                ),
+                                    "https://surpay.id/images/check.png"),
                                 const Text(
                                   'isi surveynya',
                                 ),
@@ -264,8 +258,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Column(
                               children: [
                                 Image.network(
-                                    "https://surpay.id/images/win.png"
-                                ),
+                                    "https://surpay.id/images/win.png"),
                                 const Text(
                                   'Tiap bulan akan diumumkan siapa yang memenangkan hadiahnya. undian hadiah akan disiarkan secara online di youtube SurPay.',
                                 ),
@@ -280,35 +273,21 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               Column(
                 children: [
-                  const Text(
-                    'Follow Us'
-                  ),
+                  const Text('Follow Us'),
                   Row(
                     children: [
                       IconButton(
-                        onPressed: () {},
-                        icon: const FaIcon(
-                          FontAwesomeIcons.facebook
-                        )
-                      ),
+                          onPressed: () {},
+                          icon: const FaIcon(FontAwesomeIcons.facebook)),
                       IconButton(
-                        onPressed: () {},
-                          icon: const FaIcon(
-                              FontAwesomeIcons.twitter
-                          )
-                      ),
+                          onPressed: () {},
+                          icon: const FaIcon(FontAwesomeIcons.twitter)),
                       IconButton(
-                        onPressed: () {},
-                          icon: const FaIcon(
-                              FontAwesomeIcons.youtube
-                          )
-                      ),
+                          onPressed: () {},
+                          icon: const FaIcon(FontAwesomeIcons.youtube)),
                       IconButton(
-                        onPressed: () {},
-                          icon: const FaIcon(
-                              FontAwesomeIcons.instagram
-                          )
-                      ),
+                          onPressed: () {},
+                          icon: const FaIcon(FontAwesomeIcons.instagram)),
                     ],
                   )
                 ],

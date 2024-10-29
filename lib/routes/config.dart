@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:surpay_app/screen/home_screen.dart';
+import 'package:surpay_app/screen/webview_screen.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
@@ -13,15 +14,12 @@ final router = GoRouter(
       path: '/home',
       builder: (context, state) => const HomeScreen(),
     ),
+    GoRoute(
+      path: '/webview',
+      builder: (context, state) {
+        final url = state.uri.queryParameters['url'] ?? '';
+        return WebviewScreen(url: url);
+      },
+    ),
   ],
 );
-
-Page getPage({
-  required Widget child,
-  required GoRouterState state,
-}) {
-  return MaterialPage(
-    key: state.pageKey,
-    child: child,
-  );
-}
