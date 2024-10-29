@@ -46,7 +46,6 @@ class _WebviewScreenState extends State<WebviewScreen> {
             canPop: false,
             onPopInvokedWithResult: (didPop, result) async {
               if (await _controller.canGoBack()) {
-                print(await _controller.canGoBack());
                 await _controller.goBack();
               } else {
                 if (context.mounted) {
