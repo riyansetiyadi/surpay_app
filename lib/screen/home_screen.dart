@@ -46,7 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             children: [
               Container(
-                color: Color(0XFFb3e3e0),
+                color: const Color(0XFFb3e3e0),
                 padding:
                     const EdgeInsets.only(top: 16.0, left: 16.0, right: 16.0),
                 child: Column(
@@ -60,7 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           color: Color(0xFF0355CC),
                           fontWeight: FontWeight.bold),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     const Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -90,11 +90,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 16),
+                    const SizedBox(height: 16),
                     const Text(
                         'Hanya butuh 1 menit untuk menghasilkan ratusan ribu dari handphonemu. Isi surveynya, dapatkan hadiahnya'),
-                    SizedBox(height: 20),
-                    Container(
+                    const SizedBox(height: 20),
+                    SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
@@ -125,10 +125,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 30),
+                    const SizedBox(height: 30),
                     Align(
                       alignment: Alignment.center,
-                      child: Container(
+                      child: SizedBox(
                         width: 400,
                         height: 400,
                         child: Image.network(
@@ -140,7 +140,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Container(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
@@ -156,11 +156,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       'Mari mengisi survey dengan SurPay. Dapatkan hadiah langsung dan hadiah undian yang langsung tertera jelas kapan hadiah akan diundi dan berapa besarnya. Anda juga bisa mendapatkan uang langsung dengan mengisi survey yang tertera.',
                       textAlign: TextAlign.start,
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor:
-                            Color(0xFF0355CC), // Button background color
+                            const Color(0xFF0355CC), // Button background color
                         shape: RoundedRectangleBorder(
                           borderRadius:
                               BorderRadius.circular(2), // Rounded corners
@@ -183,7 +183,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Column(
                 children: [
                   const Text(
@@ -202,7 +202,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           title: 'Install Aplikasinya',
                           description: 'Instal aplikasinya di Google Play',
                         ),
-                        SizedBox(height: 12),
+                        const SizedBox(height: 12),
                         CustomCard(
                           index: 1,
                           activeIndex: _activeCardIndex,
@@ -212,7 +212,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           description:
                               'Tiap survey akan dicantumkan hadiah undian atau hadiah langsungnya. Hadiah langsung akan masuk ke saldo anda, dan akan bisa ditarik ke rekening anda minimal Rp. 100.000,-',
                         ),
-                        SizedBox(height: 12),
+                        const SizedBox(height: 12),
                         CustomCard(
                           index: 2,
                           activeIndex: _activeCardIndex,
@@ -228,7 +228,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor:
-                          Color(0xFF0355CC), // Button background color
+                          const Color(0xFF0355CC), // Button background color
                       shape: RoundedRectangleBorder(
                         borderRadius:
                             BorderRadius.circular(4), // Rounded corners
@@ -250,7 +250,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   )
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 18,
               ),
               Column(
@@ -271,7 +271,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           title: 'Install Aplikasinya',
                           description: 'Instal aplikasinya di Google Play',
                         ),
-                        SizedBox(height: 12),
+                        const SizedBox(height: 12),
                         CustomCard(
                           index: 4,
                           activeIndex: _activeCardIndex,
@@ -281,7 +281,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           description:
                               'Tiap survey akan dicantumkan hadiah undian atau hadiah langsungnya. Hadiah langsung akan masuk ke saldo anda, dan akan bisa ditarik ke rekening anda minimal Rp. 100.000,-',
                         ),
-                        SizedBox(height: 12),
+                        const SizedBox(height: 12),
                         CustomCard(
                           index: 5,
                           activeIndex: _activeCardIndex,
@@ -296,12 +296,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 40,
               ),
               Container(
                 width: double.infinity,
-                color: Color(0xFF0a0f43),
+                color: const Color(0xFF0a0f43),
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -313,11 +313,11 @@ class _HomeScreenState extends State<HomeScreen> {
                           fontSize: 20,
                           color: Colors.white),
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     Container(
                       color: Colors.white,
                       padding: const EdgeInsets.all(2),
-                      child: Container(
+                      child: SizedBox(
                         width: 200,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -378,14 +378,14 @@ class CustomCard extends StatelessWidget {
   final String description;
 
   const CustomCard({
-    Key? key,
+    super.key,
     required this.index,
     required this.activeIndex,
     required this.onTap,
     required this.imageUrl,
     required this.title,
     required this.description,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

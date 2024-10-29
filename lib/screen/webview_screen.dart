@@ -37,36 +37,36 @@ class _WebviewScreenState extends State<WebviewScreen> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Surpay App',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: Stack(
-        children: [
-          PopScope(
-            canPop: false,
-            onPopInvokedWithResult: (didPop, result) async {
-              if (await _controller.canGoBack()) {
-                await _controller.goBack();
-              } else {
-                if (context.mounted) {
-                  context.go('/home');
+      home: Container(
+        color: Colors.white,
+        child: Stack(
+          children: [
+            PopScope(
+              canPop: false,
+              onPopInvokedWithResult: (didPop, result) async {
+                if (await _controller.canGoBack()) {
+                  await _controller.goBack();
+                } else {
+                  if (context.mounted) {
+                    context.go('/home');
+                  }
                 }
-              }
-            },
-            child: WebViewWidget(
-              controller: _controller,
-            ),
-          ),
-          if (_isLoading)
-            Container(
-              color: Colors.black.withOpacity(0.5),
-              child: const Center(
-                child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
-                ),
+              },
+              child: WebViewWidget(
+                controller: _controller,
               ),
             ),
-        ],
+            if (_isLoading)
+              Container(
+                color: Colors.black.withOpacity(0.5),
+                child: const Center(
+                  child: CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
+                  ),
+                ),
+              ),
+          ],
+        ),
       ),
     );
   }
