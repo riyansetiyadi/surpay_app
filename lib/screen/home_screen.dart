@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
+import 'package:surpay_app/widgets/navigation_bar/main_bottom_bar.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -11,6 +12,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _activeCardIndex = -1;
+  int selectedIndexBar = 0;
 
   void _changeCard(int index) {
     setState(() {
@@ -41,6 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
               )),
         ],
       ),
+      bottomNavigationBar: const MainBottomBar(),
       body: Center(
         child: SingleChildScrollView(
           child: Column(
