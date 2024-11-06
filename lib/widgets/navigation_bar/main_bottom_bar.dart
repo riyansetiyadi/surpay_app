@@ -34,12 +34,7 @@ class _MainBottomBarState extends State<MainBottomBar> {
         context.go('/home');
         break;
       case 1:
-        context.go(
-          Uri(
-            path: '/webview',
-            queryParameters: {'url': 'https://surpay.id/user/login.php'},
-          ).toString(),
-        );
+        context.push('/login');
         break;
     }
   }

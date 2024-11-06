@@ -109,14 +109,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               horizontal: 24, vertical: 12),
                         ),
                         onPressed: () {
-                          context.go(
-                            Uri(
-                              path: '/webview',
-                              queryParameters: {
-                                'url': 'https://surpay.id/user/login.php'
-                              },
-                            ).toString(),
-                          );
+                          context.push('/login');
                         },
                         child: const Text(
                           'DAFTAR DAN DAPATKAN HADIAHNYA',

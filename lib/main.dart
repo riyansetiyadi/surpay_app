@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:surpay_app/provider/address_provider.dart';
 import 'package:surpay_app/routes/config.dart';
+import 'package:surpay_app/services/api_address.dart';
 import 'package:surpay_app/utils/fcm_helper.dart';
 import 'package:surpay_app/utils/notification_helper.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:provider/provider.dart';
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
@@ -28,15 +31,30 @@ class SurpayApp extends StatefulWidget {
 }
 
 class _SurpayAppState extends State<SurpayApp> {
+  late AddressProvider addressProvider;
+
   @override
   void initState() {
     super.initState();
+
+    final apiAddressService = ApiAddressService();
+
+    addressProvider = AddressProvider(
+      apiAddressService,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      routerConfig: router,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => addressProvider,
+        )
+      ],
+      child: MaterialApp.router(
+        routerConfig: router,
+      ),
     );
   }
 }
