@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
-import 'package:surpay_app/widgets/navigation_bar/main_bottom_bar.dart';
+import 'package:surpay_app/widgets/drawer/main_drawer.dart';
+import 'package:surpay_app/widgets/navigation_bar/main_app_bar.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -23,27 +24,8 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-        leading: IconButton(
-          onPressed: () {},
-          icon: const Icon(
-            Icons.phone,
-            size: 30,
-            color: Colors.orange,
-          ),
-        ),
-        actions: [
-          IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.mail,
-                size: 30,
-                color: Colors.orange,
-              )),
-        ],
-      ),
-      bottomNavigationBar: const MainBottomBar(),
+      appBar: const MainAppBar(),
+      drawer: const MainDrawer(),
       body: Center(
         child: SingleChildScrollView(
           child: Column(

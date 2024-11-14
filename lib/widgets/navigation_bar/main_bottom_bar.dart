@@ -36,6 +36,15 @@ class _MainBottomBarState extends State<MainBottomBar> {
       case 1:
         context.push('/login');
         break;
+      case 2:
+        context.push('/login');
+        break;
+      case 3:
+        context.push('/login');
+        break;
+      case 4:
+        context.push('/login');
+        break;
     }
   }
 
@@ -43,11 +52,19 @@ class _MainBottomBarState extends State<MainBottomBar> {
   Widget build(BuildContext context) {
     return BottomNavigationBar(
       items: const [
-        BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.dashboard), label: 'Dashboard'),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.request_quote), label: 'Survey'),
+        BottomNavigationBarItem(icon: Icon(Icons.paid), label: 'Poinku'),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.currency_exchange), label: 'Penarikan'),
         BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
       ],
       currentIndex: _selectedIndex,
       onTap: _onItemTapped,
+      fixedColor: Colors.blue,
+      unselectedItemColor: Colors.grey,
     );
   }
 }
