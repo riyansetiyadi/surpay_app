@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:surpay_app/provider/address_provider.dart';
+import 'package:surpay_app/provider/auth_provider.dart';
 import 'package:surpay_app/routes/config.dart';
 import 'package:surpay_app/services/api_address.dart';
+import 'package:surpay_app/services/api_surpay.dart';
 import 'package:surpay_app/utils/fcm_helper.dart';
 import 'package:surpay_app/utils/notification_helper.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -32,15 +34,20 @@ class SurpayApp extends StatefulWidget {
 
 class _SurpayAppState extends State<SurpayApp> {
   late AddressProvider addressProvider;
+  late AuthProvider authProvider;
 
   @override
   void initState() {
     super.initState();
 
     final apiAddressService = ApiAddressService();
+    final apiSurpayService = ApiSurpayService();
 
     addressProvider = AddressProvider(
       apiAddressService,
+    );
+    authProvider = AuthProvider(
+      apiSurpayService,
     );
   }
 
@@ -50,7 +57,10 @@ class _SurpayAppState extends State<SurpayApp> {
       providers: [
         ChangeNotifierProvider(
           create: (context) => addressProvider,
-        )
+        ),
+        ChangeNotifierProvider(
+          create: (context) => authProvider,
+        ),
       ],
       child: MaterialApp.router(
         routerConfig: router,

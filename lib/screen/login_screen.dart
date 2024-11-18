@@ -1,22 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
+import 'package:surpay_app/provider/auth_provider.dart';
 import 'package:surpay_app/widgets/navigation_bar/main_bottom_bar.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+  final String? initPhoneNumber;
+  const LoginScreen({super.key, this.initPhoneNumber});
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  late TextEditingController _phoneNumberController;
+  late TextEditingController _passwordController;
   bool rememberMe = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _phoneNumberController =
+        TextEditingController(text: widget.initPhoneNumber);
+    _passwordController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _phoneNumberController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: const MainBottomBar(
-        initiateIndex: 1,
+        initiateIndex: 4,
       ),
       backgroundColor: Colors.grey[200],
       body: Center(
@@ -80,6 +100,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                       // Input Nohp
                       TextFormField(
+                        controller: _phoneNumberController,
                         decoration: InputDecoration(
                           hintText: 'Masukkan nohp',
                           border: OutlineInputBorder(
@@ -101,6 +122,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                       // Input Password
                       TextFormField(
+                        controller: _passwordController,
                         obscureText: true,
                         decoration: InputDecoration(
                           hintText: 'Masukkan password',
@@ -132,8 +154,32 @@ class _LoginScreenState extends State<LoginScreen> {
                       SizedBox(
                         width: double.infinity,
                         child: ElevatedButton(
-                          onPressed: () {
-                            // Aksi untuk Login
+                          onPressed: () async {
+                            final authRead = context.read<AuthProvider>();
+
+                            final result = await authRead.login(
+                                _phoneNumberController.text,
+                                _passwordController.text);
+                            if (result) {
+                              if (context.mounted) {
+                                context.push('/dashboard');
+                              }
+                            } else {
+                              if (context.mounted) {
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(SnackBar(
+                                  backgroundColor: Colors.red,
+                                  content: Text(
+                                    "Nomor hp/Password Salah",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge
+                                        ?.copyWith(color: Colors.white),
+                                  ),
+                                  duration: const Duration(seconds: 3),
+                                ));
+                              }
+                            }
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.blue,

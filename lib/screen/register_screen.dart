@@ -4,6 +4,9 @@ import 'package:provider/provider.dart';
 import 'package:surpay_app/models/province_district_model.dart';
 import 'package:surpay_app/models/subdistrict_model.dart';
 import 'package:surpay_app/provider/address_provider.dart';
+import 'package:surpay_app/provider/auth_provider.dart';
+import 'package:surpay_app/widgets/drawer/main_drawer.dart';
+import 'package:surpay_app/widgets/navigation_bar/main_app_bar.dart';
 import 'package:surpay_app/widgets/navigation_bar/main_bottom_bar.dart';
 
 class RegistrationScreen extends StatefulWidget {
@@ -15,19 +18,28 @@ class RegistrationScreen extends StatefulWidget {
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
   final _formKey = GlobalKey<FormState>();
+  final TextEditingController _phoneNumberController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _fullnameController = TextEditingController();
+  final TextEditingController _birthYearController = TextEditingController();
   final TextEditingController _postalCodeController = TextEditingController();
-  String? selectedGender;
+  final TextEditingController _addressController = TextEditingController();
+  int? selectedGender;
   String? selectedProvince;
-  String? selectedCity;
+  String? selectedDistrict;
   String? selectedSubdistrict;
   String? selectedVillage;
+
+  List<String> listGender = ['Perempuan', 'Laki-laki'];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[200],
+      appBar: const MainAppBar(),
+      drawer: const MainDrawer(),
       bottomNavigationBar: const MainBottomBar(
-        initiateIndex: 1,
+        initiateIndex: 4,
       ),
       body: Center(
         child: Padding(
@@ -57,29 +69,47 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
                         // No. HP
                         buildTextField(
-                            'No. HP', 'Selanjutnya akan digunakan untuk login'),
+                          'No. HP',
+                          'Selanjutnya akan digunakan untuk login',
+                          controller: _phoneNumberController,
+                        ),
                         const SizedBox(height: 16),
 
                         // Password
-                        buildTextField('Password', 'Password',
-                            obscureText: true),
+                        buildTextField(
+                          'Password',
+                          'Password',
+                          obscureText: true,
+                          controller: _passwordController,
+                        ),
                         const SizedBox(height: 16),
 
                         // Nama Lengkap
                         buildTextField(
-                            'Nama Lengkap', 'Masukkan Nama lengkap anda'),
+                          'Nama Lengkap',
+                          'Masukkan Nama lengkap anda',
+                          controller: _fullnameController,
+                        ),
                         const SizedBox(height: 16),
 
                         // Tahun Lahir
-                        buildTextField('Tahun Lahir', '',
-                            keyboardType: TextInputType.number),
+                        buildTextField(
+                          'Tahun Lahir',
+                          '',
+                          keyboardType: TextInputType.number,
+                          controller: _birthYearController,
+                        ),
                         const SizedBox(height: 16),
 
                         // Jenis Kelamin
-                        buildDropdownField('Jenis Kelamin', selectedGender,
-                            ['Laki-laki', 'Perempuan'], (value) {
+                        buildDropdownField(
+                            'Jenis Kelamin',
+                            selectedGender != null
+                                ? listGender[selectedGender!]
+                                : null,
+                            listGender, (value) {
                           setState(() {
-                            selectedGender = value;
+                            selectedGender = listGender.indexOf(value ?? '');
                           });
                         }),
                         const SizedBox(height: 16),
@@ -94,13 +124,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           (value) async {
                             setState(() {
                               selectedProvince = value;
-                              selectedCity = null;
+                              selectedDistrict = null;
                             });
                             ProvinceDistrictModel? province =
                                 await state.getProvinceByName(value ?? '');
                             String? idProvince = province?.id;
-                            if (idProvince != null)
+                            if (idProvince != null) {
                               state.getDistrict(idProvince);
+                            }
                           },
                         ),
                         const SizedBox(height: 16),
@@ -108,13 +139,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         // Kota/Kabupaten
                         buildDropdownField(
                           'Kota/Kabupaten',
-                          selectedCity,
+                          selectedDistrict,
                           state.districts
                               .map<String>((subdistrict) => subdistrict.name)
                               .toList(),
                           (value) async {
                             setState(() {
-                              selectedCity = value;
+                              selectedDistrict = value;
                               selectedSubdistrict = null;
                             });
                             ProvinceDistrictModel? district =
@@ -167,31 +198,34 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
                         // Alamat Rumah
                         buildTextField(
-                            'Alamat Rumah (Dusun, RT, RW)', 'Masukkan alamat',
-                            maxLines: 3),
+                          'Alamat Rumah (Dusun, RT, RW)',
+                          'Masukkan alamat',
+                          maxLines: 3,
+                          controller: _addressController,
+                        ),
                         const SizedBox(height: 16),
 
                         // Button "Selanjutnya"
-                        ElevatedButton.icon(
-                          onPressed: () {
-                            // Aksi ketika tombol Selanjutnya ditekan
-                          },
-                          icon: const Icon(
-                            Icons.arrow_circle_right_outlined,
-                            color: Colors.white,
-                          ),
-                          label: const Text(
-                            'Selanjutnya',
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.green,
-                            minimumSize: const Size(double.infinity, 50),
-                          ),
-                        ),
-                        const SizedBox(height: 16),
+                        // ElevatedButton.icon(
+                        //   onPressed: () {
+                        //     // Aksi ketika tombol Selanjutnya ditekan
+                        //   },
+                        //   icon: const Icon(
+                        //     Icons.arrow_circle_right_outlined,
+                        //     color: Colors.white,
+                        //   ),
+                        //   label: const Text(
+                        //     'Selanjutnya',
+                        //     style: TextStyle(
+                        //       color: Colors.white,
+                        //     ),
+                        //   ),
+                        //   style: ElevatedButton.styleFrom(
+                        //     backgroundColor: Colors.green,
+                        //     minimumSize: const Size(double.infinity, 50),
+                        //   ),
+                        // ),
+                        // const SizedBox(height: 16),
 
                         // Link "Sudah Punya Akun?"
                         TextButton(
@@ -206,8 +240,44 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
                         // Button "Ajukan Pendaftaran"
                         ElevatedButton(
-                          onPressed: () {
-                            // Aksi ketika tombol Ajukan Pendaftaran ditekan
+                          onPressed: () async {
+                            final authRead = context.read<AuthProvider>();
+
+                            final result = await authRead.register(
+                              _phoneNumberController.text,
+                              _passwordController.text,
+                              _fullnameController.text,
+                              _birthYearController.text,
+                              selectedGender.toString(),
+                              selectedProvince ?? '',
+                              selectedDistrict ?? '',
+                              selectedSubdistrict ?? '',
+                              selectedVillage ?? '',
+                              _postalCodeController.text,
+                              _addressController.text,
+                            );
+                            if (result) {
+                              if (context.mounted) {
+                                context.push(
+                                    '/login?phoneNumber=${_phoneNumberController.text}');
+                              }
+                            } else {
+                              if (context.mounted) {
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(SnackBar(
+                                  backgroundColor: Colors.red,
+                                  content: Text(
+                                    authRead.message ??
+                                        "Mohon lengkapi semua data",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge
+                                        ?.copyWith(color: Colors.white),
+                                  ),
+                                  duration: const Duration(seconds: 3),
+                                ));
+                              }
+                            }
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.green,
