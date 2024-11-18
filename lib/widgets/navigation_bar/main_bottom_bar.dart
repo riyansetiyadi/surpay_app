@@ -31,19 +31,25 @@ class _MainBottomBarState extends State<MainBottomBar> {
 
     switch (index) {
       case 0:
-        context.go('/home');
+        context.go('/dashboard');
         break;
       case 1:
-        context.push('/login');
+        context.push('/survey-aktif');
         break;
       case 2:
-        context.push('/login');
+        context.push('/hadiah');
         break;
       case 3:
-        context.push('/login');
+        context.push('/penarikan');
         break;
       case 4:
-        context.push('/login');
+        context.push('/profil');
+        break;
+      case 5:
+        context.push('/contact');
+        break;
+      case 6:
+        context.push('/');
         break;
     }
   }
@@ -59,7 +65,9 @@ class _MainBottomBarState extends State<MainBottomBar> {
         BottomNavigationBarItem(icon: Icon(Icons.paid), label: 'Poinku'),
         BottomNavigationBarItem(
             icon: Icon(Icons.currency_exchange), label: 'Penarikan'),
-        BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+        BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profil'),
+        BottomNavigationBarItem(icon: Icon(Icons.contact_support), label: 'Kontak'),
+        BottomNavigationBarItem(icon: Icon(Icons.exit_to_app), label: 'Logout'),
       ],
       currentIndex: _selectedIndex,
       onTap: _onItemTapped,
