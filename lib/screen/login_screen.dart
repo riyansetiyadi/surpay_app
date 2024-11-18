@@ -17,7 +17,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       bottomNavigationBar: const MainBottomBar(
         initiateIndex: 1,
-      ),
+      ), 
       backgroundColor: Colors.grey[200],
       body: Center(
         child: Padding(
@@ -133,7 +133,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         width: double.infinity,
                         child: ElevatedButton(
                           onPressed: () {
-                            // Aksi untuk Login
+                          context.push('/dashboard');
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.blue,

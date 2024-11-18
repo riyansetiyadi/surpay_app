@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:surpay_app/widgets/navigation_bar/main_bottom_bar.dart';
 
-class DashboardScreen extends StatefulWidget {
-  const DashboardScreen({super.key});
+class HadiahScreen extends StatefulWidget {
+  const HadiahScreen({super.key});
 
   @override
-  State<DashboardScreen> createState() => _DashboardScreenState();
+  State<HadiahScreen> createState() => _HadiahScreenState();
 }
 
-class _DashboardScreenState extends State<DashboardScreen> {
+class _HadiahScreenState extends State<HadiahScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: const MainBottomBar(
-        initiateIndex: 0,
+        initiateIndex: 2,
       ),
       backgroundColor: Colors.grey[200],
       body: Container(
@@ -66,19 +66,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   scrollDirection:Axis.horizontal,
                     child: DataTable(
                       columns: const [
-                        DataColumn(label: Text('Tanggal', style: TextStyle(fontWeight: FontWeight.bold),)),
-                        DataColumn(label: Text('Nama Lengkap', style: TextStyle(fontWeight: FontWeight.bold),)),
-                        DataColumn(label: Text('Keterangan', style: TextStyle(fontWeight: FontWeight.bold),)),
-                        DataColumn(label: Text('Jumlah', style: TextStyle(fontWeight: FontWeight.bold),)),
-                        DataColumn(label: Text('Bukti', style: TextStyle(fontWeight: FontWeight.bold),)),
+                        DataColumn(label: Text('ID Survey', style: TextStyle(fontWeight: FontWeight.bold),)),
+                        DataColumn(label: Text('Poin', style: TextStyle(fontWeight: FontWeight.bold),)),
+                        DataColumn(label: Text('Undian', style: TextStyle(fontWeight: FontWeight.bold),)),
+                        DataColumn(label: Text('Jam', style: TextStyle(fontWeight: FontWeight.bold),)),
                       ],
                     rows: const [
                       DataRow(cells: [
-                        DataCell(Text('18/11/2024')),
-                        DataCell(Text('Budi')),
-                        DataCell(Text('mencairkan dana')),
+                        DataCell(Text('1')),
                         DataCell(Text('5000')),
                         DataCell(Text('')),
+                        DataCell(Text('2024-11-18 08:38:36')),
                       ]),
                     ],
                   ),
