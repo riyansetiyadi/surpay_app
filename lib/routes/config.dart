@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:surpay_app/db/auth_repository.dart';
 import 'package:surpay_app/screen/dashboard.dart';
 import 'package:surpay_app/screen/contact.dart';
 import 'package:surpay_app/screen/hadiah.dart';
@@ -13,6 +14,16 @@ import 'package:surpay_app/screen/survey_page.dart';
 import 'package:surpay_app/screen/webview_screen.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
+final authRepository = AuthRepository();
+
+List<String> authRoute = [
+  '/dashboard',
+  '/hadiah',
+  '/penarikan',
+  '/profil',
+  '/contact',
+  '/survey-aktif'
+];
 
 // GoRouter configuration
 final router = GoRouter(
@@ -72,4 +83,12 @@ final router = GoRouter(
       },
     ),
   ],
+  redirect: (context, state) async {
+    bool isLoggedInKosmetik = await authRepository.isLoggedIn();
+    if (authRoute.contains(state.fullPath) && !isLoggedInKosmetik) {
+      return '/login';
+    }
+
+    return null;
+  },
 );
