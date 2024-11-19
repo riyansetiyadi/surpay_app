@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:surpay_app/provider/auth_provider.dart';
+import 'package:surpay_app/widgets/navigation_bar/main_app_bar.dart';
 import 'package:surpay_app/widgets/navigation_bar/main_bottom_bar.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -35,11 +36,9 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: const MainBottomBar(
-        initiateIndex: 4,
-      ),
+      appBar: const MainAppBar(),
       backgroundColor: Colors.grey[200],
-      body: Center(
+      body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(

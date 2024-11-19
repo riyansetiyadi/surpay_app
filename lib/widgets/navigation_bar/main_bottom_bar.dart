@@ -31,7 +31,7 @@ class _MainBottomBarState extends State<MainBottomBar> {
 
     switch (index) {
       case 0:
-        context.go('/dashboard');
+        context.push('/dashboard');
         break;
       case 1:
         context.push('/survey-aktif');

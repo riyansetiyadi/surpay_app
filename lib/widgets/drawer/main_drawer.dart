@@ -32,7 +32,7 @@ class _MainDrawerState extends State<MainDrawer> {
             height: 100,
             child: DrawerHeader(
               decoration: BoxDecoration(
-                color: Colors.green,
+                color: Colors.orange,
               ),
               child: Text(
                 'Surpay',
@@ -81,9 +81,9 @@ class _MainDrawerState extends State<MainDrawer> {
             ),
           ListTile(
             leading: const Icon(Icons.contact_support, color: Colors.blue),
-            title: const Text('Support'),
+            title: const Text('Contact'),
             onTap: () {
-              context.push('/support');
+              context.push('/contact');
               Scaffold.of(context).closeDrawer();
             },
           ),

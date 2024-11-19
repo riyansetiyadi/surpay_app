@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:surpay_app/widgets/navigation_bar/main_bottom_bar.dart';
+import 'package:surpay_app/widgets/navigation_bar/user_app_bar.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ContactScreen extends StatefulWidget {
@@ -13,49 +14,16 @@ class _ContactScreenState extends State<ContactScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+            appBar: const UserAppBar(),
+
       bottomNavigationBar: const MainBottomBar(
         initiateIndex: 5,
       ),
       backgroundColor: Colors.grey[200],
-      body: Container(
+      body: SingleChildScrollView(
         padding: EdgeInsets.all(16),
         child: Column(
           children: [
-            Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15.0),
-              ),
-              elevation: 8,
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text.rich(
-                      TextSpan(
-                        children: [
-                          TextSpan(
-                            text: 'Saldo Anda :',
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
-                          ),
-                          TextSpan(
-                            text: ' Rp. 7.500',
-                            style: TextStyle(
-                                fontSize: 25,
-                                color: Colors.red,
-                                fontWeight: FontWeight.w900),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 16,
-            ),
             Card(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15.0),
