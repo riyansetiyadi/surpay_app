@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:surpay_app/db/auth_repository.dart';
 import 'package:surpay_app/models/profile_model.dart';
 import 'package:surpay_app/models/province_district_model.dart';
 import 'package:surpay_app/models/subdistrict_model.dart';
@@ -7,9 +8,10 @@ import 'package:surpay_app/services/api_surpay.dart';
 import 'package:surpay_app/utils/result_state.dart';
 
 class AuthProvider extends ChangeNotifier {
+  final AuthRepository authRepository;
   final ApiSurpayService apiSurpayService;
 
-  AuthProvider(this.apiSurpayService);
+  AuthProvider(this.apiSurpayService, this.authRepository);
 
   ResultState _resultState = ResultState.initial;
   ResultState get state => _resultState;
@@ -30,6 +32,7 @@ class AuthProvider extends ChangeNotifier {
       final responseResult =
           await apiSurpayService.login(phoneNumber, password);
       profile = ProfileModel.fromApiJson(responseResult);
+      if (profile != null) await authRepository.saveProfile(profile!);
       message = 'Berhasil login';
       _resultState = ResultState.loaded;
       notifyListeners();

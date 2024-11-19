@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:surpay_app/db/auth_repository.dart';
 import 'package:surpay_app/provider/address_provider.dart';
 import 'package:surpay_app/provider/auth_provider.dart';
 import 'package:surpay_app/routes/config.dart';
@@ -40,6 +41,8 @@ class _SurpayAppState extends State<SurpayApp> {
   void initState() {
     super.initState();
 
+    final authRepository = AuthRepository();
+
     final apiAddressService = ApiAddressService();
     final apiSurpayService = ApiSurpayService();
 
@@ -48,6 +51,7 @@ class _SurpayAppState extends State<SurpayApp> {
     );
     authProvider = AuthProvider(
       apiSurpayService,
+      authRepository,
     );
   }
 
