@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:surpay_app/widgets/drawer/main_drawer.dart';
 import 'package:surpay_app/widgets/navigation_bar/main_bottom_bar.dart';
 import 'package:surpay_app/widgets/navigation_bar/user_app_bar.dart';
 
@@ -14,6 +15,7 @@ class _HadiahScreenState extends State<HadiahScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const UserAppBar(),
+      drawer: const MainDrawer(),
       bottomNavigationBar: const MainBottomBar(
         initiateIndex: 2,
       ),
@@ -29,40 +31,91 @@ class _HadiahScreenState extends State<HadiahScreen> {
               elevation: 8,
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: DataTable(
-                    columns: const [
-                      DataColumn(
-                          label: Text(
-                        'ID Survey',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      )),
-                      DataColumn(
-                          label: Text(
-                        'Poin',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      )),
-                      DataColumn(
-                          label: Text(
-                        'Undian',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      )),
-                      DataColumn(
-                          label: Text(
-                        'Jam',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      )),
-                    ],
-                    rows: const [
-                      DataRow(cells: [
-                        DataCell(Text('1')),
-                        DataCell(Text('5000')),
-                        DataCell(Text('')),
-                        DataCell(Text('2024-11-18 08:38:36')),
-                      ]),
-                    ],
-                  ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'ID Survey ',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 18),
+                        ),
+                        Text(
+                          '1',
+                          style: TextStyle(fontSize: 18),
+                        )
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Undian',
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
+                        Text('', style: TextStyle(fontSize: 18))
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Jam',
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          '24-11-2024 08:38:36',
+                          style: TextStyle(fontSize: 18),
+                        )
+                      ],
+                    ),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    Divider(
+                      color: const Color.fromARGB(177, 106, 106, 106),
+                      thickness: 0.5,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 8, bottom: 8),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Poin',
+                            style: TextStyle(
+                                color: Colors.red,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(
+                            width: 25,
+                          ),
+                          Text(
+                            'Rp. 5000',
+                            style: TextStyle(
+                                color: Colors.red,
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold),
+                          )
+                        ],
+                      ),
+                    ),
+                    Divider(
+                      color: const Color.fromARGB(177, 106, 106, 106),
+                      thickness: 0.5,
+                    ),
+                  ],
                 ),
               ),
             ),

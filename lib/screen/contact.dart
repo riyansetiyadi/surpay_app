@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:surpay_app/widgets/drawer/main_drawer.dart';
 import 'package:surpay_app/widgets/navigation_bar/main_bottom_bar.dart';
 import 'package:surpay_app/widgets/navigation_bar/user_app_bar.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -14,8 +15,8 @@ class _ContactScreenState extends State<ContactScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-            appBar: const UserAppBar(),
-
+      appBar: const UserAppBar(),
+      drawer: const MainDrawer(),
       bottomNavigationBar: const MainBottomBar(
         initiateIndex: 5,
       ),
