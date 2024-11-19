@@ -16,7 +16,7 @@ class MainDrawer extends StatelessWidget {
             height: 100,
             child: DrawerHeader(
               decoration: BoxDecoration(
-                color: Colors.green,
+                color: Colors.orange,
               ),
               child: Text(
                 'Surpay',
@@ -46,9 +46,9 @@ class MainDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(Icons.contact_support, color: Colors.blue),
-            title: const Text('Support'),
+            title: const Text('Contact'),
             onTap: () {
-              context.push('/support');
+              context.push('/contact');
               Scaffold.of(context).closeDrawer();
             },
           ),

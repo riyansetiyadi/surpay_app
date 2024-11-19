@@ -38,10 +38,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       backgroundColor: Colors.grey[200],
       appBar: const MainAppBar(),
       drawer: const MainDrawer(),
-      bottomNavigationBar: const MainBottomBar(
-        initiateIndex: 4,
-      ),
-      body: Center(
+      body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: SingleChildScrollView(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:surpay_app/widgets/drawer/main_drawer.dart';
-import 'package:surpay_app/widgets/navigation_bar/main_app_bar.dart';
+import 'package:surpay_app/widgets/navigation_bar/user_app_bar.dart';
 import 'package:surpay_app/widgets/navigation_bar/main_bottom_bar.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -14,48 +14,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const MainAppBar(),
-      drawer: const MainDrawer(),
+      appBar: const UserAppBar(),
       bottomNavigationBar: const MainBottomBar(
         initiateIndex: 0,
       ),
       backgroundColor: Colors.grey[200],
-      body: Container(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15.0),
-              ),
-              elevation: 8,
-              child: const Padding(
-                padding: EdgeInsets.all(16.0),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text.rich(
-                      TextSpan(
-                        children: [
-                          TextSpan(
-                            text: 'Saldo Anda :',
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
-                          ),
-                          TextSpan(
-                            text: ' Rp. 7.500',
-                            style: TextStyle(
-                                fontSize: 25,
-                                color: Colors.red,
-                                fontWeight: FontWeight.w900),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
             const SizedBox(
               height: 16,
             ),
