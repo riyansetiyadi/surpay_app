@@ -12,6 +12,7 @@ class ProfileModel {
   final String? postalCode;
   final String? address;
   final String? saldo;
+  final String? password;
 
   ProfileModel({
     this.token,
@@ -27,6 +28,7 @@ class ProfileModel {
     this.postalCode,
     this.address,
     this.saldo,
+    this.password,
   });
 
   factory ProfileModel.fromApiJson(Map<String, dynamic> json, {String? token}) {
@@ -44,6 +46,7 @@ class ProfileModel {
       postalCode: json['data']['kode_pos'],
       address: json['data']['alamat'],
       saldo: json['data']['saldo'],
+      password: json['data']['password'],
     );
   }
 
@@ -60,6 +63,7 @@ class ProfileModel {
       postalCode: json['postalCode'],
       address: json['address'],
       saldo: json['saldo'],
+      password: json['password'],
     );
   }
 
@@ -77,6 +81,7 @@ class ProfileModel {
       'postalCode': postalCode,
       'address': address,
       'saldo': saldo,
+      'password': password,
     };
   }
 }

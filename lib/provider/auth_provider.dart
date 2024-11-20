@@ -33,15 +33,23 @@ class AuthProvider extends ChangeNotifier {
     try {
       final responseResult =
           await apiSurpayService.login(phoneNumber, password);
-      profile = ProfileModel.fromApiJson(responseResult);
-      if (profile != null) await authRepository.saveProfile(profile!);
-      message = 'Berhasil login';
-      _resultState = ResultState.loaded;
-      notifyListeners();
-      return true;
+
+      apiResponseModel = ApiResponseModel.fromJson(responseResult);
+
+      if (!(apiResponseModel?.error ?? true)) {
+        profile = ProfileModel.fromApiJson(responseResult);
+        if (profile != null) await authRepository.saveProfile(profile!);
+        _resultState = ResultState.loaded;
+        notifyListeners();
+        return true;
+      } else {
+        _resultState = ResultState.error;
+        notifyListeners();
+        return false;
+      }
     } catch (e) {
       _resultState = ResultState.error;
-      message = 'Gagal login';
+      apiResponseModel = ApiResponseModel(error: true, message: e.toString());
       notifyListeners();
       return false;
     }
@@ -116,6 +124,36 @@ class AuthProvider extends ChangeNotifier {
   }
 
   Future<bool> getUserData() async {
+    _resultState = ResultState.loading;
+    notifyListeners();
+
+    try {
+      String? token = await authRepository.getToken();
+      final responseResult = await apiSurpayService.getUserData(token ?? '');
+      apiResponseModel = ApiResponseModel.fromJson(responseResult);
+
+      if (!(apiResponseModel?.error ?? true)) {
+        profile = ProfileModel.fromApiJson(responseResult);
+        _resultState = ResultState.loaded;
+        notifyListeners();
+        return true;
+      } else {
+        _resultState = ResultState.error;
+        notifyListeners();
+        return false;
+      }
+    } catch (e) {
+      _resultState = ResultState.error;
+      notifyListeners();
+      return false;
+    }
+  }
+
+  Future<bool> updateUserData({
+    String? phoneNumber,
+    String? fullname,
+    String? password,
+  }) async {
     _resultState = ResultState.loading;
     notifyListeners();
 

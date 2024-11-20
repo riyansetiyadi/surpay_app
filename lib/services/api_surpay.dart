@@ -12,12 +12,12 @@ class ApiSurpayService {
 
     http.StreamedResponse response = await request.send();
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == 200 || response.statusCode == 400) {
       final responseString = await response.stream.bytesToString();
       final responseJson = jsonDecode(responseString);
       return responseJson;
     } else {
-      throw Exception('Nomor hp atau password salah');
+      throw response.reasonPhrase.toString();
     }
   }
 
@@ -62,8 +62,30 @@ class ApiSurpayService {
   ) async {
     var headers = {
       'Authorization': 'Bearer $token',
-      "Content-Type": "application/json",
-      'Accept': 'application/json',
+    };
+    var request =
+        http.Request('GET', Uri.parse('$_addressUrl/userprofile.php'));
+
+    request.headers.addAll(headers);
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200 || response.statusCode == 400) {
+      final responseString = await response.stream.bytesToString();
+      final responseJson = jsonDecode(responseString);
+      return responseJson;
+    } else {
+      throw Exception(response.reasonPhrase);
+    }
+  }
+
+  Future updateUserData(
+    String token, {
+    String? phoneNumber,
+    String? fullname,
+    String? password,
+  }) async {
+    var headers = {
+      'Authorization': 'Bearer $token',
     };
     var request =
         http.Request('GET', Uri.parse('$_addressUrl/userprofile.php'));
