@@ -7,7 +7,6 @@ import 'package:surpay_app/provider/address_provider.dart';
 import 'package:surpay_app/provider/auth_provider.dart';
 import 'package:surpay_app/widgets/drawer/main_drawer.dart';
 import 'package:surpay_app/widgets/navigation_bar/main_app_bar.dart';
-import 'package:surpay_app/widgets/navigation_bar/main_bottom_bar.dart';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({super.key});
@@ -335,17 +334,19 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8.0),
             ),
-            suffixIcon: label == 'Password' ? IconButton(
-              icon: Icon(
-                _obscureText ? Icons.visibility : Icons.visibility_off,
-                color: Colors.orange,
-              ),
-              onPressed: () {
-                setState(() {
-                  _obscureText = !_obscureText;
-                });
-              },
-            ): null,
+            suffixIcon: label == 'Password'
+                ? IconButton(
+                    icon: Icon(
+                      _obscureText ? Icons.visibility : Icons.visibility_off,
+                      color: Colors.orange,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _obscureText = !_obscureText;
+                      });
+                    },
+                  )
+                : null,
           ),
           validator: (value) {
             if (value == null || value.isEmpty) {
