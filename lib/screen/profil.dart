@@ -7,7 +7,7 @@ import 'package:surpay_app/provider/auth_provider.dart';
 import 'package:surpay_app/utils/result_state.dart';
 import 'package:surpay_app/widgets/handle_error_refresh_widget.dart';
 import 'package:surpay_app/widgets/drawer/main_drawer.dart';
-import 'package:surpay_app/widgets/navigation_bar/main_bottom_bar.dart';
+import 'package:surpay_app/widgets/navigation_bar/user_bottom_bar.dart';
 import 'package:surpay_app/widgets/navigation_bar/user_app_bar.dart';
 
 class ProfilScreen extends StatefulWidget {
@@ -32,7 +32,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
     return Scaffold(
       appBar: const UserAppBar(),
       drawer: const MainDrawer(),
-      bottomNavigationBar: const MainBottomBar(
+      bottomNavigationBar: const UserBottomBar(
         initiateIndex: 4,
       ),
       backgroundColor: Colors.grey[200],
@@ -151,6 +151,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
                 ),
                 Expanded(
                   child: TextFormField(
+                    initialValue: profile?.password,
                     decoration: InputDecoration(
                       hintText: '',
                       border: OutlineInputBorder(

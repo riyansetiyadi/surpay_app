@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:surpay_app/widgets/drawer/main_drawer.dart';
-import 'package:surpay_app/widgets/navigation_bar/main_bottom_bar.dart';
+import 'package:surpay_app/widgets/navigation_bar/user_bottom_bar.dart';
 import 'package:surpay_app/widgets/navigation_bar/user_app_bar.dart';
 
 class SurveyAktifScreen extends StatefulWidget {
@@ -17,7 +17,7 @@ class _SurveyAktifScreenState extends State<SurveyAktifScreen> {
     return Scaffold(
       appBar: const UserAppBar(),
       drawer: const MainDrawer(),
-      bottomNavigationBar: const MainBottomBar(
+      bottomNavigationBar: const UserBottomBar(
         initiateIndex: 1,
       ),
       backgroundColor: Colors.grey[200],

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:surpay_app/utils/webview_helper.dart';
-import 'package:surpay_app/widgets/navigation_bar/main_bottom_bar.dart';
+import 'package:surpay_app/widgets/navigation_bar/user_bottom_bar.dart';
 import 'package:surpay_app/widgets/navigation_bar/webview_app_bar.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -46,7 +46,7 @@ class _WebviewScreenState extends State<WebviewScreen> {
     return MaterialApp(
       home: Scaffold(
         appBar: WebviewAppBar(title: _title),
-        bottomNavigationBar: const MainBottomBar(
+        bottomNavigationBar: const UserBottomBar(
           initiateIndex: 1,
         ),
         body: Container(

@@ -4,18 +4,18 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:surpay_app/provider/auth_provider.dart';
 
-class MainBottomBar extends StatefulWidget {
+class UserBottomBar extends StatefulWidget {
   final int? initiateIndex;
-  const MainBottomBar({
+  const UserBottomBar({
     super.key,
     this.initiateIndex,
   });
 
   @override
-  State<MainBottomBar> createState() => _MainBottomBarState();
+  State<UserBottomBar> createState() => _UserBottomBarState();
 }
 
-class _MainBottomBarState extends State<MainBottomBar> {
+class _UserBottomBarState extends State<UserBottomBar> {
   int _selectedIndex = 0;
 
   @override
@@ -48,9 +48,6 @@ class _MainBottomBarState extends State<MainBottomBar> {
         context.push('/profil');
         break;
       case 5:
-        context.push('/contact');
-        break;
-      case 6:
         final authRead = context.read<AuthProvider>();
 
         final result = await authRead.logout();
