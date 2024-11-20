@@ -17,6 +17,7 @@ class _LoginScreenState extends State<LoginScreen> {
   late TextEditingController _phoneNumberController;
   late TextEditingController _passwordController;
   bool rememberMe = false;
+  bool _obscureText = true;
 
   @override
   void initState() {
@@ -123,11 +124,24 @@ class _LoginScreenState extends State<LoginScreen> {
                       // Input Password
                       TextFormField(
                         controller: _passwordController,
-                        obscureText: true,
+                        obscureText: _obscureText,
                         decoration: InputDecoration(
                           hintText: 'Masukkan password',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              _obscureText
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                              color: Colors.orange,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                _obscureText = !_obscureText;
+                              });
+                            },
                           ),
                         ),
                       ),
@@ -155,6 +169,23 @@ class _LoginScreenState extends State<LoginScreen> {
                         width: double.infinity,
                         child: ElevatedButton(
                           onPressed: () async {
+                            if (_phoneNumberController.text.isEmpty ||
+                                _passwordController.text.isEmpty) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  backgroundColor: Colors.red,
+                                  content: Text(
+                                    "Mohon isi dengan lengkap!",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge
+                                        ?.copyWith(color: Colors.white),
+                                  ),
+                                  duration: const Duration(seconds: 3),
+                                ),
+                              );
+                              return;
+                            }
                             final authRead = context.read<AuthProvider>();
 
                             final result = await authRead.login(

@@ -18,6 +18,8 @@ class ProfilScreen extends StatefulWidget {
 }
 
 class _ProfilScreenState extends State<ProfilScreen> {
+  bool _obscureText = true;
+
   @override
   void initState() {
     super.initState();
@@ -152,10 +154,24 @@ class _ProfilScreenState extends State<ProfilScreen> {
                 Expanded(
                   child: TextFormField(
                     initialValue: profile?.password,
+                    obscureText: _obscureText,
                     decoration: InputDecoration(
                       hintText: '',
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          _obscureText
+                              ? Icons.visibility
+                              : Icons.visibility_off,
+                          color: Colors.orange,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            _obscureText = !_obscureText;
+                          });
+                        },
                       ),
                     ),
                   ),
