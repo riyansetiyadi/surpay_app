@@ -1,16 +1,17 @@
 class ProfileModel {
   final String? token;
-  final String? id;
+  final int? id;
   final String? phoneNumber;
   final String? fullname;
   final String? gender;
-  final String? birthYear;
+  final int? birthYear;
   final String? province;
   final String? district;
   final String? subdistrict;
   final String? village;
   final String? postalCode;
   final String? address;
+  final String? saldo;
 
   ProfileModel({
     this.token,
@@ -25,6 +26,7 @@ class ProfileModel {
     this.village,
     this.postalCode,
     this.address,
+    this.saldo,
   });
 
   factory ProfileModel.fromApiJson(Map<String, dynamic> json, {String? token}) {
@@ -41,6 +43,7 @@ class ProfileModel {
       village: json['data']['kelurahan'],
       postalCode: json['data']['kode_pos'],
       address: json['data']['alamat'],
+      saldo: json['data']['saldo'],
     );
   }
 
@@ -56,6 +59,7 @@ class ProfileModel {
       village: json['village'],
       postalCode: json['postalCode'],
       address: json['address'],
+      saldo: json['saldo'],
     );
   }
 
@@ -72,6 +76,7 @@ class ProfileModel {
       'village': village,
       'postalCode': postalCode,
       'address': address,
+      'saldo': saldo,
     };
   }
 }

@@ -16,9 +16,14 @@ class _MainDrawerState extends State<MainDrawer> {
   @override
   void initState() {
     super.initState();
+    _loadDataLogin();
+  }
+
+  Future<void> _loadDataLogin() async {
     final authRepository = AuthRepository();
-    setState(() async {
-      isLoggedIn = await authRepository.isLoggedIn();
+    bool fetchedData = await authRepository.isLoggedIn();
+    setState(() {
+      isLoggedIn = fetchedData;
     });
   }
 
@@ -32,7 +37,7 @@ class _MainDrawerState extends State<MainDrawer> {
             height: 100,
             child: DrawerHeader(
               decoration: BoxDecoration(
-                color: Colors.orange,
+                color: Colors.green,
               ),
               child: Text(
                 'Surpay',
@@ -75,18 +80,18 @@ class _MainDrawerState extends State<MainDrawer> {
               leading: const Icon(Icons.app_registration, color: Colors.blue),
               title: const Text('Register'),
               onTap: () {
-                context.push('/login');
+                context.push('/register');
                 Scaffold.of(context).closeDrawer();
               },
             ),
           ListTile(
             leading: const Icon(Icons.contact_support, color: Colors.blue),
-            title: const Text('Contact'),
+            title: const Text('Support'),
             onTap: () {
+              context.push('/support');
               context.push('/contact');
-              Scaffold.of(context).closeDrawer();
             },
-          ),
+          )
         ],
       ),
     );

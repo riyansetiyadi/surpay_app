@@ -1,6 +1,8 @@
 // bottom_bar1.dart
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
+import 'package:surpay_app/provider/auth_provider.dart';
 
 class MainBottomBar extends StatefulWidget {
   final int? initiateIndex;
@@ -24,7 +26,7 @@ class _MainBottomBarState extends State<MainBottomBar> {
     });
   }
 
-  void _onItemTapped(int index) {
+  Future<void> _onItemTapped(int index) async {
     setState(() {
       _selectedIndex = index;
     });
@@ -49,7 +51,12 @@ class _MainBottomBarState extends State<MainBottomBar> {
         context.push('/contact');
         break;
       case 6:
-        context.push('/');
+        final authRead = context.read<AuthProvider>();
+
+        final result = await authRead.logout();
+        if (result) {
+          if (mounted) context.push('/login');
+        }
         break;
     }
   }
@@ -66,7 +73,8 @@ class _MainBottomBarState extends State<MainBottomBar> {
         BottomNavigationBarItem(
             icon: Icon(Icons.currency_exchange), label: 'Penarikan'),
         BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profil'),
-        BottomNavigationBarItem(icon: Icon(Icons.contact_support), label: 'Kontak'),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.contact_support), label: 'Kontak'),
         BottomNavigationBarItem(icon: Icon(Icons.exit_to_app), label: 'Logout'),
       ],
       currentIndex: _selectedIndex,

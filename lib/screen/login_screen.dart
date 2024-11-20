@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:surpay_app/provider/auth_provider.dart';
+import 'package:surpay_app/widgets/drawer/main_drawer.dart';
 import 'package:surpay_app/widgets/navigation_bar/main_app_bar.dart';
-import 'package:surpay_app/widgets/navigation_bar/main_bottom_bar.dart';
 
 class LoginScreen extends StatefulWidget {
   final String? initPhoneNumber;
@@ -37,6 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const MainAppBar(),
+      drawer: const MainDrawer(),
       backgroundColor: Colors.grey[200],
       body: SingleChildScrollView(
         child: Padding(
@@ -165,18 +166,19 @@ class _LoginScreenState extends State<LoginScreen> {
                               }
                             } else {
                               if (context.mounted) {
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(SnackBar(
-                                  backgroundColor: Colors.red,
-                                  content: Text(
-                                    "Nomor hp/Password Salah",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge
-                                        ?.copyWith(color: Colors.white),
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    backgroundColor: Colors.red,
+                                    content: Text(
+                                      "Nomor hp/Password Salah",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyLarge
+                                          ?.copyWith(color: Colors.white),
+                                    ),
+                                    duration: const Duration(seconds: 3),
                                   ),
-                                  duration: const Duration(seconds: 3),
-                                ));
+                                );
                               }
                             }
                           },

@@ -52,45 +52,31 @@ class ApiSurpayService {
 
     http.StreamedResponse response = await request.send();
 
-    // if (response.statusCode == 200) {
     final responseString = await response.stream.bytesToString();
     final responseJson = jsonDecode(responseString);
-    print(responseJson);
     return responseJson;
-    // } else {
-    //   throw Exception('Gagal register');
-    // }
   }
 
-  Future getIndonesiaDistrict(String provinceId) async {
-    var request = http.MultipartRequest(
-      'GET',
-      Uri.parse("$_addressUrl/list_kotakab/$provinceId.json"),
-    );
+  Future getUserData(
+    String token,
+  ) async {
+    var headers = {
+      'Authorization': 'Bearer $token',
+      "Content-Type": "application/json",
+      'Accept': 'application/json',
+    };
+    var request =
+        http.Request('GET', Uri.parse('$_addressUrl/userprofile.php'));
 
+    request.headers.addAll(headers);
     http.StreamedResponse response = await request.send();
-    if (response.statusCode == 200) {
+
+    if (response.statusCode == 200 || response.statusCode == 400) {
       final responseString = await response.stream.bytesToString();
       final responseJson = jsonDecode(responseString);
       return responseJson;
     } else {
-      throw Exception('Failed to fetch city');
-    }
-  }
-
-  Future getIndonesiaSubdistrict(String cityId) async {
-    var request = http.MultipartRequest(
-      'GET',
-      Uri.parse("$_addressUrl/kota_kab/$cityId.json"),
-    );
-
-    http.StreamedResponse response = await request.send();
-    if (response.statusCode == 200) {
-      final responseString = await response.stream.bytesToString();
-      final responseJson = jsonDecode(responseString);
-      return responseJson;
-    } else {
-      throw Exception('Failed to fetch city');
+      throw Exception(response.reasonPhrase);
     }
   }
 }
