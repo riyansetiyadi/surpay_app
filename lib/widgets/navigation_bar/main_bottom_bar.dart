@@ -73,8 +73,6 @@ class _MainBottomBarState extends State<MainBottomBar> {
         BottomNavigationBarItem(
             icon: Icon(Icons.currency_exchange), label: 'Penarikan'),
         BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profil'),
-        BottomNavigationBarItem(
-            icon: Icon(Icons.contact_support), label: 'Kontak'),
         BottomNavigationBarItem(icon: Icon(Icons.exit_to_app), label: 'Logout'),
       ],
       currentIndex: _selectedIndex,

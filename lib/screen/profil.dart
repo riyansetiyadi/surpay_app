@@ -6,6 +6,7 @@ import 'package:surpay_app/models/profile_model.dart';
 import 'package:surpay_app/provider/auth_provider.dart';
 import 'package:surpay_app/utils/result_state.dart';
 import 'package:surpay_app/widgets/handle_error_refresh_widget.dart';
+import 'package:surpay_app/widgets/drawer/main_drawer.dart';
 import 'package:surpay_app/widgets/navigation_bar/main_bottom_bar.dart';
 import 'package:surpay_app/widgets/navigation_bar/user_app_bar.dart';
 
@@ -30,6 +31,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const UserAppBar(),
+      drawer: const MainDrawer(),
       bottomNavigationBar: const MainBottomBar(
         initiateIndex: 4,
       ),

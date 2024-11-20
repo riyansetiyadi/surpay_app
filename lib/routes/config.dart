@@ -10,6 +10,7 @@ import 'package:surpay_app/screen/penarikan.dart';
 import 'package:surpay_app/screen/profil.dart';
 import 'package:surpay_app/screen/register_screen.dart';
 import 'package:surpay_app/screen/survey_aktif.dart';
+import 'package:surpay_app/screen/survey_page.dart';
 import 'package:surpay_app/screen/webview_screen.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -69,6 +70,10 @@ final router = GoRouter(
     GoRoute(
       path: '/survey-aktif',
       builder: (context, state) => const SurveyAktifScreen(),
+    ),
+    GoRoute(
+      path: '/survey-page',
+      builder: (context, state) => const SurveyPageScreen(),
     ),
     GoRoute(
       path: '/webview',
