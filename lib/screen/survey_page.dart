@@ -18,7 +18,7 @@ class _SurveyPageScreenState extends State<SurveyPageScreen> {
       drawer: const MainDrawer(),
       backgroundColor: Colors.grey[200],
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: Column(
           children: [
             Card(
@@ -30,7 +30,7 @@ class _SurveyPageScreenState extends State<SurveyPageScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         color: Colors.grey,
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(15.0),
@@ -39,7 +39,7 @@ class _SurveyPageScreenState extends State<SurveyPageScreen> {
                       ),
                       height: 40,
                       width: double.infinity,
-                      child: Center(
+                      child: const Center(
                         child: Text(
                           'Judul Survey',
                           style: TextStyle(
@@ -49,7 +49,7 @@ class _SurveyPageScreenState extends State<SurveyPageScreen> {
                         ),
                       )),
                   RadioListTile<int>(
-                    title: Text("Option 1"),
+                    title: const Text("Option 1"),
                     value: 1,
                     groupValue: _selectedValue,
                     onChanged: (int? value) {
@@ -59,7 +59,7 @@ class _SurveyPageScreenState extends State<SurveyPageScreen> {
                     },
                   ),
                   RadioListTile<int>(
-                    title: Text("Option 2"),
+                    title: const Text("Option 2"),
                     value: 1,
                     groupValue: _selectedValue,
                     onChanged: (int? value) {
@@ -69,7 +69,7 @@ class _SurveyPageScreenState extends State<SurveyPageScreen> {
                     },
                   ),
                   RadioListTile<int>(
-                    title: Text("Option 3"),
+                    title: const Text("Option 3"),
                     value: 1,
                     groupValue: _selectedValue,
                     onChanged: (int? value) {

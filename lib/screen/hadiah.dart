@@ -29,8 +29,8 @@ class _HadiahScreenState extends State<HadiahScreen> {
                 borderRadius: BorderRadius.circular(15.0),
               ),
               elevation: 8,
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
+              child: const Padding(
+                padding: EdgeInsets.all(16.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -83,7 +83,7 @@ class _HadiahScreenState extends State<HadiahScreen> {
                       height: 8,
                     ),
                     Divider(
-                      color: const Color.fromARGB(177, 106, 106, 106),
+                      color: Color.fromARGB(177, 106, 106, 106),
                       thickness: 0.5,
                     ),
                     Padding(
@@ -112,7 +112,7 @@ class _HadiahScreenState extends State<HadiahScreen> {
                       ),
                     ),
                     Divider(
-                      color: const Color.fromARGB(177, 106, 106, 106),
+                      color: Color.fromARGB(177, 106, 106, 106),
                       thickness: 0.5,
                     ),
                   ],

@@ -11,8 +11,7 @@ class UserAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      automaticallyImplyLeading: automaticallyImplyLeading,
-      backgroundColor: Colors.white,
+      iconTheme: const IconThemeData(color: Color.fromARGB(255, 0, 0, 0)),
       title: const Row(
         children: [
           SizedBox(
@@ -37,25 +36,9 @@ class UserAppBar extends StatelessWidget implements PreferredSizeWidget {
                 ),
               ],
             ),
-            Text.rich(
-              TextSpan(
-                children: [
-                  TextSpan(
-                    text: 'Saldo Anda :',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                  TextSpan(
-                    text: ' Rp. 7.500',
-                    style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.red,
-                        fontWeight: FontWeight.w900),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
+      ),
     );
   }
 
