@@ -17,6 +17,7 @@ class _LoginScreenState extends State<LoginScreen> {
   late TextEditingController _phoneNumberController;
   late TextEditingController _passwordController;
   bool rememberMe = false;
+  bool _obscureText = true;
 
   @override
   void initState() {
@@ -123,11 +124,24 @@ class _LoginScreenState extends State<LoginScreen> {
                       // Input Password
                       TextFormField(
                         controller: _passwordController,
-                        obscureText: true,
+                        obscureText: _obscureText,
                         decoration: InputDecoration(
                           hintText: 'Masukkan password',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              _obscureText
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                              color: Colors.orange,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                _obscureText = !_obscureText;
+                              });
+                            },
                           ),
                         ),
                       ),

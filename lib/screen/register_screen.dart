@@ -29,6 +29,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   String? selectedDistrict;
   String? selectedSubdistrict;
   String? selectedVillage;
+  bool _obscureText = true;
 
   List<String> listGender = ['Perempuan', 'Laki-laki'];
 
@@ -76,7 +77,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         buildTextField(
                           'Password',
                           'Password',
-                          obscureText: true,
+                          obscureText: _obscureText,
                           controller: _passwordController,
                         ),
                         const SizedBox(height: 16),
@@ -334,6 +335,17 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8.0),
             ),
+            suffixIcon: label == 'Password' ? IconButton(
+              icon: Icon(
+                _obscureText ? Icons.visibility : Icons.visibility_off,
+                color: Colors.orange,
+              ),
+              onPressed: () {
+                setState(() {
+                  _obscureText = !_obscureText;
+                });
+              },
+            ): null,
           ),
           validator: (value) {
             if (value == null || value.isEmpty) {
