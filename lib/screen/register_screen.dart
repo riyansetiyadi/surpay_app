@@ -7,6 +7,7 @@ import 'package:surpay_app/provider/address_provider.dart';
 import 'package:surpay_app/provider/auth_provider.dart';
 import 'package:surpay_app/widgets/drawer/main_drawer.dart';
 import 'package:surpay_app/widgets/navigation_bar/main_app_bar.dart';
+import 'package:surpay_app/widgets/navigation_bar/main_bottom_bar.dart';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({super.key});
@@ -237,42 +238,54 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         // Button "Ajukan Pendaftaran"
                         ElevatedButton(
                           onPressed: () async {
-                            final authRead = context.read<AuthProvider>();
+                            if (_formKey.currentState?.validate() ?? false) {
+                              final authRead = context.read<AuthProvider>();
 
-                            final result = await authRead.register(
-                              _phoneNumberController.text,
-                              _passwordController.text,
-                              _fullnameController.text,
-                              _birthYearController.text,
-                              selectedGender.toString(),
-                              selectedProvince ?? '',
-                              selectedDistrict ?? '',
-                              selectedSubdistrict ?? '',
-                              selectedVillage ?? '',
-                              _postalCodeController.text,
-                              _addressController.text,
-                            );
-                            if (result) {
-                              if (context.mounted) {
-                                context.push(
-                                    '/login?phoneNumber=${_phoneNumberController.text}');
+                              final result = await authRead.register(
+                                _phoneNumberController.text,
+                                _passwordController.text,
+                                _fullnameController.text,
+                                _birthYearController.text,
+                                selectedGender.toString(),
+                                selectedProvince ?? '',
+                                selectedDistrict ?? '',
+                                selectedSubdistrict ?? '',
+                                selectedVillage ?? '',
+                                _postalCodeController.text,
+                                _addressController.text,
+                              );
+                              if (result) {
+                                if (context.mounted) {
+                                  context.push(
+                                      '/login?phoneNumber=${_phoneNumberController.text}');
+                                }
+                              } else {
+                                if (context.mounted) {
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(SnackBar(
+                                    backgroundColor: Colors.red,
+                                    content: Text(
+                                      authRead.message ??
+                                          "Pendaftaran gagal, coba lagi.",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyLarge
+                                          ?.copyWith(color: Colors.white),
+                                    ),
+                                    duration: const Duration(seconds: 3),
+                                  ));
+                                }
                               }
                             } else {
-                              if (context.mounted) {
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(SnackBar(
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
                                   backgroundColor: Colors.red,
                                   content: Text(
-                                    authRead.message ??
-                                        "Mohon lengkapi semua data",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge
-                                        ?.copyWith(color: Colors.white),
+                                    "Mohon lengkapi semua data.",
+                                    style: TextStyle(color: Colors.white),
                                   ),
-                                  duration: const Duration(seconds: 3),
-                                ));
-                              }
+                                ),
+                              );
                             }
                           },
                           style: ElevatedButton.styleFrom(
@@ -322,6 +335,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               borderRadius: BorderRadius.circular(8.0),
             ),
           ),
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Isi dengan lengkap!';
+            }
+            return null;
+          },
         ),
       ],
     );
@@ -349,6 +368,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           }).toList(),
           onChanged: onChanged,
           hint: const Text('Pilih'),
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Pilih salah satu';
+            }
+            return null;
+          },
         ),
       ],
     );
