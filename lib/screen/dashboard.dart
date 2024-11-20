@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:surpay_app/widgets/drawer/main_drawer.dart';
 import 'package:surpay_app/widgets/navigation_bar/user_app_bar.dart';
 import 'package:surpay_app/widgets/navigation_bar/main_bottom_bar.dart';
 

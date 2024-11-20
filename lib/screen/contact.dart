@@ -14,14 +14,13 @@ class _ContactScreenState extends State<ContactScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-            appBar: const UserAppBar(),
-
+      appBar: const UserAppBar(),
       bottomNavigationBar: const MainBottomBar(
         initiateIndex: 5,
       ),
       backgroundColor: Colors.grey[200],
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: Column(
           children: [
             Card(
@@ -34,13 +33,13 @@ class _ContactScreenState extends State<ContactScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Temukan Kami',
+                    const Text('Temukan Kami',
                         style: TextStyle(
                             fontSize: 25, fontWeight: FontWeight.bold)),
-                    SizedBox(
+                    const SizedBox(
                       height: 16,
                     ),
-                    Container(
+                    SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: () async {
@@ -52,7 +51,21 @@ class _ContactScreenState extends State<ContactScreen> {
                               mode: LaunchMode.externalApplication,
                             );
                           } else {
-                            print("Could not launch Maps");
+                            if (context.mounted) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  backgroundColor: Colors.red,
+                                  content: Text(
+                                    "Could not launch Maps",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge
+                                        ?.copyWith(color: Colors.white),
+                                  ),
+                                  duration: const Duration(seconds: 3),
+                                ),
+                              );
+                            }
                           }
                         },
                         style: ElevatedButton.styleFrom(
@@ -68,10 +81,10 @@ class _ContactScreenState extends State<ContactScreen> {
                         ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 16,
                     ),
-                    Row(
+                    const Row(
                       children: [
                         Image(
                           image: NetworkImage(
@@ -88,10 +101,10 @@ class _ContactScreenState extends State<ContactScreen> {
                         )
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 16,
                     ),
-                    Row(
+                    const Row(
                       children: [
                         Image(
                             image: NetworkImage(
@@ -107,10 +120,10 @@ class _ContactScreenState extends State<ContactScreen> {
                         )
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 16,
                     ),
-                    Row(
+                    const Row(
                       children: [
                         Image(
                             image: NetworkImage(
@@ -126,10 +139,10 @@ class _ContactScreenState extends State<ContactScreen> {
                         )
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
-                    Row(
+                    const Row(
                       children: [
                         Image(
                           image: NetworkImage(
@@ -151,10 +164,10 @@ class _ContactScreenState extends State<ContactScreen> {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
-            Text('Copyrights © 2023 - >IT Solverra.')
+            const Text('Copyrights © 2023 - >IT Solverra.')
           ],
         ),
       ),

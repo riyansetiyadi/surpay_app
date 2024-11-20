@@ -14,9 +14,9 @@ class UserAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       automaticallyImplyLeading: automaticallyImplyLeading,
       backgroundColor: Colors.white,
-      title: Row(
+      title: const Row(
         children: [
-          Container(
+          SizedBox(
             height: 50,
             width: 50,
             child:

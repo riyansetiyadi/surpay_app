@@ -19,7 +19,7 @@ class _HadiahScreenState extends State<HadiahScreen> {
       ),
       backgroundColor: Colors.grey[200],
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: Column(
           children: [
             Card(

@@ -19,14 +19,14 @@ class _SurveyAktifScreenState extends State<SurveyAktifScreen> {
       ),
       backgroundColor: Colors.grey[200],
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: Column(
           children: [
             Row(
               children: [
                 Expanded(
                   child: TextFormField(
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: 'Cari',
                       filled: true,
                       fillColor: Colors.white,
@@ -36,7 +36,7 @@ class _SurveyAktifScreenState extends State<SurveyAktifScreen> {
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 10,
                 ),
                 ElevatedButton(
@@ -54,7 +54,7 @@ class _SurveyAktifScreenState extends State<SurveyAktifScreen> {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 16,
             ),
             Card(
@@ -67,21 +67,22 @@ class _SurveyAktifScreenState extends State<SurveyAktifScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Judul Survey',
+                    const Text('Judul Survey',
                         style: TextStyle(
                             fontSize: 18, fontWeight: FontWeight.bold)),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
-                    Text('Deskripsi survey', style: TextStyle(fontSize: 18)),
-                    SizedBox(
+                    const Text('Deskripsi survey',
+                        style: TextStyle(fontSize: 18)),
+                    const SizedBox(
                       height: 16,
                     ),
-                    Divider(
-                      color: const Color.fromARGB(177, 106, 106, 106),
+                    const Divider(
+                      color: Color.fromARGB(177, 106, 106, 106),
                       thickness: 0.5,
                     ),
-                    Column(
+                    const Column(
                       children: [
                         Row(
                           children: [
@@ -111,11 +112,11 @@ class _SurveyAktifScreenState extends State<SurveyAktifScreen> {
                         ),
                       ],
                     ),
-                    Divider(
-                      color: const Color.fromARGB(177, 106, 106, 106),
+                    const Divider(
+                      color: Color.fromARGB(177, 106, 106, 106),
                       thickness: 0.5,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     ElevatedButton(

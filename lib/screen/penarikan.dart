@@ -19,7 +19,7 @@ class _PenarikanScreenState extends State<PenarikanScreen> {
       ),
       backgroundColor: Colors.grey[200],
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: Column(
           children: [
             Card(
@@ -32,12 +32,12 @@ class _PenarikanScreenState extends State<PenarikanScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Total pendapatan dari :',
+                    const Text('Total pendapatan dari :',
                         style: TextStyle(fontSize: 18)),
-                    SizedBox(
+                    const SizedBox(
                       height: 16,
                     ),
-                    Row(
+                    const Row(
                       children: [
                         Text(
                           'username : ',
@@ -51,10 +51,10 @@ class _PenarikanScreenState extends State<PenarikanScreen> {
                         )
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
-                    Row(
+                    const Row(
                       children: [
                         Text(
                           'nama : ',
@@ -63,14 +63,14 @@ class _PenarikanScreenState extends State<PenarikanScreen> {
                         Text('user 1', style: TextStyle(fontSize: 18))
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
-                    Divider(
-                      color: const Color.fromARGB(177, 106, 106, 106),
+                    const Divider(
+                      color: Color.fromARGB(177, 106, 106, 106),
                       thickness: 0.5,
                     ),
-                    Padding(
+                    const Padding(
                       padding: EdgeInsets.all(8),
                       child: Row(
                         children: [
@@ -85,11 +85,11 @@ class _PenarikanScreenState extends State<PenarikanScreen> {
                         ],
                       ),
                     ),
-                    Divider(
-                      color: const Color.fromARGB(177, 106, 106, 106),
+                    const Divider(
+                      color: Color.fromARGB(177, 106, 106, 106),
                       thickness: 0.5,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     ElevatedButton(
