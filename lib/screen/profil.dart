@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:surpay_app/models/api_response_model.dart';
 import 'package:surpay_app/models/profile_model.dart';
 import 'package:surpay_app/provider/auth_provider.dart';
 import 'package:surpay_app/utils/result_state.dart';
@@ -19,13 +20,20 @@ class ProfilScreen extends StatefulWidget {
 
 class _ProfilScreenState extends State<ProfilScreen> {
   bool _obscureText = true;
+  final TextEditingController _phoneNumberController = TextEditingController();
+  final TextEditingController _fullnameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
     final authRead = context.read<AuthProvider>();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      authRead.getUserData();
+      authRead.getUserData().whenComplete(() {
+        _phoneNumberController.text = authRead.profile?.phoneNumber ?? "";
+        _fullnameController.text = authRead.profile?.fullname ?? "";
+        _passwordController.text = authRead.profile?.password ?? "";
+      });
     });
   }
 
@@ -43,7 +51,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
         child: Column(
           children: [
             Consumer<AuthProvider>(builder: (context, state, _) {
-              switch (state.state) {
+              switch (state.stateGetUser) {
                 case ResultState.loading:
                   return Center(
                     child: defaultTargetPlatform == TargetPlatform.iOS
@@ -103,7 +111,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
                 ),
                 Expanded(
                   child: TextFormField(
-                    initialValue: profile?.phoneNumber,
+                    controller: _phoneNumberController,
                     decoration: InputDecoration(
                       hintText: '',
                       border: OutlineInputBorder(
@@ -128,7 +136,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
                 ),
                 Expanded(
                   child: TextFormField(
-                    initialValue: profile?.fullname,
+                    controller: _fullnameController,
                     decoration: InputDecoration(
                       hintText: '',
                       border: OutlineInputBorder(
@@ -153,7 +161,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
                 ),
                 Expanded(
                   child: TextFormField(
-                    initialValue: profile?.password,
+                    controller: _passwordController,
                     obscureText: _obscureText,
                     decoration: InputDecoration(
                       hintText: '',
@@ -182,7 +190,47 @@ class _ProfilScreenState extends State<ProfilScreen> {
               height: 20,
             ),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () async {
+                final authRead = context.read<AuthProvider>();
+                ApiResponseModel? result = await authRead.updateUserData(
+                  phoneNumber: _phoneNumberController.text,
+                  fullname: _fullnameController.text,
+                  password: _passwordController.text,
+                );
+                if (result != null) {
+                  if (mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        backgroundColor: Colors.green,
+                        content: Text(
+                          result.message,
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyLarge
+                              ?.copyWith(color: Colors.white),
+                        ),
+                        duration: const Duration(seconds: 3),
+                      ),
+                    );
+                  }
+                } else {
+                  if (mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        backgroundColor: Colors.red,
+                        content: Text(
+                          "Data gagal diubah",
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyLarge
+                              ?.copyWith(color: Colors.white),
+                        ),
+                        duration: const Duration(seconds: 3),
+                      ),
+                    );
+                  }
+                }
+              },
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color.fromARGB(255, 60, 86, 255),
                 shape: RoundedRectangleBorder(

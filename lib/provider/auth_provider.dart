@@ -14,11 +14,15 @@ class AuthProvider extends ChangeNotifier {
 
   AuthProvider(this.apiSurpayService, this.authRepository);
 
-  ResultState _resultState = ResultState.initial;
-  ResultState get state => _resultState;
+  ResultState _resultStateGetUser = ResultState.initial;
+  ResultState get stateGetUser => _resultStateGetUser;
+
+  ResultState _resultStateUpdateUser = ResultState.initial;
+  ResultState get stateUpdateUser => _resultStateUpdateUser;
 
   String? message;
-  ApiResponseModel? apiResponseModel;
+  ApiResponseModel? apiResponseGetUserModel;
+  ApiResponseModel? apiResponseUpdateUserModel;
   ProfileModel? profile;
 
   List<ProvinceDistrictModel> districts = [];
@@ -27,29 +31,30 @@ class AuthProvider extends ChangeNotifier {
   List<SubdistrictModel> villages = [];
 
   Future<bool> login(String phoneNumber, String password) async {
-    _resultState = ResultState.loading;
+    _resultStateGetUser = ResultState.loading;
     notifyListeners();
 
     try {
       final responseResult =
           await apiSurpayService.login(phoneNumber, password);
 
-      apiResponseModel = ApiResponseModel.fromJson(responseResult);
+      apiResponseGetUserModel = ApiResponseModel.fromJson(responseResult);
 
-      if (!(apiResponseModel?.error ?? true)) {
+      if (!(apiResponseGetUserModel?.error ?? true)) {
         profile = ProfileModel.fromApiJson(responseResult);
         if (profile != null) await authRepository.saveProfile(profile!);
-        _resultState = ResultState.loaded;
+        _resultStateGetUser = ResultState.loaded;
         notifyListeners();
         return true;
       } else {
-        _resultState = ResultState.error;
+        _resultStateGetUser = ResultState.error;
         notifyListeners();
         return false;
       }
     } catch (e) {
-      _resultState = ResultState.error;
-      apiResponseModel = ApiResponseModel(error: true, message: e.toString());
+      _resultStateGetUser = ResultState.error;
+      apiResponseGetUserModel =
+          ApiResponseModel(error: true, message: e.toString());
       notifyListeners();
       return false;
     }
@@ -68,7 +73,7 @@ class AuthProvider extends ChangeNotifier {
     String postalCode,
     String address,
   ) async {
-    _resultState = ResultState.loading;
+    _resultStateGetUser = ResultState.loading;
     notifyListeners();
 
     try {
@@ -88,16 +93,16 @@ class AuthProvider extends ChangeNotifier {
       message = responseResult['message'];
       if (!responseResult['error']) {
         profile = ProfileModel.fromApiJson(responseResult);
-        _resultState = ResultState.loaded;
+        _resultStateGetUser = ResultState.loaded;
         notifyListeners();
         return true;
       } else {
-        _resultState = ResultState.error;
+        _resultStateGetUser = ResultState.error;
         notifyListeners();
         return false;
       }
     } catch (e) {
-      _resultState = ResultState.error;
+      _resultStateGetUser = ResultState.error;
       message = 'Gagal register';
       notifyListeners();
       return false;
@@ -106,17 +111,17 @@ class AuthProvider extends ChangeNotifier {
 
   Future<bool> logout() async {
     try {
-      _resultState = ResultState.loading;
+      _resultStateGetUser = ResultState.loading;
       notifyListeners();
 
       await authRepository.deleteProfile();
 
-      _resultState = ResultState.loaded;
+      _resultStateGetUser = ResultState.loaded;
       notifyListeners();
 
       return true;
     } catch (e) {
-      _resultState = ResultState.error;
+      _resultStateGetUser = ResultState.error;
       message = 'Gagal logout';
       notifyListeners();
       return false;
@@ -124,58 +129,63 @@ class AuthProvider extends ChangeNotifier {
   }
 
   Future<bool> getUserData() async {
-    _resultState = ResultState.loading;
+    _resultStateGetUser = ResultState.loading;
     notifyListeners();
 
     try {
       String? token = await authRepository.getToken();
       final responseResult = await apiSurpayService.getUserData(token ?? '');
-      apiResponseModel = ApiResponseModel.fromJson(responseResult);
+      apiResponseGetUserModel = ApiResponseModel.fromJson(responseResult);
 
-      if (!(apiResponseModel?.error ?? true)) {
+      if (!(apiResponseGetUserModel?.error ?? true)) {
         profile = ProfileModel.fromApiJson(responseResult);
-        _resultState = ResultState.loaded;
+        _resultStateGetUser = ResultState.loaded;
         notifyListeners();
         return true;
       } else {
-        _resultState = ResultState.error;
+        _resultStateGetUser = ResultState.error;
         notifyListeners();
         return false;
       }
     } catch (e) {
-      _resultState = ResultState.error;
+      _resultStateGetUser = ResultState.error;
       notifyListeners();
       return false;
     }
   }
 
-  Future<bool> updateUserData({
+  Future<ApiResponseModel?> updateUserData({
     String? phoneNumber,
     String? fullname,
     String? password,
   }) async {
-    _resultState = ResultState.loading;
+    _resultStateUpdateUser = ResultState.loading;
     notifyListeners();
 
     try {
       String? token = await authRepository.getToken();
-      final responseResult = await apiSurpayService.getUserData(token ?? '');
-      apiResponseModel = ApiResponseModel.fromJson(responseResult);
+      final responseResult = await apiSurpayService.updateUserData(
+        token ?? '',
+        phoneNumber: phoneNumber,
+        fullname: fullname,
+        password: password,
+      );
+      apiResponseUpdateUserModel = ApiResponseModel.fromJson(responseResult);
 
-      if (!(apiResponseModel?.error ?? true)) {
+      if (!(apiResponseUpdateUserModel?.error ?? true)) {
         profile = ProfileModel.fromApiJson(responseResult);
-        _resultState = ResultState.loaded;
+        _resultStateUpdateUser = ResultState.loaded;
         notifyListeners();
-        return true;
+        return apiResponseUpdateUserModel;
       } else {
-        _resultState = ResultState.error;
+        _resultStateUpdateUser = ResultState.error;
         notifyListeners();
-        return false;
+        return apiResponseUpdateUserModel;
       }
     } catch (e) {
-      _resultState = ResultState.error;
+      _resultStateUpdateUser = ResultState.error;
       notifyListeners();
-      return false;
+      return ApiResponseModel(error: true, message: e.toString());
     }
   }
 }
