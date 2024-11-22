@@ -101,4 +101,106 @@ class ApiSurpayService {
       throw Exception(response.reasonPhrase);
     }
   }
+
+  Future getAllSurvey(
+    String token,
+  ) async {
+    var headers = {
+      'Authorization': 'Bearer $token',
+    };
+    var request = http.Request('GET', Uri.parse('$_addressUrl/listsurvey.php'));
+
+    request.headers.addAll(headers);
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200 || response.statusCode == 400) {
+      final responseString = await response.stream.bytesToString();
+      final responseJson = jsonDecode(responseString);
+      return responseJson;
+    } else {
+      throw Exception(response.reasonPhrase);
+    }
+  }
+
+  Future getDetailSurvey(
+    String token,
+    String id,
+  ) async {
+    var headers = {
+      'Authorization': 'Bearer $token',
+    };
+    var request =
+        http.Request('GET', Uri.parse('$_addressUrl/detailsurvey.php/$id'));
+
+    request.headers.addAll(headers);
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200 || response.statusCode == 400) {
+      final responseString = await response.stream.bytesToString();
+      final responseJson = jsonDecode(responseString);
+      return responseJson;
+    } else {
+      throw Exception(response.reasonPhrase);
+    }
+  }
+
+  Future getListHadiah(
+    String token,
+  ) async {
+    var headers = {
+      'Authorization': 'Bearer $token',
+    };
+    var request = http.Request('GET', Uri.parse('$_addressUrl/listhadiah.php'));
+
+    request.headers.addAll(headers);
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200 || response.statusCode == 400) {
+      final responseString = await response.stream.bytesToString();
+      final responseJson = jsonDecode(responseString);
+      return responseJson;
+    } else {
+      throw Exception(response.reasonPhrase);
+    }
+  }
+
+  Future getPenarikan(
+    String token,
+  ) async {
+    var headers = {
+      'Authorization': 'Bearer $token',
+    };
+    var request = http.Request('GET', Uri.parse('$_addressUrl/penarikan.php'));
+
+    request.headers.addAll(headers);
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200 || response.statusCode == 400) {
+      final responseString = await response.stream.bytesToString();
+      final responseJson = jsonDecode(responseString);
+      return responseJson;
+    } else {
+      throw Exception(response.reasonPhrase);
+    }
+  }
+
+  Future getTarikDana(
+    String token,
+  ) async {
+    var headers = {
+      'Authorization': 'Bearer $token',
+    };
+    var request = http.Request('POST', Uri.parse('$_addressUrl/.php'));
+
+    request.headers.addAll(headers);
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200 || response.statusCode == 400) {
+      final responseString = await response.stream.bytesToString();
+      final responseJson = jsonDecode(responseString);
+      return responseJson;
+    } else {
+      throw Exception(response.reasonPhrase);
+    }
+  }
 }
