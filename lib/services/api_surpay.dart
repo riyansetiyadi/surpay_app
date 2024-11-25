@@ -184,6 +184,26 @@ class ApiSurpayService {
     }
   }
 
+  Future getRiwayatDashboard(
+    String token,
+  ) async {
+    var headers = {
+      'Authorization': 'Bearer $token',
+    };
+    var request = http.Request('GET', Uri.parse('$_addressUrl/riwayatdashboard.php'));
+
+    request.headers.addAll(headers);
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200 || response.statusCode == 400) {
+      final responseString = await response.stream.bytesToString();
+      final responseJson = jsonDecode(responseString);
+      return responseJson;
+    } else {
+      throw Exception(response.reasonPhrase);
+    }
+  }
+
   Future getTarikDana(
     String token,
   ) async {
