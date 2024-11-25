@@ -18,6 +18,7 @@ class _LoginScreenState extends State<LoginScreen> {
   late TextEditingController _passwordController;
   bool rememberMe = false;
   bool _obscureText = true;
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -165,6 +166,67 @@ class _LoginScreenState extends State<LoginScreen> {
                       const SizedBox(height: 8),
 
                       // Login Button
+                      // SizedBox(
+                      //   width: double.infinity,
+                      //   child: ElevatedButton(
+                      //     onPressed: () async {
+                      //       if (_phoneNumberController.text.isEmpty ||
+                      //           _passwordController.text.isEmpty) {
+                      //         ScaffoldMessenger.of(context).showSnackBar(
+                      //           SnackBar(
+                      //             backgroundColor: Colors.red,
+                      //             content: Text(
+                      //               "Mohon isi dengan lengkap!",
+                      //               style: Theme.of(context)
+                      //                   .textTheme
+                      //                   .bodyLarge
+                      //                   ?.copyWith(color: Colors.white),
+                      //             ),
+                      //             duration: const Duration(seconds: 3),
+                      //           ),
+                      //         );
+                      //         return;
+                      //       }
+                      //       final authRead = context.read<AuthProvider>();
+
+                      //       final result = await authRead.login(
+                      //           _phoneNumberController.text,
+                      //           _passwordController.text);
+                      //       if (result) {
+                      //         if (context.mounted) {
+                      //           context.push('/dashboard');
+                      //         }
+                      //       } else {
+                      //         if (context.mounted) {
+                      //           ScaffoldMessenger.of(context).showSnackBar(
+                      //             SnackBar(
+                      //               backgroundColor: Colors.red,
+                      //               content: Text(
+                      //                 "Nomor hp/Password Salah",
+                      //                 style: Theme.of(context)
+                      //                     .textTheme
+                      //                     .bodyLarge
+                      //                     ?.copyWith(color: Colors.white),
+                      //               ),
+                      //               duration: const Duration(seconds: 3),
+                      //             ),
+                      //           );
+                      //         }
+                      //       }
+                      //     },
+                      //     style: ElevatedButton.styleFrom(
+                      //       backgroundColor: Colors.blue,
+                      //       shape: RoundedRectangleBorder(
+                      //         borderRadius: BorderRadius.circular(8.0),
+                      //       ),
+                      //     ),
+                      //     child: const Text(
+                      //       'Login',
+                      //       style: TextStyle(color: Colors.white),
+                      //     ),
+                      //   ),
+                      // ),
+
                       SizedBox(
                         width: double.infinity,
                         child: ElevatedButton(
@@ -219,12 +281,17 @@ class _LoginScreenState extends State<LoginScreen> {
                               borderRadius: BorderRadius.circular(8.0),
                             ),
                           ),
-                          child: const Text(
-                            'Login',
-                            style: TextStyle(color: Colors.white),
+                          child: SizedBox(
+                            width: 20.0,
+                            height: 20.0,
+                            child: const CircularProgressIndicator(
+                              valueColor:
+                                  AlwaysStoppedAnimation<Color>(Colors.white),
+                            ),
                           ),
                         ),
                       ),
+
                       const SizedBox(height: 8),
 
                       const Divider(),
