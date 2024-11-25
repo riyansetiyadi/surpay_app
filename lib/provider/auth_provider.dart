@@ -154,7 +154,7 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
-  Future<ApiResponseModel?> updateUserData({
+  Future<bool> updateUserData({
     String? phoneNumber,
     String? fullname,
     String? password,
@@ -172,20 +172,20 @@ class AuthProvider extends ChangeNotifier {
       );
       apiResponseUpdateUserModel = ApiResponseModel.fromJson(responseResult);
 
-      if (!(apiResponseUpdateUserModel?.error ?? true)) {
+      if (!(apiResponseUpdateUserModel?.error ?? false)) {
         profile = ProfileModel.fromApiJson(responseResult);
         _resultStateUpdateUser = ResultState.loaded;
         notifyListeners();
-        return apiResponseUpdateUserModel;
+        return true;
       } else {
         _resultStateUpdateUser = ResultState.error;
         notifyListeners();
-        return apiResponseUpdateUserModel;
+        return false;
       }
     } catch (e) {
       _resultStateUpdateUser = ResultState.error;
       notifyListeners();
-      return ApiResponseModel(error: true, message: e.toString());
+      return false;
     }
   }
 }

@@ -1,0 +1,171 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:surpay_app/models/survey_question_model.dart';
+import 'package:surpay_app/provider/survey_provider.dart';
+import 'package:surpay_app/utils/result_state.dart';
+import 'package:surpay_app/widgets/drawer/main_drawer.dart';
+import 'package:surpay_app/widgets/handle_error_refresh_widget.dart';
+import 'package:surpay_app/widgets/navigation_bar/user_app_bar.dart';
+
+class DetailSurveyScreen extends StatefulWidget {
+  final String? id;
+  const DetailSurveyScreen({
+    super.key,
+    this.id,
+  });
+
+  @override
+  State<DetailSurveyScreen> createState() => _DetailSurveyScreenState();
+}
+
+class _DetailSurveyScreenState extends State<DetailSurveyScreen> {
+  int? _selectedValue;
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: const UserAppBar(),
+      drawer: const MainDrawer(),
+      backgroundColor: Colors.grey[200],
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16),
+        child: Consumer<SurveyProvider>(
+          builder: (context, state, _) {
+            switch (state.stateGetUserById) {
+              case ResultState.loading:
+                return Center(
+                  child: defaultTargetPlatform == TargetPlatform.iOS
+                      ? const CupertinoActivityIndicator(
+                          radius: 20.0,
+                        )
+                      : const CircularProgressIndicator(),
+                );
+              case ResultState.initial:
+                return Center(
+                  child: defaultTargetPlatform == TargetPlatform.iOS
+                      ? const CupertinoActivityIndicator(
+                          radius: 20.0,
+                        )
+                      : const CircularProgressIndicator(),
+                );
+              case ResultState.error:
+                return ErrorRefresh(
+                  onPressed: () async {
+                    await state.getSurveyById(widget.id ?? '');
+                  },
+                );
+              case ResultState.loaded:
+                if (state.detailSurvey != null) {
+                  return Column(
+                    children: [
+                      ...state.detailSurvey!.map(
+                        (item) {
+                          return questionCard(item);
+                        },
+                      )
+                    ],
+                  );
+                } else {
+                  return ErrorRefresh(
+                    onPressed: () async {
+                      await state.getSurveyById(widget.id ?? '');
+                    },
+                  );
+                }
+            }
+          },
+        ),
+      ),
+    );
+  }
+
+  Card questionCard(SurveyQuestionModel survey) {
+    return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15.0),
+      ),
+      elevation: 8,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            decoration: const BoxDecoration(
+              color: Colors.grey,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(15.0),
+                topRight: Radius.circular(15.0),
+              ),
+            ),
+            height: 40,
+            width: double.infinity,
+            child: Center(
+              child: Text(
+                survey.pertanyaan,
+                style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                    color: Colors.white),
+              ),
+            ),
+          ),
+          if (survey.a != null)
+            RadioListTile<int>(
+              title: Text(survey.a ?? ''),
+              value: 0,
+              groupValue: _selectedValue,
+              onChanged: (int? value) {
+                setState(() {
+                  _selectedValue = value;
+                });
+              },
+            ),
+          if (survey.b != null)
+            RadioListTile<int>(
+              title: Text(survey.b ?? ''),
+              value: 1,
+              groupValue: _selectedValue,
+              onChanged: (int? value) {
+                setState(() {
+                  _selectedValue = value;
+                });
+              },
+            ),
+          if (survey.c != null)
+            RadioListTile<int>(
+              title: Text(survey.c ?? ''),
+              value: 2,
+              groupValue: _selectedValue,
+              onChanged: (int? value) {
+                setState(() {
+                  _selectedValue = value;
+                });
+              },
+            ),
+          if (survey.d != null)
+            RadioListTile<int>(
+              title: Text(survey.d ?? ''),
+              value: 3,
+              groupValue: _selectedValue,
+              onChanged: (int? value) {
+                setState(() {
+                  _selectedValue = value;
+                });
+              },
+            ),
+          if (survey.e != null)
+            RadioListTile<int>(
+              title: Text(survey.e ?? ''),
+              value: 4,
+              groupValue: _selectedValue,
+              onChanged: (int? value) {
+                setState(() {
+                  _selectedValue = value;
+                });
+              },
+            ),
+        ],
+      ),
+    );
+  }
+}

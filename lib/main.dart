@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:surpay_app/db/auth_repository.dart';
 import 'package:surpay_app/provider/address_provider.dart';
 import 'package:surpay_app/provider/auth_provider.dart';
+import 'package:surpay_app/provider/survey_provider.dart';
 import 'package:surpay_app/routes/config.dart';
 import 'package:surpay_app/services/api_address.dart';
 import 'package:surpay_app/services/api_surpay.dart';
@@ -36,6 +37,7 @@ class SurpayApp extends StatefulWidget {
 class _SurpayAppState extends State<SurpayApp> {
   late AddressProvider addressProvider;
   late AuthProvider authProvider;
+  late SurveyProvider surveyProvider;
 
   @override
   void initState() {
@@ -53,6 +55,10 @@ class _SurpayAppState extends State<SurpayApp> {
       apiSurpayService,
       authRepository,
     );
+    surveyProvider = SurveyProvider(
+      apiSurpayService,
+      authRepository,
+    );
   }
 
   @override
@@ -64,6 +70,9 @@ class _SurpayAppState extends State<SurpayApp> {
         ),
         ChangeNotifierProvider(
           create: (context) => authProvider,
+        ),
+        ChangeNotifierProvider(
+          create: (context) => surveyProvider,
         ),
       ],
       child: MaterialApp.router(

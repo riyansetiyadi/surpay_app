@@ -7,10 +7,10 @@ import 'package:surpay_app/screen/hadiah.dart';
 import 'package:surpay_app/screen/home_screen.dart';
 import 'package:surpay_app/screen/login_screen.dart';
 import 'package:surpay_app/screen/penarikan.dart';
-import 'package:surpay_app/screen/profil.dart';
+import 'package:surpay_app/screen/profile.dart';
 import 'package:surpay_app/screen/register_screen.dart';
-import 'package:surpay_app/screen/survey_aktif.dart';
-import 'package:surpay_app/screen/survey_page.dart';
+import 'package:surpay_app/screen/list_survey.dart';
+import 'package:surpay_app/screen/detail_survey.dart';
 import 'package:surpay_app/screen/webview_screen.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -61,7 +61,7 @@ final router = GoRouter(
     ),
     GoRoute(
       path: '/profil',
-      builder: (context, state) => const ProfilScreen(),
+      builder: (context, state) => const ProfileScreen(),
     ),
     GoRoute(
       path: '/contact',
@@ -69,11 +69,16 @@ final router = GoRouter(
     ),
     GoRoute(
       path: '/survey-aktif',
-      builder: (context, state) => const SurveyAktifScreen(),
+      builder: (context, state) => const ListSurveyScreen(),
     ),
     GoRoute(
       path: '/survey-page',
-      builder: (context, state) => const SurveyPageScreen(),
+      builder: (context, state) {
+        String? id = state.uri.queryParameters['id'];
+        return DetailSurveyScreen(
+          id: id,
+        );
+      },
     ),
     GoRoute(
       path: '/webview',

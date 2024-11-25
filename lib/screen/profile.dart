@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:surpay_app/models/api_response_model.dart';
 import 'package:surpay_app/models/profile_model.dart';
 import 'package:surpay_app/provider/auth_provider.dart';
 import 'package:surpay_app/utils/result_state.dart';
@@ -11,14 +10,14 @@ import 'package:surpay_app/widgets/drawer/main_drawer.dart';
 import 'package:surpay_app/widgets/navigation_bar/user_bottom_bar.dart';
 import 'package:surpay_app/widgets/navigation_bar/user_app_bar.dart';
 
-class ProfilScreen extends StatefulWidget {
-  const ProfilScreen({super.key});
+class ProfileScreen extends StatefulWidget {
+  const ProfileScreen({super.key});
 
   @override
-  State<ProfilScreen> createState() => _ProfilScreenState();
+  State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
-class _ProfilScreenState extends State<ProfilScreen> {
+class _ProfileScreenState extends State<ProfileScreen> {
   bool _obscureText = true;
   final TextEditingController _phoneNumberController = TextEditingController();
   final TextEditingController _fullnameController = TextEditingController();
@@ -28,13 +27,15 @@ class _ProfilScreenState extends State<ProfilScreen> {
   void initState() {
     super.initState();
     final authRead = context.read<AuthProvider>();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      authRead.getUserData().whenComplete(() {
-        _phoneNumberController.text = authRead.profile?.phoneNumber ?? "";
-        _fullnameController.text = authRead.profile?.fullname ?? "";
-        _passwordController.text = authRead.profile?.password ?? "";
-      });
-    });
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) {
+        authRead.getUserData().whenComplete(() {
+          _phoneNumberController.text = authRead.profile?.phoneNumber ?? "";
+          _fullnameController.text = authRead.profile?.fullname ?? "";
+          _passwordController.text = authRead.profile?.password ?? "";
+        });
+      },
+    );
   }
 
   @override
@@ -50,34 +51,37 @@ class _ProfilScreenState extends State<ProfilScreen> {
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            Consumer<AuthProvider>(builder: (context, state, _) {
-              switch (state.stateGetUser) {
-                case ResultState.loading:
-                  return Center(
-                    child: defaultTargetPlatform == TargetPlatform.iOS
-                        ? const CupertinoActivityIndicator(
-                            radius: 20.0,
-                          )
-                        : const CircularProgressIndicator(),
-                  );
-                case ResultState.initial:
-                  return Center(
-                    child: defaultTargetPlatform == TargetPlatform.iOS
-                        ? const CupertinoActivityIndicator(
-                            radius: 20.0,
-                          )
-                        : const CircularProgressIndicator(),
-                  );
-                case ResultState.error:
-                  return ErrorRefresh(
-                    onPressed: () async {
-                      await state.getUserData();
-                    },
-                  );
-                case ResultState.loaded:
-                  return cardUbahData(state.profile);
-              }
-            }),
+            Consumer<AuthProvider>(
+              builder: (context, state, _) {
+                switch (state.stateGetUser) {
+                  case ResultState.loading:
+                    return Center(
+                      child: defaultTargetPlatform == TargetPlatform.iOS
+                          ? const CupertinoActivityIndicator(
+                              radius: 20.0,
+                            )
+                          : const CircularProgressIndicator(),
+                    );
+                  case ResultState.initial:
+                    return Center(
+                      child: defaultTargetPlatform == TargetPlatform.iOS
+                          ? const CupertinoActivityIndicator(
+                              radius: 20.0,
+                            )
+                          : const CircularProgressIndicator(),
+                    );
+                  case ResultState.error:
+                    return ErrorRefresh(
+                      errorTitle: state.apiResponseGetUserModel?.message,
+                      onPressed: () async {
+                        await state.getUserData();
+                      },
+                    );
+                  case ResultState.loaded:
+                    return cardUbahData(state.profile);
+                }
+              },
+            ),
           ],
         ),
       ),
@@ -192,18 +196,19 @@ class _ProfilScreenState extends State<ProfilScreen> {
             ElevatedButton(
               onPressed: () async {
                 final authRead = context.read<AuthProvider>();
-                ApiResponseModel? result = await authRead.updateUserData(
+                bool result = await authRead.updateUserData(
                   phoneNumber: _phoneNumberController.text,
                   fullname: _fullnameController.text,
                   password: _passwordController.text,
                 );
-                if (result != null) {
+                if (result) {
                   if (mounted) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         backgroundColor: Colors.green,
                         content: Text(
-                          result.message,
+                          authRead.apiResponseUpdateUserModel?.message ??
+                              "Data berhasil diubah",
                           style: Theme.of(context)
                               .textTheme
                               .bodyLarge
@@ -219,7 +224,8 @@ class _ProfilScreenState extends State<ProfilScreen> {
                       SnackBar(
                         backgroundColor: Colors.red,
                         content: Text(
-                          "Data gagal diubah",
+                          authRead.apiResponseUpdateUserModel?.message ??
+                              "Data gagal diubah",
                           style: Theme.of(context)
                               .textTheme
                               .bodyLarge
