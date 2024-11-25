@@ -22,10 +22,10 @@ class _ListSurveyScreenState extends State<ListSurveyScreen> {
   @override
   void initState() {
     super.initState();
-    final authRead = context.read<SurveyProvider>();
+    final surveyRead = context.read<SurveyProvider>();
     WidgetsBinding.instance.addPostFrameCallback(
       (_) {
-        authRead.getListSurvey();
+        surveyRead.getListSurvey();
       },
     );
   }

@@ -3,7 +3,8 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class ApiSurpayService {
-  static const String _addressUrl = 'http://10.0.2.2/surpay_web/api';
+  static const String _addressUrl =
+      'https://www.niniekkurniairani.my.id/surpay_web/api';
 
   Future login(String phoneNumber, String password) async {
     var request =
@@ -191,7 +192,8 @@ class ApiSurpayService {
     var headers = {
       'Authorization': 'Bearer $token',
     };
-    var request = http.Request('GET', Uri.parse('$_addressUrl/riwayatdashboard.php'));
+    var request =
+        http.Request('GET', Uri.parse('$_addressUrl/riwayatdashboard.php'));
 
     request.headers.addAll(headers);
     http.StreamedResponse response = await request.send();
@@ -199,6 +201,7 @@ class ApiSurpayService {
     if (response.statusCode == 200 || response.statusCode == 400) {
       final responseString = await response.stream.bytesToString();
       final responseJson = jsonDecode(responseString);
+      print(responseJson);
       return responseJson;
     } else {
       throw Exception(response.reasonPhrase);

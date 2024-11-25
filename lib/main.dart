@@ -3,6 +3,7 @@ import 'package:surpay_app/db/auth_repository.dart';
 import 'package:surpay_app/provider/address_provider.dart';
 import 'package:surpay_app/provider/auth_provider.dart';
 import 'package:surpay_app/provider/survey_provider.dart';
+import 'package:surpay_app/provider/transaction_provider.dart';
 import 'package:surpay_app/routes/config.dart';
 import 'package:surpay_app/services/api_address.dart';
 import 'package:surpay_app/services/api_surpay.dart';
@@ -38,6 +39,7 @@ class _SurpayAppState extends State<SurpayApp> {
   late AddressProvider addressProvider;
   late AuthProvider authProvider;
   late SurveyProvider surveyProvider;
+  late TransactionProvider transactionProvider;
 
   @override
   void initState() {
@@ -59,6 +61,10 @@ class _SurpayAppState extends State<SurpayApp> {
       apiSurpayService,
       authRepository,
     );
+    transactionProvider = TransactionProvider(
+      apiSurpayService,
+      authRepository,
+    );
   }
 
   @override
@@ -73,6 +79,9 @@ class _SurpayAppState extends State<SurpayApp> {
         ),
         ChangeNotifierProvider(
           create: (context) => surveyProvider,
+        ),
+        ChangeNotifierProvider(
+          create: (context) => transactionProvider,
         ),
       ],
       child: MaterialApp.router(
