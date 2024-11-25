@@ -25,9 +25,14 @@ class _DetailSurveyScreenState extends State<DetailSurveyScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const UserAppBar(),
-      drawer: const MainDrawer(),
-      backgroundColor: Colors.grey[200],
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Consumer<SurveyProvider>(
@@ -114,18 +119,19 @@ class _DetailSurveyScreenState extends State<DetailSurveyScreen> {
                         height: 8,
                       ),
                       ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color.fromARGB(255, 0, 64, 255),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                  ),
-                  child: const Text(
-                    'Simpan',
-                    style: TextStyle(color: Colors.white, fontSize: 16),
-                  ),
-                ),
+                        onPressed: () {},
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor:
+                              const Color.fromARGB(255, 0, 64, 255),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                        ),
+                        child: const Text(
+                          'Simpan',
+                          style: TextStyle(color: Colors.white, fontSize: 16),
+                        ),
+                      ),
                     ],
                   );
                 } else {
