@@ -63,7 +63,69 @@ class _DetailSurveyScreenState extends State<DetailSurveyScreen> {
                         (item) {
                           return questionCard(item);
                         },
-                      )
+                      ),
+                      SizedBox(
+                        height: 8,
+                      ),
+                      Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
+                        elevation: 8,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              decoration: const BoxDecoration(
+                                color: Colors.grey,
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(15.0),
+                                  topRight: Radius.circular(15.0),
+                                ),
+                              ),
+                              height: 40,
+                              width: double.infinity,
+                              child: Center(
+                                child: Padding(
+                                  padding: EdgeInsets.only(left: 8, right: 8),
+                                  child: Text(
+                                    'Komentar',
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20,
+                                        color: Colors.white),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            TextFormField(
+                              maxLines: 3,
+                              decoration: InputDecoration(
+                                hintText: 'Beri Komentar',
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 8,
+                      ),
+                      ElevatedButton(
+                  onPressed: () {},
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color.fromARGB(255, 0, 64, 255),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                  ),
+                  child: const Text(
+                    'Simpan',
+                    style: TextStyle(color: Colors.white, fontSize: 16),
+                  ),
+                ),
                     ],
                   );
                 } else {
@@ -100,12 +162,15 @@ class _DetailSurveyScreenState extends State<DetailSurveyScreen> {
             height: 40,
             width: double.infinity,
             child: Center(
-              child: Text(
-                survey.pertanyaan,
-                style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                    color: Colors.white),
+              child: Padding(
+                padding: EdgeInsets.only(left: 8, right: 8),
+                child: Text(
+                  survey.pertanyaan,
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                      color: Colors.white),
+                ),
               ),
             ),
           ),
