@@ -16,6 +16,9 @@ class AuthProvider extends ChangeNotifier {
     getUserData();
   }
 
+  ResultState _resultStateLogin = ResultState.initial;
+  ResultState get stateLogin => _resultStateLogin;
+
   ResultState _resultStateGetUser = ResultState.initial;
   ResultState get stateGetUser => _resultStateGetUser;
 
@@ -33,7 +36,7 @@ class AuthProvider extends ChangeNotifier {
   List<SubdistrictModel> villages = [];
 
   Future<bool> login(String phoneNumber, String password) async {
-    _resultStateGetUser = ResultState.loading;
+    _resultStateLogin = ResultState.loading;
     notifyListeners();
 
     try {
@@ -52,12 +55,12 @@ class AuthProvider extends ChangeNotifier {
         notifyListeners();
         return true;
       } else {
-        _resultStateGetUser = ResultState.error;
+        _resultStateLogin = ResultState.error;
         notifyListeners();
         return false;
       }
     } catch (e) {
-      _resultStateGetUser = ResultState.error;
+      _resultStateLogin = ResultState.error;
       apiResponseGetUserModel =
           ApiResponseModel(error: true, message: e.toString());
       notifyListeners();

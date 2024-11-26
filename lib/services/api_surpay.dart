@@ -16,6 +16,7 @@ class ApiSurpayService {
     if (response.statusCode == 200 || response.statusCode == 400) {
       final responseString = await response.stream.bytesToString();
       final responseJson = jsonDecode(responseString);
+      print(responseJson);
       return responseJson;
     } else {
       throw response.reasonPhrase.toString();

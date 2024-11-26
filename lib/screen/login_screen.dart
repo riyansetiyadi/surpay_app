@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:surpay_app/provider/auth_provider.dart';
+import 'package:surpay_app/utils/result_state.dart';
 import 'package:surpay_app/widgets/drawer/main_drawer.dart';
 import 'package:surpay_app/widgets/navigation_bar/main_app_bar.dart';
 
@@ -165,68 +166,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
                       const SizedBox(height: 8),
 
-                      // Login Button
-                      // SizedBox(
-                      //   width: double.infinity,
-                      //   child: ElevatedButton(
-                      //     onPressed: () async {
-                      //       if (_phoneNumberController.text.isEmpty ||
-                      //           _passwordController.text.isEmpty) {
-                      //         ScaffoldMessenger.of(context).showSnackBar(
-                      //           SnackBar(
-                      //             backgroundColor: Colors.red,
-                      //             content: Text(
-                      //               "Mohon isi dengan lengkap!",
-                      //               style: Theme.of(context)
-                      //                   .textTheme
-                      //                   .bodyLarge
-                      //                   ?.copyWith(color: Colors.white),
-                      //             ),
-                      //             duration: const Duration(seconds: 3),
-                      //           ),
-                      //         );
-                      //         return;
-                      //       }
-                      //       final authRead = context.read<AuthProvider>();
-
-                      //       final result = await authRead.login(
-                      //           _phoneNumberController.text,
-                      //           _passwordController.text);
-                      //       if (result) {
-                      //         if (context.mounted) {
-                      //           context.push('/dashboard');
-                      //         }
-                      //       } else {
-                      //         if (context.mounted) {
-                      //           ScaffoldMessenger.of(context).showSnackBar(
-                      //             SnackBar(
-                      //               backgroundColor: Colors.red,
-                      //               content: Text(
-                      //                 "Nomor hp/Password Salah",
-                      //                 style: Theme.of(context)
-                      //                     .textTheme
-                      //                     .bodyLarge
-                      //                     ?.copyWith(color: Colors.white),
-                      //               ),
-                      //               duration: const Duration(seconds: 3),
-                      //             ),
-                      //           );
-                      //         }
-                      //       }
-                      //     },
-                      //     style: ElevatedButton.styleFrom(
-                      //       backgroundColor: Colors.blue,
-                      //       shape: RoundedRectangleBorder(
-                      //         borderRadius: BorderRadius.circular(8.0),
-                      //       ),
-                      //     ),
-                      //     child: const Text(
-                      //       'Login',
-                      //       style: TextStyle(color: Colors.white),
-                      //     ),
-                      //   ),
-                      // ),
-
                       SizedBox(
                         width: double.infinity,
                         child: ElevatedButton(
@@ -281,14 +220,38 @@ class _LoginScreenState extends State<LoginScreen> {
                               borderRadius: BorderRadius.circular(8.0),
                             ),
                           ),
-                          child: SizedBox(
-                            width: 20.0,
-                            height: 20.0,
-                            child: const CircularProgressIndicator(
-                              valueColor:
-                                  AlwaysStoppedAnimation<Color>(Colors.white),
-                            ),
+                          child: Consumer<AuthProvider>(
+                            builder: (context, state, _) {
+                              switch (state.stateLogin) {
+                                case ResultState.loading:
+                                
+                                  return const SizedBox(
+                                    width: 20.0,
+                                    height: 20.0,
+                                    child: CircularProgressIndicator(
+                                      valueColor: AlwaysStoppedAnimation<Color>(
+                                          Colors.white),
+                                    ),
+                                  );
+                                case ResultState.initial:
+                                  return const Text(
+                                    'Login',
+                                    style: TextStyle(color: Colors.white),
+                                  );
+                                case ResultState.error:
+                                  return const Text(
+                                    'Login',
+                                    style: TextStyle(color: Colors.white),
+                                  );
+                                case ResultState.loaded:
+                                  return const Text(
+                                    'Login',
+                                    style: TextStyle(color: Colors.white),
+                                  );
+                              }
+                            },
                           ),
+                         
                         ),
                       ),
 
