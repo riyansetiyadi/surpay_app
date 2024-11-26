@@ -81,8 +81,10 @@ final router = GoRouter(
       path: '/survey-page',
       builder: (context, state) {
         String? id = state.uri.queryParameters['id'];
+        String? surveyTitle = state.uri.queryParameters['title'];
         return DetailSurveyScreen(
           id: id,
+          surveyTitle: surveyTitle,
         );
       },
     ),

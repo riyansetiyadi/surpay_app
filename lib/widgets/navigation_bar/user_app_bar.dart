@@ -1,4 +1,10 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:surpay_app/provider/auth_provider.dart';
+import 'package:surpay_app/utils/result_state.dart';
+import 'package:surpay_app/widgets/handle_error_refresh_widget.dart';
 
 class UserAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String? title;
@@ -12,30 +18,68 @@ class UserAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       iconTheme: const IconThemeData(color: Color.fromARGB(255, 0, 0, 0)),
-      title: const Row(
+      title: Row(
         children: [
-          SizedBox(
+          const SizedBox(
             height: 50,
             width: 50,
             child:
                 Image(image: NetworkImage('https://surpay.id/images/icon.png')),
           ),
-          Text.rich(
-            TextSpan(
-              children: [
-                TextSpan(
-                  text: 'Saldo Anda :',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-                TextSpan(
-                  text: ' Rp. 7.500',
-                  style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.red,
-                      fontWeight: FontWeight.w900),
-                ),
-              ],
-            ),
+          Consumer<AuthProvider>(
+            builder: (context, state, _) {
+              switch (state.stateGetUser) {
+                case ResultState.loading:
+                  return Center(
+                    child: defaultTargetPlatform == TargetPlatform.iOS
+                        ? const CupertinoActivityIndicator(
+                            radius: 20.0,
+                          )
+                        : const CircularProgressIndicator(),
+                  );
+                case ResultState.initial:
+                  return Center(
+                    child: defaultTargetPlatform == TargetPlatform.iOS
+                        ? const CupertinoActivityIndicator(
+                            radius: 20.0,
+                          )
+                        : const CircularProgressIndicator(),
+                  );
+                case ResultState.error:
+                  return ErrorRefresh(
+                    onPressed: () async {
+                      await state.getUserData();
+                    },
+                  );
+                case ResultState.loaded:
+                  if (state.profile != null) {
+                    return Text.rich(
+                      TextSpan(
+                        children: [
+                          const TextSpan(
+                            text: 'Saldo Anda :',
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
+                          TextSpan(
+                            text: ' Rp. ${state.profile?.saldo}',
+                            style: const TextStyle(
+                                fontSize: 20,
+                                color: Colors.red,
+                                fontWeight: FontWeight.w900),
+                          ),
+                        ],
+                      ),
+                    );
+                  } else {
+                    return ErrorRefresh(
+                      onPressed: () async {
+                        await state.getUserData();
+                      },
+                    );
+                  }
+              }
+            },
           ),
         ],
       ),

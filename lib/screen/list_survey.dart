@@ -194,7 +194,8 @@ class _ListSurveyScreenState extends State<ListSurveyScreen> {
             ElevatedButton(
               onPressed: () {
                 state.getSurveyById(survey.id.toString());
-                context.push('/survey-page?id=${survey.id}');
+                context
+                    .push('/survey-page?id=${survey.id}&title=${survey.title}');
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color.fromARGB(255, 255, 200, 0),
