@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
+import 'package:surpay_app/provider/auth_provider.dart';
+import 'package:surpay_app/utils/result_state.dart';
 import 'package:surpay_app/widgets/drawer/main_drawer.dart';
 import 'package:surpay_app/widgets/navigation_bar/user_app_bar.dart';
 import 'package:surpay_app/widgets/navigation_bar/user_bottom_bar.dart';
@@ -12,6 +15,10 @@ class TarikDanaScreen extends StatefulWidget {
 }
 
 class _TarikDanaScreenState extends State<TarikDanaScreen> {
+  final TextEditingController _jumlahController = TextEditingController();
+  final TextEditingController _norekeningController = TextEditingController();
+  final TextEditingController _namarekeningController = TextEditingController();
+  final TextEditingController _namabankController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,6 +38,7 @@ class _TarikDanaScreenState extends State<TarikDanaScreen> {
               height: 8,
             ),
             TextFormField(
+              controller: _jumlahController,
               decoration: const InputDecoration(
                 fillColor: Colors.white,
                 filled: true,
@@ -47,6 +55,7 @@ class _TarikDanaScreenState extends State<TarikDanaScreen> {
               height: 8,
             ),
             TextFormField(
+              controller: _norekeningController,
               decoration: const InputDecoration(
                 filled: true,
                 fillColor: Colors.white,
@@ -63,6 +72,7 @@ class _TarikDanaScreenState extends State<TarikDanaScreen> {
               height: 8,
             ),
             TextFormField(
+              controller: _namarekeningController,
               decoration: const InputDecoration(
                 fillColor: Colors.white,
                 filled: true,
@@ -79,6 +89,7 @@ class _TarikDanaScreenState extends State<TarikDanaScreen> {
               height: 8,
             ),
             TextFormField(
+              controller: _namabankController,
               decoration: const InputDecoration(
                 filled: true,
                 fillColor: Colors.white,
@@ -98,9 +109,35 @@ class _TarikDanaScreenState extends State<TarikDanaScreen> {
                   borderRadius: BorderRadius.circular(5),
                 ),
               ),
-              child: const Text(
-                'Simpan',
-                style: TextStyle(color: Colors.white, fontSize: 16),
+              child: Consumer<AuthProvider>(
+                builder: (context, state, _) {
+                  switch (state.stateLogin) {
+                    case ResultState.loading:
+                      return const SizedBox(
+                        width: 20.0,
+                        height: 20.0,
+                        child: CircularProgressIndicator(
+                          valueColor:
+                              AlwaysStoppedAnimation<Color>(Colors.white),
+                        ),
+                      );
+                    case ResultState.initial:
+                      return const Text(
+                        'Tarik Dana',
+                        style: TextStyle(color: Colors.white),
+                      );
+                    case ResultState.error:
+                      return const Text(
+                        'Tarik Dana',
+                        style: TextStyle(color: Colors.white),
+                      );
+                    case ResultState.loaded:
+                      return const Text(
+                        'Tarik Dana',
+                        style: TextStyle(color: Colors.white),
+                      );
+                  }
+                },
               ),
             ),
           ],
