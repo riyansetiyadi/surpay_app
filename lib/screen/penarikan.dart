@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:surpay_app/widgets/drawer/main_drawer.dart';
 import 'package:surpay_app/widgets/navigation_bar/user_bottom_bar.dart';
 import 'package:surpay_app/widgets/navigation_bar/user_app_bar.dart';
@@ -95,7 +96,9 @@ class _PenarikanScreenState extends State<PenarikanScreen> {
                       height: 10,
                     ),
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        context.push('/tarik-dana');
+                      },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color.fromARGB(255, 255, 200, 0),
                         shape: RoundedRectangleBorder(

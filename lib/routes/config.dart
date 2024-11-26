@@ -11,6 +11,7 @@ import 'package:surpay_app/screen/profile.dart';
 import 'package:surpay_app/screen/register_screen.dart';
 import 'package:surpay_app/screen/list_survey.dart';
 import 'package:surpay_app/screen/detail_survey.dart';
+import 'package:surpay_app/screen/tarikdana.dart';
 import 'package:surpay_app/screen/webview_screen.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -20,6 +21,7 @@ List<String> authRoute = [
   '/dashboard',
   '/hadiah',
   '/penarikan',
+  '/tarik-dana',
   '/profil',
   '/contact',
   '/survey-aktif'
@@ -70,6 +72,10 @@ final router = GoRouter(
     GoRoute(
       path: '/survey-aktif',
       builder: (context, state) => const ListSurveyScreen(),
+    ),
+    GoRoute(
+      path: '/tarik-dana',
+      builder: (context, state) => const TarikDanaScreen(),
     ),
     GoRoute(
       path: '/survey-page',
