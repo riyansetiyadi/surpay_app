@@ -3,9 +3,9 @@ import 'package:flutter/widgets.dart';
 import 'package:surpay_app/db/auth_repository.dart';
 import 'package:surpay_app/models/api_response_model.dart';
 import 'package:surpay_app/models/dashboard_model.dart';
+import 'package:surpay_app/models/hadiah_model.dart';
 import 'package:surpay_app/models/province_district_model.dart';
 import 'package:surpay_app/models/subdistrict_model.dart';
-import 'package:surpay_app/models/survey_question_model.dart';
 import 'package:surpay_app/services/api_surpay.dart';
 import 'package:surpay_app/utils/result_state.dart';
 
@@ -18,14 +18,14 @@ class TransactionProvider extends ChangeNotifier {
   ResultState _resultStateGetDashboardHistory = ResultState.initial;
   ResultState get stateGetDashboardHistory => _resultStateGetDashboardHistory;
 
-  ResultState _resultStategetSurveyById = ResultState.initial;
-  ResultState get stateGetUserById => _resultStategetSurveyById;
+  ResultState _resultStateGetHadiah = ResultState.initial;
+  ResultState get stateGetHadiah => _resultStateGetHadiah;
 
   String? message;
   ApiResponseModel? apiResponseGetDashboardHistory;
-  ApiResponseModel? apiResponseGetDetailSurveyModel;
+  ApiResponseModel? apiResponseGetHadiahModel;
   List<DashboardModel>? dashboardHistories;
-  List<SurveyQuestionModel>? detailSurvey;
+  List<HadiahModel>? hadiahHistories;
 
   List<ProvinceDistrictModel> districts = [];
   List<SubdistrictModel> subdistrictsComplete = [];
@@ -62,31 +62,29 @@ class TransactionProvider extends ChangeNotifier {
     }
   }
 
-  Future<bool> getSurveyById(String id) async {
-    _resultStategetSurveyById = ResultState.loading;
+  Future<bool> getHadiah() async {
+    _resultStateGetHadiah = ResultState.loading;
     notifyListeners();
 
     try {
       String? token = await authRepository.getToken();
-      final responseResult =
-          await apiSurpayService.getDetailSurvey(token ?? '', id);
-      apiResponseGetDetailSurveyModel =
-          ApiResponseModel.fromJson(responseResult);
+      final responseResult = await apiSurpayService.getListHadiah(token ?? '');
+      apiResponseGetHadiahModel = ApiResponseModel.fromJson(responseResult);
 
-      if (!(apiResponseGetDetailSurveyModel?.error ?? false)) {
-        detailSurvey = (responseResult['data'] as List<dynamic>)
-            .map((item) => SurveyQuestionModel.fromJson(item))
+      if (!(apiResponseGetHadiahModel?.error ?? false)) {
+        hadiahHistories = (responseResult['data'] as List<dynamic>)
+            .map((item) => HadiahModel.fromJson(item))
             .toList();
-        _resultStategetSurveyById = ResultState.loaded;
+        _resultStateGetHadiah = ResultState.loaded;
         notifyListeners();
         return true;
       } else {
-        _resultStategetSurveyById = ResultState.error;
+        _resultStateGetHadiah = ResultState.error;
         notifyListeners();
         return false;
       }
     } catch (e) {
-      _resultStategetSurveyById = ResultState.error;
+      _resultStateGetHadiah = ResultState.error;
       notifyListeners();
       return false;
     }

@@ -146,6 +146,39 @@ class ApiSurpayService {
     }
   }
 
+  Future postAnswerSurvey(
+    String token,
+    String idSurvey,
+    String numberSurvey,
+    String answer,
+    String comment,
+  ) async {
+    print(numberSurvey);
+    var headers = {
+      'Authorization': 'Bearer $token',
+    };
+    var request =
+        http.Request('POST', Uri.parse('$_addressUrl/jawabsurvey.php'));
+    request.body = json.encode({
+      "idsurvey": idSurvey,
+      "nomer": numberSurvey,
+      "jawaban": answer,
+      "komentar": comment
+    });
+    request.headers.addAll(headers);
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200 || response.statusCode == 400) {
+      final responseString = await response.stream.bytesToString();
+      final responseJson = jsonDecode(responseString);
+      print(responseJson);
+      return responseJson;
+    } else {
+      print(response.reasonPhrase);
+      throw Exception(response.reasonPhrase);
+    }
+  }
+
   Future getListHadiah(
     String token,
   ) async {
@@ -160,6 +193,7 @@ class ApiSurpayService {
     if (response.statusCode == 200 || response.statusCode == 400) {
       final responseString = await response.stream.bytesToString();
       final responseJson = jsonDecode(responseString);
+      print(responseJson);
       return responseJson;
     } else {
       throw Exception(response.reasonPhrase);

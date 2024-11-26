@@ -12,7 +12,9 @@ class AuthProvider extends ChangeNotifier {
   final AuthRepository authRepository;
   final ApiSurpayService apiSurpayService;
 
-  AuthProvider(this.apiSurpayService, this.authRepository);
+  AuthProvider(this.apiSurpayService, this.authRepository) {
+    getUserData();
+  }
 
   ResultState _resultStateGetUser = ResultState.initial;
   ResultState get stateGetUser => _resultStateGetUser;
@@ -44,6 +46,9 @@ class AuthProvider extends ChangeNotifier {
         profile = ProfileModel.fromApiJson(responseResult);
         if (profile != null) await authRepository.saveProfile(profile!);
         _resultStateGetUser = ResultState.loaded;
+
+        getUserData();
+
         notifyListeners();
         return true;
       } else {

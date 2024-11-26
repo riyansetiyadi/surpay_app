@@ -8,6 +8,7 @@ class SurveyQuestionModel {
   final String? c;
   final String? d;
   final String? e;
+  String? answer;
 
   SurveyQuestionModel({
     required this.id,
@@ -19,6 +20,7 @@ class SurveyQuestionModel {
     this.c,
     this.d,
     this.e,
+    this.answer,
   });
 
   // Factory method to create a SurveyQuestion from JSON
@@ -33,6 +35,7 @@ class SurveyQuestionModel {
       c: json['c'],
       d: json['d'],
       e: json['e'],
+      answer: json['answer'],
     );
   }
 
@@ -48,6 +51,7 @@ class SurveyQuestionModel {
       'c': c,
       'd': d,
       'e': e,
+      'answer': answer,
     };
   }
 }

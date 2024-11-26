@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:surpay_app/db/auth_repository.dart';
 import 'package:surpay_app/models/api_response_model.dart';
-import 'package:surpay_app/models/province_district_model.dart';
 import 'package:surpay_app/models/subdistrict_model.dart';
 import 'package:surpay_app/models/survey_model.dart';
 import 'package:surpay_app/models/survey_question_model.dart';
@@ -21,13 +20,16 @@ class SurveyProvider extends ChangeNotifier {
   ResultState _resultStategetSurveyById = ResultState.initial;
   ResultState get stateGetUserById => _resultStategetSurveyById;
 
+  ResultState _resultStatePostAnswerSurvey = ResultState.initial;
+  ResultState get statePostAnswerSurvey => _resultStatePostAnswerSurvey;
+
   String? message;
   ApiResponseModel? apiResponseGetListSurveyModel;
   ApiResponseModel? apiResponseGetDetailSurveyModel;
+  ApiResponseModel? apiResponsePostAnswerSurveyModel;
   List<SurveyModel>? listSurvey;
   List<SurveyQuestionModel>? detailSurvey;
 
-  List<ProvinceDistrictModel> districts = [];
   List<SubdistrictModel> subdistrictsComplete = [];
   List<String> subdistrictsUnique = [];
   List<SubdistrictModel> villages = [];
@@ -86,6 +88,59 @@ class SurveyProvider extends ChangeNotifier {
       }
     } catch (e) {
       _resultStategetSurveyById = ResultState.error;
+      notifyListeners();
+      return false;
+    }
+  }
+
+  void updateSurveyAnswer(int id, String? answer) {
+    detailSurvey?.firstWhere((element) => element.id == id).answer = answer;
+    notifyListeners();
+  }
+
+  Future<bool> postAnswerSurvey(
+      List<SurveyQuestionModel>? surveys, String comment) async {
+    _resultStatePostAnswerSurvey = ResultState.loading;
+    notifyListeners();
+    print(surveys?[0].answer);
+
+    try {
+      String? token = await authRepository.getToken();
+
+      if (surveys != null) {
+        for (SurveyQuestionModel question in surveys) {
+          dynamic responseResult = await apiSurpayService.postAnswerSurvey(
+            token ?? '',
+            question.idSurvey.toString(),
+            question.nomer.toString(),
+            question.answer ?? '',
+            comment,
+          );
+
+          apiResponsePostAnswerSurveyModel =
+              ApiResponseModel.fromJson(responseResult);
+
+          if (apiResponsePostAnswerSurveyModel?.error ?? true) {
+            _resultStatePostAnswerSurvey = ResultState.error;
+            notifyListeners();
+            return false;
+          }
+        }
+        _resultStatePostAnswerSurvey = ResultState.loaded;
+        notifyListeners();
+        return true;
+      } else {
+        apiResponsePostAnswerSurveyModel = ApiResponseModel(
+          error: true,
+          message: 'Survey tidak valid',
+        );
+        _resultStatePostAnswerSurvey = ResultState.error;
+        notifyListeners();
+        return false;
+      }
+    } catch (e) {
+      print(e);
+      _resultStatePostAnswerSurvey = ResultState.error;
       notifyListeners();
       return false;
     }

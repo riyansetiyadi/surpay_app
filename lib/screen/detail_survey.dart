@@ -1,19 +1,21 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:surpay_app/models/survey_question_model.dart';
+import 'package:surpay_app/provider/auth_provider.dart';
 import 'package:surpay_app/provider/survey_provider.dart';
 import 'package:surpay_app/utils/result_state.dart';
-import 'package:surpay_app/widgets/drawer/main_drawer.dart';
 import 'package:surpay_app/widgets/handle_error_refresh_widget.dart';
-import 'package:surpay_app/widgets/navigation_bar/user_app_bar.dart';
 
 class DetailSurveyScreen extends StatefulWidget {
   final String? id;
+  final String? surveyTitle;
   const DetailSurveyScreen({
     super.key,
     this.id,
+    this.surveyTitle,
   });
 
   @override
@@ -21,18 +23,25 @@ class DetailSurveyScreen extends StatefulWidget {
 }
 
 class _DetailSurveyScreenState extends State<DetailSurveyScreen> {
-  int? _selectedValue;
+  late TextEditingController _commentController;
+
+  @override
+  void initState() {
+    super.initState();
+    _commentController = TextEditingController();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-      ),
+          // leading: IconButton(
+          //   icon: const Icon(Icons.arrow_back),
+          //   onPressed: () {
+          //     Navigator.pop(context);
+          //   },
+          // ),
+          ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Consumer<SurveyProvider>(
@@ -66,10 +75,10 @@ class _DetailSurveyScreenState extends State<DetailSurveyScreen> {
                     children: [
                       ...state.detailSurvey!.map(
                         (item) {
-                          return questionCard(item);
+                          return questionCard(item, state);
                         },
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 8,
                       ),
                       Card(
@@ -90,12 +99,12 @@ class _DetailSurveyScreenState extends State<DetailSurveyScreen> {
                               ),
                               height: 40,
                               width: double.infinity,
-                              child: Center(
+                              child: const Center(
                                 child: Padding(
                                   padding: EdgeInsets.only(left: 8, right: 8),
                                   child: Text(
                                     'Komentar',
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 20,
                                         color: Colors.white),
@@ -104,6 +113,7 @@ class _DetailSurveyScreenState extends State<DetailSurveyScreen> {
                               ),
                             ),
                             TextFormField(
+                              controller: _commentController,
                               maxLines: 3,
                               decoration: InputDecoration(
                                 hintText: 'Beri Komentar',
@@ -115,11 +125,46 @@ class _DetailSurveyScreenState extends State<DetailSurveyScreen> {
                           ],
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 8,
                       ),
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () async {
+                          print("jawab survey");
+                          final result = await state.postAnswerSurvey(
+                            state.detailSurvey,
+                            _commentController.text,
+                          );
+                          print(result);
+                          if (result) {
+                            if (context.mounted) {
+                              final authRead = context.read<AuthProvider>();
+
+                              await authRead.getUserData();
+                              if (context.mounted) {
+                                context.push('/survey-aktif');
+                              }
+                            }
+                          } else {
+                            if (context.mounted) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  backgroundColor: Colors.red,
+                                  content: Text(
+                                    state.apiResponsePostAnswerSurveyModel
+                                            ?.message ??
+                                        '',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge
+                                        ?.copyWith(color: Colors.white),
+                                  ),
+                                  duration: const Duration(seconds: 3),
+                                ),
+                              );
+                            }
+                          }
+                        },
                         style: ElevatedButton.styleFrom(
                           backgroundColor:
                               const Color.fromARGB(255, 0, 64, 255),
@@ -148,7 +193,7 @@ class _DetailSurveyScreenState extends State<DetailSurveyScreen> {
     );
   }
 
-  Card questionCard(SurveyQuestionModel survey) {
+  Card questionCard(SurveyQuestionModel survey, SurveyProvider state) {
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15.0),
@@ -169,7 +214,7 @@ class _DetailSurveyScreenState extends State<DetailSurveyScreen> {
             width: double.infinity,
             child: Center(
               child: Padding(
-                padding: EdgeInsets.only(left: 8, right: 8),
+                padding: const EdgeInsets.only(left: 8, right: 8),
                 child: Text(
                   survey.pertanyaan,
                   style: const TextStyle(
@@ -181,58 +226,63 @@ class _DetailSurveyScreenState extends State<DetailSurveyScreen> {
             ),
           ),
           if (survey.a != null)
-            RadioListTile<int>(
+            RadioListTile<String>(
               title: Text(survey.a ?? ''),
-              value: 0,
-              groupValue: _selectedValue,
-              onChanged: (int? value) {
-                setState(() {
-                  _selectedValue = value;
-                });
+              value: 'a',
+              groupValue: survey.answer,
+              onChanged: (String? value) {
+                state.updateSurveyAnswer(
+                  survey.id,
+                  value,
+                );
               },
             ),
           if (survey.b != null)
-            RadioListTile<int>(
+            RadioListTile<String>(
               title: Text(survey.b ?? ''),
-              value: 1,
-              groupValue: _selectedValue,
-              onChanged: (int? value) {
-                setState(() {
-                  _selectedValue = value;
-                });
+              value: 'b',
+              groupValue: survey.answer,
+              onChanged: (String? value) {
+                state.updateSurveyAnswer(
+                  survey.id,
+                  value,
+                );
               },
             ),
           if (survey.c != null)
-            RadioListTile<int>(
+            RadioListTile<String>(
               title: Text(survey.c ?? ''),
-              value: 2,
-              groupValue: _selectedValue,
-              onChanged: (int? value) {
-                setState(() {
-                  _selectedValue = value;
-                });
+              value: 'c',
+              groupValue: survey.answer,
+              onChanged: (String? value) {
+                state.updateSurveyAnswer(
+                  survey.id,
+                  value,
+                );
               },
             ),
           if (survey.d != null)
-            RadioListTile<int>(
+            RadioListTile<String>(
               title: Text(survey.d ?? ''),
-              value: 3,
-              groupValue: _selectedValue,
-              onChanged: (int? value) {
-                setState(() {
-                  _selectedValue = value;
-                });
+              value: 'd',
+              groupValue: survey.answer,
+              onChanged: (String? value) {
+                state.updateSurveyAnswer(
+                  survey.id,
+                  value,
+                );
               },
             ),
           if (survey.e != null)
-            RadioListTile<int>(
+            RadioListTile<String>(
               title: Text(survey.e ?? ''),
-              value: 4,
-              groupValue: _selectedValue,
-              onChanged: (int? value) {
-                setState(() {
-                  _selectedValue = value;
-                });
+              value: 'e',
+              groupValue: survey.answer,
+              onChanged: (String? value) {
+                state.updateSurveyAnswer(
+                  survey.id,
+                  value,
+                );
               },
             ),
         ],
