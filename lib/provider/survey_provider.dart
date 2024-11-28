@@ -18,7 +18,7 @@ class SurveyProvider extends ChangeNotifier {
   ResultState get stateGetListSurvey => _resultStateGetListSurvey;
 
   ResultState _resultStategetSurveyById = ResultState.initial;
-  ResultState get stateGetUserById => _resultStategetSurveyById;
+  ResultState get stateGetSurveyById => _resultStategetSurveyById;
 
   ResultState _resultStatePostAnswerSurvey = ResultState.initial;
   ResultState get statePostAnswerSurvey => _resultStatePostAnswerSurvey;

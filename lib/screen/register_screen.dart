@@ -5,6 +5,7 @@ import 'package:surpay_app/models/province_district_model.dart';
 import 'package:surpay_app/models/subdistrict_model.dart';
 import 'package:surpay_app/provider/address_provider.dart';
 import 'package:surpay_app/provider/auth_provider.dart';
+import 'package:surpay_app/utils/result_state.dart';
 import 'package:surpay_app/widgets/drawer/main_drawer.dart';
 import 'package:surpay_app/widgets/navigation_bar/main_app_bar.dart';
 
@@ -292,11 +293,36 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             backgroundColor: Colors.green,
                             minimumSize: const Size(double.infinity, 50),
                           ),
-                          child: const Text(
-                            'Ajukan Pendaftaran',
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
+                          child: Consumer<AuthProvider>(
+                            builder: (context, state, _) {
+                              switch (state.stateLogin) {
+                                case ResultState.loading:
+                                
+                                  return const SizedBox(
+                                    width: 20.0,
+                                    height: 20.0,
+                                    child: CircularProgressIndicator(
+                                      valueColor: AlwaysStoppedAnimation<Color>(
+                                          Colors.white),
+                                    ),
+                                  );
+                                case ResultState.initial:
+                                  return const Text(
+                                    'Ajukan Pendaftaran',
+                                    style: TextStyle(color: Colors.white),
+                                  );
+                                case ResultState.error:
+                                  return const Text(
+                                    'Ajukan Pendaftaran',
+                                    style: TextStyle(color: Colors.white),
+                                  );
+                                case ResultState.loaded:
+                                  return const Text(
+                                    'Ajukan Pendaftaran',
+                                    style: TextStyle(color: Colors.white),
+                                  );
+                              }
+                            },
                           ),
                         ),
                       ],

@@ -46,7 +46,7 @@ class _DetailSurveyScreenState extends State<DetailSurveyScreen> {
         padding: const EdgeInsets.all(16),
         child: Consumer<SurveyProvider>(
           builder: (context, state, _) {
-            switch (state.stateGetUserById) {
+            switch (state.stateGetSurveyById) {
               case ResultState.loading:
                 return Center(
                   child: defaultTargetPlatform == TargetPlatform.iOS
@@ -189,9 +189,35 @@ class _DetailSurveyScreenState extends State<DetailSurveyScreen> {
                             borderRadius: BorderRadius.circular(5),
                           ),
                         ),
-                        child: const Text(
-                          'Simpan',
-                          style: TextStyle(color: Colors.white, fontSize: 16),
+                        child: Consumer<SurveyProvider>(
+                          builder: (context, state, _) {
+                            switch (state.statePostAnswerSurvey) {
+                              case ResultState.loading:
+                                return const SizedBox(
+                                  width: 20.0,
+                                  height: 20.0,
+                                  child: CircularProgressIndicator(
+                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                        Colors.white),
+                                  ),
+                                );
+                              case ResultState.initial:
+                                return const Text(
+                                  'Simpan',
+                                  style: TextStyle(color: Colors.white),
+                                );
+                              case ResultState.error:
+                                return const Text(
+                                  'Simpan',
+                                  style: TextStyle(color: Colors.white),
+                                );
+                              case ResultState.loaded:
+                                return const Text(
+                                  'Simpan',
+                                  style: TextStyle(color: Colors.white),
+                                );
+                            }
+                          },
                         ),
                       ),
                     ],
