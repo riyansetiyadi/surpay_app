@@ -16,7 +16,6 @@ class ApiSurpayService {
     if (response.statusCode == 200 || response.statusCode == 400) {
       final responseString = await response.stream.bytesToString();
       final responseJson = jsonDecode(responseString);
-      print(responseJson);
       return responseJson;
     } else {
       throw response.reasonPhrase.toString();
@@ -74,7 +73,6 @@ class ApiSurpayService {
     if (response.statusCode == 200 || response.statusCode == 400) {
       final responseString = await response.stream.bytesToString();
       final responseJson = jsonDecode(responseString);
-      print(responseJson);
       return responseJson;
     } else {
       throw response.statusCode;
@@ -119,7 +117,6 @@ class ApiSurpayService {
     if (response.statusCode == 200 || response.statusCode == 400) {
       final responseString = await response.stream.bytesToString();
       final responseJson = jsonDecode(responseString);
-      print(responseJson);
       return responseJson;
     } else {
       throw Exception(response.reasonPhrase);
@@ -155,7 +152,6 @@ class ApiSurpayService {
     String answer,
     String comment,
   ) async {
-    print(numberSurvey);
     var headers = {
       'Authorization': 'Bearer $token',
     };
@@ -173,10 +169,8 @@ class ApiSurpayService {
     if (response.statusCode == 200 || response.statusCode == 400) {
       final responseString = await response.stream.bytesToString();
       final responseJson = jsonDecode(responseString);
-      print(responseJson);
       return responseJson;
     } else {
-      print(response.reasonPhrase);
       throw Exception(response.reasonPhrase);
     }
   }
@@ -195,7 +189,6 @@ class ApiSurpayService {
     if (response.statusCode == 200 || response.statusCode == 400) {
       final responseString = await response.stream.bytesToString();
       final responseJson = jsonDecode(responseString);
-      print(responseJson);
       return responseJson;
     } else {
       throw Exception(response.reasonPhrase);
@@ -222,7 +215,6 @@ class ApiSurpayService {
 
     request.headers.addAll(headers);
     http.StreamedResponse response = await request.send();
-    print(response.reasonPhrase);
     if (response.statusCode == 200 || response.statusCode == 400) {
       final responseString = await response.stream.bytesToString();
       final responseJson = jsonDecode(responseString);
@@ -247,7 +239,6 @@ class ApiSurpayService {
     if (response.statusCode == 200 || response.statusCode == 400) {
       final responseString = await response.stream.bytesToString();
       final responseJson = jsonDecode(responseString);
-      print(responseJson);
       return responseJson;
     } else {
       throw Exception(response.reasonPhrase);

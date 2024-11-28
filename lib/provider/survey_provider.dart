@@ -40,7 +40,6 @@ class SurveyProvider extends ChangeNotifier {
 
     try {
       String? token = await authRepository.getToken();
-      print(token);
       final responseResult = await apiSurpayService.getAllSurvey(token ?? '');
       apiResponseGetListSurveyModel = ApiResponseModel.fromJson(responseResult);
 
@@ -102,7 +101,6 @@ class SurveyProvider extends ChangeNotifier {
       List<SurveyQuestionModel>? surveys, String comment) async {
     _resultStatePostAnswerSurvey = ResultState.loading;
     notifyListeners();
-    print(surveys?[0].answer);
 
     try {
       String? token = await authRepository.getToken();
@@ -139,7 +137,6 @@ class SurveyProvider extends ChangeNotifier {
         return false;
       }
     } catch (e) {
-      print(e);
       _resultStatePostAnswerSurvey = ResultState.error;
       notifyListeners();
       return false;

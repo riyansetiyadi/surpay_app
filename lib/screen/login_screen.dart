@@ -170,6 +170,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         width: double.infinity,
                         child: ElevatedButton(
                           onPressed: () async {
+                            final authRead = context.read<AuthProvider>();
                             if (_phoneNumberController.text.isEmpty ||
                                 _passwordController.text.isEmpty) {
                               ScaffoldMessenger.of(context).showSnackBar(
@@ -187,14 +188,30 @@ class _LoginScreenState extends State<LoginScreen> {
                               );
                               return;
                             }
-                            final authRead = context.read<AuthProvider>();
 
                             final result = await authRead.login(
                                 _phoneNumberController.text,
                                 _passwordController.text);
                             if (result) {
                               if (context.mounted) {
-                                context.push('/dashboard');
+                                final authRead = context.read<AuthProvider>();
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                        authRead.apiResponseLogin?.message ??
+                                            'Login berhasil'),
+                                    duration: const Duration(seconds: 2),
+                                  ),
+                                );
+
+                                Future.delayed(
+                                  const Duration(seconds: 2),
+                                  () {
+                                    if (context.mounted) {
+                                      context.push('/dashboard');
+                                    }
+                                  },
+                                );
                               }
                             } else {
                               if (context.mounted) {
@@ -202,7 +219,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                   SnackBar(
                                     backgroundColor: Colors.red,
                                     content: Text(
-                                      "Nomor hp/Password Salah",
+                                      authRead.apiResponseLogin?.message ??
+                                          "Gagal login, silahkan coba lagi",
                                       style: Theme.of(context)
                                           .textTheme
                                           .bodyLarge
@@ -224,7 +242,6 @@ class _LoginScreenState extends State<LoginScreen> {
                             builder: (context, state, _) {
                               switch (state.stateLogin) {
                                 case ResultState.loading:
-                                
                                   return const SizedBox(
                                     width: 20.0,
                                     height: 20.0,
@@ -251,7 +268,6 @@ class _LoginScreenState extends State<LoginScreen> {
                               }
                             },
                           ),
-                         
                         ),
                       ),
 

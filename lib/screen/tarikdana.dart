@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:surpay_app/provider/auth_provider.dart';
+import 'package:surpay_app/provider/transaction_provider.dart';
 import 'package:surpay_app/utils/result_state.dart';
 import 'package:surpay_app/widgets/drawer/main_drawer.dart';
 import 'package:surpay_app/widgets/navigation_bar/user_app_bar.dart';
@@ -102,16 +103,66 @@ class _TarikDanaScreenState extends State<TarikDanaScreen> {
               height: 16,
             ),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () async {
+                final transactionRead = context.read<TransactionProvider>();
+                final authRead = context.read<AuthProvider>();
+                final result = await transactionRead.postWithdrawMoney(
+                  _jumlahController.text,
+                  _norekeningController.text,
+                  _namarekeningController.text,
+                  _namabankController.text,
+                );
+                if (result) {
+                  authRead.getUserData();
+
+                  if (context.mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(transactionRead
+                                .apiResponsePostWithdrawMoney?.message ??
+                            'Berhasil menarik uang'),
+                        duration: const Duration(seconds: 2),
+                      ),
+                    );
+
+                    Future.delayed(
+                      const Duration(seconds: 2),
+                      () {
+                        if (context.mounted) {
+                          context.push('/penarikan');
+                        }
+                      },
+                    );
+                  }
+                } else {
+                  if (context.mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        backgroundColor: Colors.red,
+                        content: Text(
+                          transactionRead
+                                  .apiResponsePostWithdrawMoney?.message ??
+                              'Tarik dana gagal',
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyLarge
+                              ?.copyWith(color: Colors.white),
+                        ),
+                        duration: const Duration(seconds: 3),
+                      ),
+                    );
+                  }
+                }
+              },
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color.fromARGB(255, 0, 42, 255),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(5),
                 ),
               ),
-              child: Consumer<AuthProvider>(
+              child: Consumer<TransactionProvider>(
                 builder: (context, state, _) {
-                  switch (state.stateLogin) {
+                  switch (state.statePostWithdrawMoney) {
                     case ResultState.loading:
                       return const SizedBox(
                         width: 20.0,

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
+import 'package:surpay_app/provider/auth_provider.dart';
 import 'package:surpay_app/widgets/drawer/main_drawer.dart';
 import 'package:surpay_app/widgets/navigation_bar/main_app_bar.dart';
 
@@ -14,6 +16,23 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _activeCardIndex = -1;
   int selectedIndexBar = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    final authRead = context.read<AuthProvider>();
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) async {
+        bool isLoggedIn = await authRead.isLoggedIn();
+        if (isLoggedIn && authRead.isInitialRoute) {
+          authRead.changeStatusInitialRoute();
+          if (mounted) {
+            context.push('/dashboard');
+          }
+        }
+      },
+    );
+  }
 
   void _changeCard(int index) {
     setState(() {

@@ -1,5 +1,3 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:surpay_app/provider/auth_provider.dart';
@@ -30,47 +28,14 @@ class UserAppBar extends StatelessWidget implements PreferredSizeWidget {
             builder: (context, state, _) {
               switch (state.stateGetUser) {
                 case ResultState.loading:
-                  return Center(
-                    child: defaultTargetPlatform == TargetPlatform.iOS
-                        ? const CupertinoActivityIndicator(
-                            radius: 20.0,
-                          )
-                        : const CircularProgressIndicator(),
-                  );
+                  return showSaldo(state);
                 case ResultState.initial:
-                  return Center(
-                    child: defaultTargetPlatform == TargetPlatform.iOS
-                        ? const CupertinoActivityIndicator(
-                            radius: 20.0,
-                          )
-                        : const CircularProgressIndicator(),
-                  );
+                  return showSaldo(state);
                 case ResultState.error:
-                  return ErrorRefresh(
-                    onPressed: () async {
-                      await state.getUserData();
-                    },
-                  );
+                  return showSaldo(state);
                 case ResultState.loaded:
                   if (state.profile != null) {
-                    return Text.rich(
-                      TextSpan(
-                        children: [
-                          const TextSpan(
-                            text: 'Saldo Anda :',
-                            style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.bold),
-                          ),
-                          TextSpan(
-                            text: ' Rp. ${state.profile?.saldo}',
-                            style: const TextStyle(
-                                fontSize: 20,
-                                color: Colors.red,
-                                fontWeight: FontWeight.w900),
-                          ),
-                        ],
-                      ),
-                    );
+                    return showSaldo(state);
                   } else {
                     return ErrorRefresh(
                       onPressed: () async {
@@ -80,6 +45,24 @@ class UserAppBar extends StatelessWidget implements PreferredSizeWidget {
                   }
               }
             },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Text showSaldo(AuthProvider state) {
+    return Text.rich(
+      TextSpan(
+        children: [
+          const TextSpan(
+            text: 'Saldo Anda :',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          TextSpan(
+            text: ' Rp. ${state.profile?.saldo}',
+            style: const TextStyle(
+                fontSize: 20, color: Colors.red, fontWeight: FontWeight.w900),
           ),
         ],
       ),

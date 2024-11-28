@@ -130,19 +130,36 @@ class _DetailSurveyScreenState extends State<DetailSurveyScreen> {
                       ),
                       ElevatedButton(
                         onPressed: () async {
-                          print("jawab survey");
                           final result = await state.postAnswerSurvey(
                             state.detailSurvey,
                             _commentController.text,
                           );
-                          print(result);
                           if (result) {
                             if (context.mounted) {
                               final authRead = context.read<AuthProvider>();
 
                               await authRead.getUserData();
+
                               if (context.mounted) {
-                                context.push('/survey-aktif');
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                      state.apiResponsePostAnswerSurveyModel
+                                              ?.message ??
+                                          'Berhasil mengisi survey',
+                                    ),
+                                    duration: const Duration(seconds: 2),
+                                  ),
+                                );
+
+                                Future.delayed(
+                                  const Duration(seconds: 2),
+                                  () {
+                                    if (context.mounted) {
+                                      context.push('/survey-aktif');
+                                    }
+                                  },
+                                );
                               }
                             }
                           } else {
@@ -153,7 +170,7 @@ class _DetailSurveyScreenState extends State<DetailSurveyScreen> {
                                   content: Text(
                                     state.apiResponsePostAnswerSurveyModel
                                             ?.message ??
-                                        '',
+                                        'Gagal mengisi survey',
                                     style: Theme.of(context)
                                         .textTheme
                                         .bodyLarge
@@ -225,7 +242,7 @@ class _DetailSurveyScreenState extends State<DetailSurveyScreen> {
               ),
             ),
           ),
-          if (survey.a != null)
+          if (survey.a != null && (survey.a?.isNotEmpty ?? false))
             RadioListTile<String>(
               title: Text(survey.a ?? ''),
               value: 'a',
@@ -237,7 +254,7 @@ class _DetailSurveyScreenState extends State<DetailSurveyScreen> {
                 );
               },
             ),
-          if (survey.b != null)
+          if (survey.b != null && (survey.b?.isNotEmpty ?? false))
             RadioListTile<String>(
               title: Text(survey.b ?? ''),
               value: 'b',
@@ -249,7 +266,7 @@ class _DetailSurveyScreenState extends State<DetailSurveyScreen> {
                 );
               },
             ),
-          if (survey.c != null)
+          if (survey.c != null && (survey.c?.isNotEmpty ?? false))
             RadioListTile<String>(
               title: Text(survey.c ?? ''),
               value: 'c',
@@ -261,7 +278,7 @@ class _DetailSurveyScreenState extends State<DetailSurveyScreen> {
                 );
               },
             ),
-          if (survey.d != null)
+          if (survey.d != null && (survey.d?.isNotEmpty ?? false))
             RadioListTile<String>(
               title: Text(survey.d ?? ''),
               value: 'd',
@@ -273,7 +290,7 @@ class _DetailSurveyScreenState extends State<DetailSurveyScreen> {
                 );
               },
             ),
-          if (survey.e != null)
+          if (survey.e != null && (survey.e?.isNotEmpty ?? false))
             RadioListTile<String>(
               title: Text(survey.e ?? ''),
               value: 'e',

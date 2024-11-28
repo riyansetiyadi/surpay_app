@@ -16,6 +16,9 @@ class AuthProvider extends ChangeNotifier {
     getUserData();
   }
 
+  bool _isInitialRoute = true;
+  bool get isInitialRoute => _isInitialRoute;
+
   ResultState _resultStateLogin = ResultState.initial;
   ResultState get stateLogin => _resultStateLogin;
 
@@ -26,6 +29,7 @@ class AuthProvider extends ChangeNotifier {
   ResultState get stateUpdateUser => _resultStateUpdateUser;
 
   String? message;
+  ApiResponseModel? apiResponseLogin;
   ApiResponseModel? apiResponseGetUserModel;
   ApiResponseModel? apiResponseUpdateUserModel;
   ProfileModel? profile;
@@ -43,12 +47,12 @@ class AuthProvider extends ChangeNotifier {
       final responseResult =
           await apiSurpayService.login(phoneNumber, password);
 
-      apiResponseGetUserModel = ApiResponseModel.fromJson(responseResult);
+      apiResponseLogin = ApiResponseModel.fromJson(responseResult);
 
-      if (!(apiResponseGetUserModel?.error ?? true)) {
+      if (!(apiResponseLogin?.error ?? true)) {
         profile = ProfileModel.fromApiJson(responseResult);
         if (profile != null) await authRepository.saveProfile(profile!);
-        _resultStateGetUser = ResultState.loaded;
+        _resultStateLogin = ResultState.loaded;
 
         getUserData();
 
@@ -61,8 +65,7 @@ class AuthProvider extends ChangeNotifier {
       }
     } catch (e) {
       _resultStateLogin = ResultState.error;
-      apiResponseGetUserModel =
-          ApiResponseModel(error: true, message: e.toString());
+      apiResponseLogin = ApiResponseModel(error: true, message: e.toString());
       notifyListeners();
       return false;
     }
@@ -155,6 +158,14 @@ class AuthProvider extends ChangeNotifier {
         notifyListeners();
         return false;
       }
+    } on int catch (e) {
+      if (e == 401) {
+        logout();
+      } else {
+        _resultStateGetUser = ResultState.error;
+      }
+      notifyListeners();
+      return false;
     } catch (e) {
       _resultStateGetUser = ResultState.error;
       notifyListeners();
@@ -195,5 +206,14 @@ class AuthProvider extends ChangeNotifier {
       notifyListeners();
       return false;
     }
+  }
+
+  Future<bool> isLoggedIn() async {
+    return await authRepository.isLoggedIn();
+  }
+
+  void changeStatusInitialRoute() async {
+    _isInitialRoute = false;
+    notifyListeners();
   }
 }
