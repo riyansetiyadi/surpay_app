@@ -21,9 +21,13 @@ class TransactionProvider extends ChangeNotifier {
   ResultState _resultStateGetHadiah = ResultState.initial;
   ResultState get stateGetHadiah => _resultStateGetHadiah;
 
+  ResultState _resultStatePostWithdrawMoney = ResultState.initial;
+  ResultState get statePostWithdrawMoney => _resultStatePostWithdrawMoney;
+
   String? message;
   ApiResponseModel? apiResponseGetDashboardHistory;
-  ApiResponseModel? apiResponseGetHadiahModel;
+  ApiResponseModel? apiResponseGetHadiah;
+  ApiResponseModel? apiResponsePostWithdrawMoney;
   List<DashboardModel>? dashboardHistories;
   List<HadiahModel>? hadiahHistories;
 
@@ -69,9 +73,9 @@ class TransactionProvider extends ChangeNotifier {
     try {
       String? token = await authRepository.getToken();
       final responseResult = await apiSurpayService.getListHadiah(token ?? '');
-      apiResponseGetHadiahModel = ApiResponseModel.fromJson(responseResult);
+      apiResponseGetHadiah = ApiResponseModel.fromJson(responseResult);
 
-      if (!(apiResponseGetHadiahModel?.error ?? false)) {
+      if (!(apiResponseGetHadiah?.error ?? false)) {
         hadiahHistories = (responseResult['data'] as List<dynamic>)
             .map((item) => HadiahModel.fromJson(item))
             .toList();
@@ -85,6 +89,42 @@ class TransactionProvider extends ChangeNotifier {
       }
     } catch (e) {
       _resultStateGetHadiah = ResultState.error;
+      notifyListeners();
+      return false;
+    }
+  }
+
+  Future<bool> postWithdrawMoney(
+    String money,
+    String bankAccountNumber,
+    String bankAccountFullname,
+    String bankName,
+  ) async {
+    _resultStatePostWithdrawMoney = ResultState.loading;
+    notifyListeners();
+
+    try {
+      String? token = await authRepository.getToken();
+      final responseResult = await apiSurpayService.postTarikDana(
+        token ?? '',
+        money,
+        bankAccountNumber,
+        bankAccountFullname,
+        bankName,
+      );
+      apiResponsePostWithdrawMoney = ApiResponseModel.fromJson(responseResult);
+
+      if (!(apiResponsePostWithdrawMoney?.error ?? false)) {
+        _resultStatePostWithdrawMoney = ResultState.loaded;
+        notifyListeners();
+        return true;
+      } else {
+        _resultStatePostWithdrawMoney = ResultState.error;
+        notifyListeners();
+        return false;
+      }
+    } catch (e) {
+      _resultStatePostWithdrawMoney = ResultState.error;
       notifyListeners();
       return false;
     }
