@@ -81,7 +81,7 @@ class AuthProvider extends ChangeNotifier {
     String postalCode,
     String address,
   ) async {
-    _resultStateGetUser = ResultState.loading;
+    _resultStateLogin = ResultState.loading;
     notifyListeners();
 
     try {
@@ -101,16 +101,16 @@ class AuthProvider extends ChangeNotifier {
       message = responseResult['message'];
       if (!responseResult['error']) {
         profile = ProfileModel.fromApiJson(responseResult);
-        _resultStateGetUser = ResultState.loaded;
+        _resultStateLogin = ResultState.loaded;
         notifyListeners();
         return true;
       } else {
-        _resultStateGetUser = ResultState.error;
+        _resultStateLogin = ResultState.error;
         notifyListeners();
         return false;
       }
     } catch (e) {
-      _resultStateGetUser = ResultState.error;
+      _resultStateLogin = ResultState.error;
       message = 'Gagal register';
       notifyListeners();
       return false;

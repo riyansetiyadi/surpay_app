@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:surpay_app/provider/auth_provider.dart';
+import 'package:surpay_app/provider/transaction_provider.dart';
 import 'package:surpay_app/utils/result_state.dart';
 import 'package:surpay_app/widgets/drawer/main_drawer.dart';
 import 'package:surpay_app/widgets/navigation_bar/user_app_bar.dart';
@@ -109,9 +108,9 @@ class _TarikDanaScreenState extends State<TarikDanaScreen> {
                   borderRadius: BorderRadius.circular(5),
                 ),
               ),
-              child: Consumer<AuthProvider>(
+              child: Consumer<TransactionProvider>(
                 builder: (context, state, _) {
-                  switch (state.stateLogin) {
+                  switch (state.statePostWithdrawMoney) {
                     case ResultState.loading:
                       return const SizedBox(
                         width: 20.0,
