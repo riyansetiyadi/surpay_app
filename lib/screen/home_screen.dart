@@ -234,40 +234,37 @@ class _HomeScreenState extends State<HomeScreen> {
               Column(
                 children: [
                   const Text(
-                    'contoh survey',
+                    'Contoh survey',
                     style: TextStyle(fontSize: 20),
                   ),
                   Container(
                     padding: const EdgeInsets.all(16.0),
                     child: Column(
                       children: [
-                        CustomCard(
+                        CustomCard2(
                           index: 3,
                           activeIndex: _activeCardIndex,
                           onTap: _changeCard,
-                          imageUrl: "https://surpay.id/images/icon.png",
-                          title: 'Install Aplikasinya',
-                          description: 'Instal aplikasinya di Google Play',
+                          imageAsset: 'assets/images/listsurvey.png',
+                          description: 'Pilih Survey dengan Hadiah yang anda suka',
                         ),
                         const SizedBox(height: 12),
-                        CustomCard(
+                        CustomCard2(
                           index: 4,
                           activeIndex: _activeCardIndex,
                           onTap: _changeCard,
-                          imageUrl: "https://surpay.id/images/check.png",
-                          title: 'Pilih survey dan Hadiahnya',
+                          imageAsset: 'assets/images/detailsurvey.png',
                           description:
-                              'Tiap survey akan dicantumkan hadiah undian atau hadiah langsungnya. Hadiah langsung akan masuk ke saldo anda, dan akan bisa ditarik ke rekening anda minimal Rp. 100.000,-',
+                              'Isi surveynya',
                         ),
                         const SizedBox(height: 12),
-                        CustomCard(
+                        CustomCard2(
                           index: 5,
                           activeIndex: _activeCardIndex,
                           onTap: _changeCard,
-                          imageUrl: "https://surpay.id/images/win.png",
-                          title: 'Cairkan hadiahnya',
+                          imageAsset: 'assets/images/detailsurvey.png',
                           description:
-                              'Anda bisa menarik saldo anda, dan kami akan mentransfer ke rekening anda. Untuk undian, kami akan umumkan kapan undian dilaksanakan dan siapa pemenangnya.',
+                              'Tiap bulan akan diumumkan siapa yang memenangkan hadiahnya. undian hadiah akan disiarkan secara online di youtube SurPay.',
                         ),
                       ],
                     ),
@@ -405,6 +402,63 @@ class CustomCard extends StatelessWidget {
                   description,
                   textAlign: TextAlign.center,
                   style: TextStyle(color: textColor),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class CustomCard2 extends StatelessWidget {
+  final int index;
+  final int activeIndex;
+  final Function(int) onTap;
+  final String imageAsset;
+  final String description;
+
+  const CustomCard2({
+    super.key,
+    required this.index,
+    required this.activeIndex,
+    required this.onTap,
+    required this.imageAsset,
+    required this.description,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    Color cardColor = (activeIndex == index) ? Colors.orange : Colors.white;
+    Color textColor = (activeIndex == index) ? Colors.white : Colors.black;
+
+    return InkWell(
+      onTap: () => onTap(index),
+      child: Card(
+        elevation: 20,
+        shadowColor: Colors.grey,
+        color: cardColor,
+        child: SizedBox(
+          width: double.infinity,
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Image.asset(
+                  imageAsset,
+                  width: 200,
+                  height: 200,
+                  fit: BoxFit.cover,
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  description,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 15, color: textColor, fontWeight: FontWeight.bold,
+),
                 ),
               ],
             ),
