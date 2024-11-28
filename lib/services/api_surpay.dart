@@ -74,9 +74,10 @@ class ApiSurpayService {
     if (response.statusCode == 200 || response.statusCode == 400) {
       final responseString = await response.stream.bytesToString();
       final responseJson = jsonDecode(responseString);
+      print(responseJson);
       return responseJson;
     } else {
-      throw Exception(response.reasonPhrase);
+      throw response.statusCode;
     }
   }
 
@@ -201,17 +202,27 @@ class ApiSurpayService {
     }
   }
 
-  Future getPenarikan(
+  Future postTarikDana(
     String token,
+    String money,
+    String bankAccountNumber,
+    String bankAccountFullname,
+    String bankName,
   ) async {
     var headers = {
       'Authorization': 'Bearer $token',
     };
-    var request = http.Request('GET', Uri.parse('$_addressUrl/penarikan.php'));
+    var request = http.Request('POST', Uri.parse('$_addressUrl/tarikdana.php'));
+    request.body = json.encode({
+      "jumlah": money,
+      "rekening": bankAccountNumber,
+      "namarekening": bankAccountFullname,
+      "bank": bankName,
+    });
 
     request.headers.addAll(headers);
     http.StreamedResponse response = await request.send();
-
+    print(response.reasonPhrase);
     if (response.statusCode == 200 || response.statusCode == 400) {
       final responseString = await response.stream.bytesToString();
       final responseJson = jsonDecode(responseString);
