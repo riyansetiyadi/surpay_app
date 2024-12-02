@@ -1,6 +1,6 @@
 class HadiahModel {
   final int idHadiah;
-  final String nama;
+  final String phoneNumber;
   final String idUser;
   final String idSurvey;
   final int poin;
@@ -11,7 +11,7 @@ class HadiahModel {
 
   HadiahModel({
     required this.idHadiah,
-    required this.nama,
+    required this.phoneNumber,
     required this.idUser,
     required this.idSurvey,
     required this.poin,
@@ -25,7 +25,7 @@ class HadiahModel {
   factory HadiahModel.fromJson(Map<String, dynamic> json) {
     return HadiahModel(
       idHadiah: json['idhadiah'] as int,
-      nama: json['nama'] as String,
+      phoneNumber: json['phone_number'] as String,
       idUser: json['iduser'] as String,
       idSurvey: json['idsurvey'] as String,
       poin: json['poin'] as int,
@@ -40,7 +40,7 @@ class HadiahModel {
   Map<String, dynamic> toJson() {
     return {
       'idhadiah': idHadiah,
-      'nama': nama,
+      'phone_number': phoneNumber,
       'iduser': idUser,
       'idsurvey': idSurvey,
       'poin': poin,
