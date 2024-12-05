@@ -70,6 +70,7 @@ class _TarikDanaScreenState extends State<TarikDanaScreen> {
             ),
             TextFormField(
               controller: _jumlahController,
+              keyboardType: TextInputType.number,
               decoration: const InputDecoration(
                 fillColor: Colors.white,
                 filled: true,
@@ -87,6 +88,7 @@ class _TarikDanaScreenState extends State<TarikDanaScreen> {
             ),
             TextFormField(
               controller: _norekeningController,
+              keyboardType: TextInputType.number,
               decoration: const InputDecoration(
                 filled: true,
                 fillColor: Colors.white,

@@ -93,7 +93,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                       // Label Nohp
                       const Text(
-                        'nohp',
+                        'No. hp',
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
@@ -104,6 +104,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       // Input Nohp
                       TextFormField(
                         controller: _phoneNumberController,
+                        keyboardType: TextInputType.phone,
                         decoration: InputDecoration(
                           hintText: 'Masukkan nohp',
                           border: OutlineInputBorder(

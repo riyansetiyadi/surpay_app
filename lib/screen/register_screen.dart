@@ -68,10 +68,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
                         // No. HP
                         buildTextField(
-                          'No. HP',
-                          'Selanjutnya akan digunakan untuk login',
-                          controller: _phoneNumberController,
-                        ),
+                            'No. HP', 'Selanjutnya akan digunakan untuk login',
+                            controller: _phoneNumberController,
+                            keyboardType: TextInputType.phone),
                         const SizedBox(height: 16),
 
                         // Password
