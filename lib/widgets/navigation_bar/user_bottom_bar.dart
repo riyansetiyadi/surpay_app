@@ -1,8 +1,6 @@
 // bottom_bar1.dart
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
-import 'package:surpay_app/provider/auth_provider.dart';
 
 class UserBottomBar extends StatefulWidget {
   final int? initiateIndex;
@@ -47,14 +45,6 @@ class _UserBottomBarState extends State<UserBottomBar> {
       case 4:
         context.push('/profil');
         break;
-      case 5:
-        final authRead = context.read<AuthProvider>();
-
-        final result = await authRead.logout();
-        if (result) {
-          if (mounted) context.push('/login');
-        }
-        break;
     }
   }
 
@@ -70,7 +60,6 @@ class _UserBottomBarState extends State<UserBottomBar> {
         BottomNavigationBarItem(
             icon: Icon(Icons.currency_exchange), label: 'Penarikan'),
         BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profil'),
-        BottomNavigationBarItem(icon: Icon(Icons.exit_to_app), label: 'Logout'),
       ],
       currentIndex: _selectedIndex,
       onTap: _onItemTapped,
