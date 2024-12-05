@@ -161,9 +161,8 @@ class AuthProvider extends ChangeNotifier {
     } on int catch (e) {
       if (e == 401) {
         logout();
-      } else {
-        _resultStateGetUser = ResultState.error;
       }
+      _resultStateGetUser = ResultState.error;
       notifyListeners();
       return false;
     } catch (e) {
@@ -174,9 +173,9 @@ class AuthProvider extends ChangeNotifier {
   }
 
   Future<bool> updateUserData({
-    String? phoneNumber,
     String? fullname,
     String? password,
+    String? referrerCode,
   }) async {
     _resultStateUpdateUser = ResultState.loading;
     notifyListeners();
@@ -185,15 +184,16 @@ class AuthProvider extends ChangeNotifier {
       String? token = await authRepository.getToken();
       final responseResult = await apiSurpayService.updateUserData(
         token ?? '',
-        phoneNumber: phoneNumber,
         fullname: fullname,
         password: password,
+        referrerCode: referrerCode,
       );
       apiResponseUpdateUserModel = ApiResponseModel.fromJson(responseResult);
 
       if (!(apiResponseUpdateUserModel?.error ?? false)) {
         profile = ProfileModel.fromApiJson(responseResult);
         _resultStateUpdateUser = ResultState.loaded;
+        await getUserData();
         notifyListeners();
         return true;
       } else {

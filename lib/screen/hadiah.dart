@@ -164,32 +164,35 @@ class _HadiahScreenState extends State<HadiahScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  'ID Survey ',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                ),
-                Text(
-                  hadiah.idSurvey,
-                  style: const TextStyle(fontSize: 18),
-                )
-              ],
-            ),
+            if (hadiah.idSurvey != '')
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    'ID Survey ',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                  ),
+                  Text(
+                    hadiah.idSurvey,
+                    style: const TextStyle(fontSize: 18),
+                  )
+                ],
+              ),
             const SizedBox(
               height: 10,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  'Undian',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-                Text(hadiah.undian ?? '', style: const TextStyle(fontSize: 18))
-              ],
-            ),
+            if (hadiah.undian != '')
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    'Undian',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  Text(hadiah.undian ?? '',
+                      style: const TextStyle(fontSize: 18))
+                ],
+              ),
             const SizedBox(
               height: 10,
             ),

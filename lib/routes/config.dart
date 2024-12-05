@@ -7,7 +7,7 @@ import 'package:surpay_app/screen/hadiah.dart';
 import 'package:surpay_app/screen/home_screen.dart';
 import 'package:surpay_app/screen/login_screen.dart';
 import 'package:surpay_app/screen/penarikan.dart';
-import 'package:surpay_app/screen/profile.dart';
+import 'package:surpay_app/screen/profile_screen.dart';
 import 'package:surpay_app/screen/register_screen.dart';
 import 'package:surpay_app/screen/list_survey.dart';
 import 'package:surpay_app/screen/detail_survey.dart';
@@ -97,8 +97,8 @@ final router = GoRouter(
     ),
   ],
   redirect: (context, state) async {
-    bool isLoggedInKosmetik = await authRepository.isLoggedIn();
-    if (authRoute.contains(state.fullPath) && !isLoggedInKosmetik) {
+    bool isLoggedIn = await authRepository.isLoggedIn();
+    if (authRoute.contains(state.fullPath) && !isLoggedIn) {
       return '/login';
     }
 

@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:surpay_app/db/auth_repository.dart';
 import 'package:surpay_app/models/dashboard_model.dart';
 import 'package:surpay_app/provider/transaction_provider.dart';
 import 'package:surpay_app/utils/result_state.dart';
@@ -22,9 +24,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
   void initState() {
     super.initState();
     final transactionRead = context.read<TransactionProvider>();
+    final authRepository = AuthRepository();
     WidgetsBinding.instance.addPostFrameCallback(
-      (_) {
-        transactionRead.getDashboardHistory();
+      (_) async {
+        bool isLoggedIn = await authRepository.isLoggedIn();
+        if (!isLoggedIn) {
+          if (mounted) context.push('/login');
+        } else {
+          transactionRead.getDashboardHistory();
+        }
       },
     );
   }

@@ -24,6 +24,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   final TextEditingController _birthYearController = TextEditingController();
   final TextEditingController _postalCodeController = TextEditingController();
   final TextEditingController _addressController = TextEditingController();
+  final TextEditingController _referralCodeController = TextEditingController();
   int? selectedGender;
   String? selectedProvince;
   String? selectedDistrict;
@@ -203,6 +204,16 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         ),
                         const SizedBox(height: 16),
 
+                        // Referral code
+                        buildTextField(
+                          'Kode referral (optional)',
+                          'Masukkan kode referral teman anda',
+                          maxLines: 3,
+                          controller: _referralCodeController,
+                          validator: null,
+                        ),
+                        const SizedBox(height: 16),
+
                         // Button "Selanjutnya"
                         // ElevatedButton.icon(
                         //   onPressed: () {
@@ -297,7 +308,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             builder: (context, state, _) {
                               switch (state.stateLogin) {
                                 case ResultState.loading:
-                                
                                   return const SizedBox(
                                     width: 20.0,
                                     height: 20.0,
@@ -344,6 +354,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     TextInputType keyboardType = TextInputType.text,
     int maxLines = 1,
     TextEditingController? controller,
+    FormFieldValidator<String>? validator,
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -374,12 +385,15 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   )
                 : null,
           ),
-          validator: (value) {
-            if (value == null || value.isEmpty) {
-              return 'Isi dengan lengkap!';
-            }
-            return null;
-          },
+          validator: validator ??
+              (validator == null
+                  ? null
+                  : (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Isi dengan lengkap!';
+                      }
+                      return null;
+                    }),
         ),
       ],
     );

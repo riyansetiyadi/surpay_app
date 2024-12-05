@@ -142,9 +142,10 @@ class _ListSurveyScreenState extends State<ListSurveyScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(survey.title,
-                style:
-                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            Text(
+              survey.title,
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
             const SizedBox(
               height: 10,
             ),
@@ -170,18 +171,19 @@ class _ListSurveyScreenState extends State<ListSurveyScreen> {
                     )
                   ],
                 ),
-                Row(
-                  children: [
-                    const Text(
-                      'Undian :',
-                      style: TextStyle(color: Colors.red, fontSize: 18),
-                    ),
-                    Text(
-                      survey.undian,
-                      style: const TextStyle(color: Colors.red, fontSize: 18),
-                    )
-                  ],
-                ),
+                if (survey.undian != '')
+                  Row(
+                    children: [
+                      const Text(
+                        'Undian :',
+                        style: TextStyle(color: Colors.red, fontSize: 18),
+                      ),
+                      Text(
+                        survey.undian,
+                        style: const TextStyle(color: Colors.red, fontSize: 18),
+                      )
+                    ],
+                  ),
               ],
             ),
             const Divider(

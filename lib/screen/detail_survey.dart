@@ -253,7 +253,6 @@ class _DetailSurveyScreenState extends State<DetailSurveyScreen> {
                 topRight: Radius.circular(15.0),
               ),
             ),
-            height: 40,
             width: double.infinity,
             child: Center(
               child: Padding(

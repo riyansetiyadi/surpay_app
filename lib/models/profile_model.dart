@@ -13,6 +13,8 @@ class ProfileModel {
   final String? address;
   final String? saldo;
   final String? password;
+  final String? referrerCode;
+  final String? referralCode;
 
   ProfileModel({
     this.token,
@@ -29,6 +31,8 @@ class ProfileModel {
     this.address,
     this.saldo,
     this.password,
+    this.referrerCode,
+    this.referralCode,
   });
 
   factory ProfileModel.fromApiJson(Map<String, dynamic> json, {String? token}) {
@@ -47,6 +51,8 @@ class ProfileModel {
       address: json['data']['alamat'],
       saldo: json['data']['saldo'],
       password: json['data']['password'],
+      referrerCode: json['data']['referrer_code'],
+      referralCode: json['data']['referral_code'],
     );
   }
 
@@ -64,6 +70,8 @@ class ProfileModel {
       address: json['address'],
       saldo: json['saldo'],
       password: json['password'],
+      referrerCode: json['referrerCode'],
+      referralCode: json['referralCode'],
     );
   }
 
@@ -82,6 +90,8 @@ class ProfileModel {
       'address': address,
       'saldo': saldo,
       'password': password,
+      'referrerCode': referrerCode,
+      'referralCode': referralCode,
     };
   }
 }

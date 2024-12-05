@@ -70,8 +70,9 @@ class ApiSurpayService {
     request.headers.addAll(headers);
     http.StreamedResponse response = await request.send();
 
+    final responseString = await response.stream.bytesToString();
     if (response.statusCode == 200 || response.statusCode == 400) {
-      final responseString = await response.stream.bytesToString();
+      // final responseString = await response.stream.bytesToString();
       final responseJson = jsonDecode(responseString);
       return responseJson;
     } else {
@@ -79,17 +80,17 @@ class ApiSurpayService {
     }
   }
 
-  Future updateUserData(
-    String token, {
-    String? phoneNumber,
-    String? fullname,
-    String? password,
-  }) async {
+  Future updateUserData(String token,
+      {String? fullname, String? password, String? referrerCode}) async {
     var headers = {
       'Authorization': 'Bearer $token',
     };
-    var request =
-        http.Request('GET', Uri.parse('$_addressUrl/userprofile.php'));
+    var request = http.Request('PUT', Uri.parse('$_addressUrl/updateuser.php'));
+    request.body = json.encode({
+      "nama_lengkap": fullname,
+      "password": password,
+      "referrer_code": referrerCode,
+    });
 
     request.headers.addAll(headers);
     http.StreamedResponse response = await request.send();
