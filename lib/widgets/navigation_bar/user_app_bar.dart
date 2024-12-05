@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:surpay_app/provider/auth_provider.dart';
+import 'package:surpay_app/utils/number_format.dart';
 import 'package:surpay_app/utils/result_state.dart';
 import 'package:surpay_app/widgets/handle_error_refresh_widget.dart';
 
@@ -59,9 +60,13 @@ class UserAppBar extends StatelessWidget implements PreferredSizeWidget {
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           TextSpan(
-            text: ' Rp. ${state.profile?.saldo}',
+            text:
+                ' Rp. ${formatMoneyNumber(int.parse(state.profile?.saldo ?? '0'))}',
             style: const TextStyle(
-                fontSize: 20, color: Colors.red, fontWeight: FontWeight.w900),
+              fontSize: 20,
+              color: Colors.red,
+              fontWeight: FontWeight.w900,
+            ),
           ),
         ],
       ),

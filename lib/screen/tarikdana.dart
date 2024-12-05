@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:surpay_app/provider/auth_provider.dart';
 import 'package:surpay_app/provider/transaction_provider.dart';
+import 'package:surpay_app/utils/number_format.dart';
 import 'package:surpay_app/utils/result_state.dart';
 import 'package:surpay_app/widgets/drawer/main_drawer.dart';
 import 'package:surpay_app/widgets/navigation_bar/user_app_bar.dart';
@@ -20,6 +21,35 @@ class _TarikDanaScreenState extends State<TarikDanaScreen> {
   final TextEditingController _norekeningController = TextEditingController();
   final TextEditingController _namarekeningController = TextEditingController();
   final TextEditingController _namabankController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _jumlahController.addListener(() {
+      final text = _jumlahController.text.replaceAll('.', '');
+      if (text.isNotEmpty) {
+        _jumlahController.value = TextEditingValue(
+          text: formatMoneyNumber(int.parse(text)),
+          selection: TextSelection.collapsed(
+            offset: formatMoneyNumber(int.parse(text)).length,
+          ),
+        );
+      }
+    });
+
+    _norekeningController.addListener(() {
+      final text = _norekeningController.text;
+      if (text.isNotEmpty) {
+        _norekeningController.value = TextEditingValue(
+          text: formatRekening(text),
+          selection: TextSelection.collapsed(
+            offset: formatRekening(text).length,
+          ),
+        );
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -107,8 +137,8 @@ class _TarikDanaScreenState extends State<TarikDanaScreen> {
                 final transactionRead = context.read<TransactionProvider>();
                 final authRead = context.read<AuthProvider>();
                 final result = await transactionRead.postWithdrawMoney(
-                  _jumlahController.text,
-                  _norekeningController.text,
+                  _jumlahController.text.replaceAll('.', ''),
+                  _norekeningController.text.replaceAll(RegExp(r'\D'), ''),
                   _namarekeningController.text,
                   _namabankController.text,
                 );

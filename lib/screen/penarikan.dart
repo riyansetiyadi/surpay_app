@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:surpay_app/models/profile_model.dart';
 import 'package:surpay_app/provider/auth_provider.dart';
+import 'package:surpay_app/utils/number_format.dart';
 import 'package:surpay_app/utils/result_state.dart';
 import 'package:surpay_app/widgets/drawer/main_drawer.dart';
 import 'package:surpay_app/widgets/handle_error_refresh_widget.dart';
@@ -129,7 +130,7 @@ class _PenarikanScreenState extends State<PenarikanScreen> {
                     style: TextStyle(color: Colors.red, fontSize: 20),
                   ),
                   Text(
-                    profile?.saldo ?? '0',
+                    formatMoneyNumber(int.parse(profile?.saldo ?? '0')),
                     style: const TextStyle(color: Colors.red, fontSize: 20),
                   )
                 ],

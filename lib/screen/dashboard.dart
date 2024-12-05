@@ -177,7 +177,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     width: 25,
                   ),
                   Text(
-                    'Rp. ${dashboardHistory.jumlah}',
+                    'Rp. ${formatMoneyNumber(dashboardHistory.jumlah)}',
                     style: const TextStyle(
                         color: Colors.red,
                         fontSize: 25,

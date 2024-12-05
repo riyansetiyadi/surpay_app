@@ -232,7 +232,7 @@ class _HadiahScreenState extends State<HadiahScreen> {
                     width: 25,
                   ),
                   Text(
-                    'Rp. ${hadiah.poin}',
+                    'Rp. ${formatMoneyNumber(hadiah.poin)}',
                     style: const TextStyle(
                         color: Colors.red,
                         fontSize: 25,

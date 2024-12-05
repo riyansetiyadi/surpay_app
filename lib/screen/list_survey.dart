@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:surpay_app/models/survey_model.dart';
 import 'package:surpay_app/provider/survey_provider.dart';
+import 'package:surpay_app/utils/number_format.dart';
 import 'package:surpay_app/utils/result_state.dart';
 import 'package:surpay_app/widgets/drawer/main_drawer.dart';
 import 'package:surpay_app/widgets/handle_error_refresh_widget.dart';
@@ -166,7 +167,7 @@ class _ListSurveyScreenState extends State<ListSurveyScreen> {
                       style: TextStyle(color: Colors.blue, fontSize: 18),
                     ),
                     Text(
-                      survey.poin.toString(),
+                      formatMoneyNumber(survey.poin),
                       style: const TextStyle(color: Colors.blue, fontSize: 18),
                     )
                   ],
