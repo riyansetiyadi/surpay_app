@@ -119,6 +119,7 @@ class _DetailSurveyScreenState extends State<DetailSurveyScreen> {
                                 hintText: 'Beri Komentar',
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10.0),
+                                  borderSide: BorderSide.none,
                                 ),
                               ),
                             ),
