@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:surpay_app/provider/auth_provider.dart';
 import 'package:surpay_app/widgets/drawer/main_drawer.dart';
 import 'package:surpay_app/widgets/navigation_bar/main_app_bar.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -265,7 +266,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           activeIndex: _activeCardIndex,
                           onTap: _changeCard,
                           imageAsset: 'assets/images/listsurvey.png',
-                          description: 'Pilih Survey dengan Hadiah yang anda suka',
+                          description:
+                              'Pilih Survey dengan Hadiah yang anda suka',
                         ),
                         const SizedBox(height: 12),
                         CustomCard2(
@@ -273,8 +275,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           activeIndex: _activeCardIndex,
                           onTap: _changeCard,
                           imageAsset: 'assets/images/detailsurvey.png',
-                          description:
-                              'Isi surveynya',
+                          description: 'Isi surveynya',
                         ),
                         const SizedBox(height: 12),
                         CustomCard2(
@@ -317,23 +318,73 @@ class _HomeScreenState extends State<HomeScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             IconButton(
-                              onPressed: () {},
+                              onPressed: () async {
+                                final Uri mapsUri = Uri.parse(
+                                    "https://www.facebook.com/share/1BZK9psQ6t/?mibextid=qi2Omg");
+                                if (await canLaunchUrl(mapsUri)) {
+                                  await launchUrl(
+                                    mapsUri,
+                                    mode: LaunchMode.externalApplication,
+                                  );
+                                } else {
+                                  if (context.mounted) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        backgroundColor: Colors.red,
+                                        content: Text(
+                                          "Akun tidak ditemukan",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyLarge
+                                              ?.copyWith(color: Colors.white),
+                                        ),
+                                        duration: const Duration(seconds: 3),
+                                      ),
+                                    );
+                                  }
+                                }
+                              },
                               icon: const FaIcon(
                                 FontAwesomeIcons.facebook,
                                 color: Colors.blue,
                                 size: 20,
                               ),
                             ),
+                            // IconButton(
+                            //   onPressed: () {},
+                            //   icon: const FaIcon(
+                            //     FontAwesomeIcons.twitter,
+                            //     color: Colors.blue,
+                            //     size: 20,
+                            //   ),
+                            // ),
                             IconButton(
-                              onPressed: () {},
-                              icon: const FaIcon(
-                                FontAwesomeIcons.twitter,
-                                color: Colors.blue,
-                                size: 20,
-                              ),
-                            ),
-                            IconButton(
-                              onPressed: () {},
+                              onPressed: () async {
+                                final Uri mapsUri = Uri.parse(
+                                    "https://www.youtube.com/@surpayindonesia");
+                                if (await canLaunchUrl(mapsUri)) {
+                                  await launchUrl(
+                                    mapsUri,
+                                    mode: LaunchMode.externalApplication,
+                                  );
+                                } else {
+                                  if (context.mounted) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        backgroundColor: Colors.red,
+                                        content: Text(
+                                          "Could not launch Maps",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyLarge
+                                              ?.copyWith(color: Colors.white),
+                                        ),
+                                        duration: const Duration(seconds: 3),
+                                      ),
+                                    );
+                                  }
+                                }
+                              },
                               icon: const FaIcon(
                                 FontAwesomeIcons.youtube,
                                 color: Colors.blue,
@@ -341,7 +392,32 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                             IconButton(
-                              onPressed: () {},
+                              onPressed: () async {
+                                final Uri mapsUri = Uri.parse(
+                                    "https://www.instagram.com/surpay_indonesia/profilecard/?igsh=cmE4ZXNtZm9pMWlk");
+                                if (await canLaunchUrl(mapsUri)) {
+                                  await launchUrl(
+                                    mapsUri,
+                                    mode: LaunchMode.externalApplication,
+                                  );
+                                } else {
+                                  if (context.mounted) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        backgroundColor: Colors.red,
+                                        content: Text(
+                                          "Akun tidak ditemukan",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyLarge
+                                              ?.copyWith(color: Colors.white),
+                                        ),
+                                        duration: const Duration(seconds: 3),
+                                      ),
+                                    );
+                                  }
+                                }
+                              },
                               icon: const FaIcon(
                                 FontAwesomeIcons.instagram,
                                 color: Colors.blue,
@@ -476,8 +552,11 @@ class CustomCard2 extends StatelessWidget {
                 Text(
                   description,
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 15, color: textColor, fontWeight: FontWeight.bold,
-),
+                  style: TextStyle(
+                    fontSize: 15,
+                    color: textColor,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ],
             ),

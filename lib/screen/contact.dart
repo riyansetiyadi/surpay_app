@@ -113,7 +113,7 @@ class _ContactScreenState extends State<ContactScreen> {
                           width: 10,
                         ),
                         Text(
-                          'solverra.aplikasi@gmail.com',
+                          'surpay2025@gmail.com',
                           style: TextStyle(fontSize: 18),
                         )
                       ],
@@ -132,7 +132,7 @@ class _ContactScreenState extends State<ContactScreen> {
                           width: 10,
                         ),
                         Text(
-                          '0823-3534-4285',
+                          '0811-3338-8892',
                           style: TextStyle(fontSize: 18),
                         )
                       ],
@@ -153,7 +153,7 @@ class _ContactScreenState extends State<ContactScreen> {
                           width: 10,
                         ),
                         Text(
-                          '@surpay.indonesia',
+                          '@surpay_indonesia',
                           style: TextStyle(fontSize: 18),
                         )
                       ],
