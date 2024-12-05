@@ -8,6 +8,7 @@ class HadiahModel {
   final String jam;
   final String? status;
   final String? bukti;
+  final String? type;
 
   HadiahModel({
     required this.idHadiah,
@@ -19,6 +20,7 @@ class HadiahModel {
     required this.jam,
     this.status,
     this.bukti,
+    this.type,
   });
 
   // Factory method untuk membuat instance dari JSON
@@ -33,6 +35,7 @@ class HadiahModel {
       jam: json['jam'] as String,
       status: json['status'] as String?,
       bukti: json['bukti'] as String?,
+      type: json['type'] as String?,
     );
   }
 
@@ -48,6 +51,7 @@ class HadiahModel {
       'jam': jam,
       'status': status,
       'bukti': bukti,
+      'type': type,
     };
   }
 }

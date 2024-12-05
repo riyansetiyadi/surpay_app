@@ -19,6 +19,12 @@ class HadiahScreen extends StatefulWidget {
 }
 
 class _HadiahScreenState extends State<HadiahScreen> {
+  Map<String, String> translations = {
+    "survey_reward": "Hadiah Survey",
+    "withdrawal": "Penarikan",
+    "reward_referral": "Hadiah referral",
+  };
+
   @override
   void initState() {
     super.initState();
@@ -165,38 +171,10 @@ class _HadiahScreenState extends State<HadiahScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if (hadiah.idSurvey != '')
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    'ID Survey ',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                  ),
-                  Text(
-                    hadiah.idSurvey,
-                    style: const TextStyle(fontSize: 18),
-                  )
-                ],
-              ),
-            const SizedBox(
-              height: 10,
-            ),
-            if (hadiah.undian != '')
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    'Undian',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                  Text(hadiah.undian ?? '',
-                      style: const TextStyle(fontSize: 18))
-                ],
-              ),
-            const SizedBox(
-              height: 10,
-            ),
+            if (hadiah.type != '')
+              innerText('Tipe', translations[hadiah.type] ?? ''),
+            if (hadiah.idSurvey != '') innerText('ID Survey', hadiah.idSurvey),
+            if (hadiah.undian != '') innerText('Undian', hadiah.undian ?? ''),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -209,9 +187,6 @@ class _HadiahScreenState extends State<HadiahScreen> {
                   style: const TextStyle(fontSize: 18),
                 )
               ],
-            ),
-            const SizedBox(
-              height: 8,
             ),
             const Divider(
               color: Color.fromARGB(177, 106, 106, 106),
@@ -248,6 +223,25 @@ class _HadiahScreenState extends State<HadiahScreen> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Padding innerText(String textTitle, String textBody) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            textTitle,
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          ),
+          Text(
+            textBody,
+            style: const TextStyle(fontSize: 18),
+          )
+        ],
       ),
     );
   }
