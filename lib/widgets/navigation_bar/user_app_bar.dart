@@ -18,11 +18,10 @@ class UserAppBar extends StatelessWidget implements PreferredSizeWidget {
       iconTheme: const IconThemeData(color: Color.fromARGB(255, 0, 0, 0)),
       title: Row(
         children: [
-          const SizedBox(
+          Image.asset(
+            'assets/images/app_icon.png',
             height: 50,
             width: 50,
-            child:
-                Image(image: NetworkImage('https://surpay.id/images/icon.png')),
           ),
           Consumer<AuthProvider>(
             builder: (context, state, _) {

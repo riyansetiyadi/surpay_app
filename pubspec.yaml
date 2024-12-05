@@ -48,6 +48,7 @@ dependencies:
   http: ^1.2.2
   provider: ^6.1.2
   shared_preferences: ^2.3.3
+  share_plus: ^10.1.2
 
 dev_dependencies:
   flutter_test:
@@ -71,8 +72,7 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/images/listsurvey.png
-    - assets/images/detailsurvey.png
+    - assets/images/
 
   # To add assets to your application, add an assets section, like this:
   # assets:
