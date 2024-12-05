@@ -35,6 +35,18 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   List<String> listGender = ['Perempuan', 'Laki-laki'];
 
   @override
+  void dispose() {
+    _phoneNumberController.dispose();
+    _passwordController.dispose();
+    _fullnameController.dispose();
+    _birthYearController.dispose();
+    _postalCodeController.dispose();
+    _addressController.dispose();
+    _referralCodeController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[200],

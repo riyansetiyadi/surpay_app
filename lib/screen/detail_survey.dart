@@ -32,6 +32,12 @@ class _DetailSurveyScreenState extends State<DetailSurveyScreen> {
   }
 
   @override
+  void dispose() {
+    _commentController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(

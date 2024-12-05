@@ -51,6 +51,15 @@ class _TarikDanaScreenState extends State<TarikDanaScreen> {
   }
 
   @override
+  void dispose() {
+    _jumlahController.dispose();
+    _norekeningController.dispose();
+    _namabankController.dispose();
+    _namarekeningController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const UserAppBar(),

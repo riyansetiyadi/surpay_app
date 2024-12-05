@@ -47,6 +47,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   @override
+  void dispose() {
+    _phoneNumberController.dispose();
+    _fullnameController.dispose();
+    _passwordController.dispose();
+    _referrerCodeController.dispose();
+    _referralCodeController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const UserAppBar(),
