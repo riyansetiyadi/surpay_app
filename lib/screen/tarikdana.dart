@@ -71,12 +71,21 @@ class _TarikDanaScreenState extends State<TarikDanaScreen> {
             TextFormField(
               controller: _jumlahController,
               keyboardType: TextInputType.number,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 fillColor: Colors.white,
                 filled: true,
                 border: InputBorder.none,
                 contentPadding:
-                    EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                suffixIcon: TextButton(
+                  child: const Text('Max'),
+                  onPressed: () async {
+                    final authRead = context.read<AuthProvider>();
+                    if (authRead.profile?.saldo != null) {
+                      _jumlahController.text = authRead.profile!.saldo!;
+                    }
+                  },
+                ),
               ),
             ),
             const SizedBox(
