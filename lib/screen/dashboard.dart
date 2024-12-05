@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:surpay_app/db/auth_repository.dart';
 import 'package:surpay_app/models/dashboard_model.dart';
 import 'package:surpay_app/provider/transaction_provider.dart';
+import 'package:surpay_app/utils/number_format.dart';
 import 'package:surpay_app/utils/result_state.dart';
 import 'package:surpay_app/widgets/drawer/main_drawer.dart';
 import 'package:surpay_app/widgets/handle_error_refresh_widget.dart';
@@ -132,9 +133,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   'Nama Lengkap',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
-                Text(
-                  dashboardHistory.namaLengkap,
-                  style: const TextStyle(fontSize: 18),
+                Expanded(
+                  child: Text(
+                    dashboardHistory.namaLengkap,
+                    style: const TextStyle(fontSize: 18),
+                    textAlign: TextAlign.end,
+                  ),
                 )
               ],
             ),
